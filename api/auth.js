@@ -12,8 +12,8 @@ module.exports = async function handler(req, res) {
     const catalog = await getCatalog();
     const envUser = process.env.ADMIN_USER || '';
     const envPass = process.env.ADMIN_PASSWORD || '';
-    const savedUser = (catalog.settings && catalog.settings.adminUser) || envUser;
-    const savedPass = (catalog.settings && catalog.settings.adminPass) || envPass;
+    const savedUser = envUser || (catalog.settings && catalog.settings.adminUser);
+    const savedPass = envPass || (catalog.settings && catalog.settings.adminPass);
     const isConfigured = Boolean(savedUser && savedPass);
 
     if (req.method === 'GET') {

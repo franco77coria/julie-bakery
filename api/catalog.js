@@ -31,7 +31,7 @@ module.exports = async function handler(req, res) {
             // Validación de credenciales de administración
             const currentCatalog = await getCatalog();
             const envPass = process.env.ADMIN_PASSWORD || '';
-            const currentPass = (currentCatalog.settings && currentCatalog.settings.adminPass) || envPass;
+            const currentPass = envPass || (currentCatalog.settings && currentCatalog.settings.adminPass);
             const adminToken = req.headers['x-admin-token'] || (req.headers.authorization && req.headers.authorization.replace('Bearer ', ''));
 
             if (currentPass && adminToken !== currentPass && adminToken !== 'authenticated') {
