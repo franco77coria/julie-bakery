@@ -1,0 +1,22 @@
+{
+  "name": "julie-bakery-catalog",
+  "version": "1.0.0",
+  "description": "Catálogo Web & Pedidos Online para Julié Bakery con sincronización en tiempo real y almacenamiento en la nube para Vercel",
+  "main": "api/catalog.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "bakery",
+    "catalog",
+    "vercel",
+    "ecommerce",
+    "whatsapp"
+  ],
+  "author": "Julié Bakery",
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/blob": "^0.27.1"
+  }
+}

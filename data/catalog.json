@@ -1,0 +1,319 @@
+{
+  "updatedAt": "2026-10-25T00:29:39.177Z",
+  "settings": {
+    "whatsapp": "5491138951241",
+    "adminUser": "julie.bakery",
+    "adminPass": "Helena2024."
+  },
+  "categories": [
+    {
+      "key": "dulce",
+      "title": "Categoría Dulce",
+      "shortTitle": "Dulce",
+      "subtitle": "Tortas personalizadas, Letter Cakes, medialunas almibaradas, tartas y budines.",
+      "icon": "cake",
+      "color": "bordo"
+    },
+    {
+      "key": "salado",
+      "title": "Categoría Salada",
+      "shortTitle": "Salado",
+      "subtitle": "Chipá artesanal por cuarto, medio o kilo, scons de queso y medialunas rellenas.",
+      "icon": "cheese",
+      "color": "chocolate"
+    },
+    {
+      "key": "box",
+      "title": "Categoría Box & Desayunos",
+      "shortTitle": "Boxes",
+      "subtitle": "Boxes para regalar con foto polaroid, degustaciones e infusiones listas para sorprender.",
+      "icon": "gift",
+      "color": "oliva"
+    }
+  ],
+  "products": [
+    {
+      "id": "prod-letter-cake",
+      "name": "Letter & Number Cake Personalizada",
+      "category": "dulce",
+      "badge": "Super Recomendado!",
+      "featured": true,
+      "immediateDelivery": false,
+      "immediateNote": "",
+      "dailyOffer": true,
+      "offerLabel": "10% OFF encargando hoy",
+      "description": "Torta de letra o número personalizada, rellena con abundantes picos de dulce de leche repostero, ganache o crema y decorada con perlas comestibles en tonos rosa y blanco.",
+      "allowCombine": true,
+      "flavors": [
+        "Base Sablée de Vainilla",
+        "Base Sablée de Chocolate",
+        "Base Brownie Húmedo",
+        "Relleno Dulce de Leche Repostero",
+        "Crema Chocotorta",
+        "Ganache de Chocolate Blanco",
+        "Perlas Rosas y Blancas",
+        "Frutos Rojos Frescos"
+      ],
+      "variants": [
+        {
+          "label": "1 Letra / Número Chica (10-12 porc.)",
+          "unitType": "unidad",
+          "price": 26500,
+          "image": "/images/julie_01.jpg",
+          "fallback": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "1 Letra / Número Grande (20-22 porc.)",
+          "unitType": "unidad",
+          "price": 36000,
+          "image": "/images/julie_01.jpg",
+          "fallback": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "Combo 2 Letras / Números (35-40 porc.)",
+          "unitType": "unidad",
+          "price": 66000,
+          "image": "/images/julie_01.jpg",
+          "fallback": "https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=900&q=80"
+        }
+      ]
+    },
+    {
+      "id": "prod-chipa",
+      "name": "Chipá Artesanal Super Quesoso",
+      "category": "salado",
+      "badge": "Sale calentito",
+      "featured": true,
+      "immediateDelivery": true,
+      "immediateNote": "Horneadas del día listas para retirar",
+      "dailyOffer": true,
+      "offerLabel": "Promo 1/2 Kg Hoy",
+      "description": "Nuestro clásico chipá casero con mucha hebra de queso pategrás, sardo y reggianito. Podés pedirlos recién horneados listos para comer o congelados para hornear en casa.",
+      "allowCombine": true,
+      "flavors": [
+        "Recién Horneados (Listos para comer)",
+        "Congelados (Para hornear en casa)",
+        "Clásico 3 Quesos",
+        "Relleno con Jamón",
+        "Con toque de Orégano y Parmesano"
+      ],
+      "variants": [
+        {
+          "label": "Por Unidad (1 u. grande)",
+          "unitType": "unidad",
+          "price": 1200,
+          "image": "/images/julie_05.jpg",
+          "fallback": "https://images.unsplash.com/photo-1598373182133-52452f7691ef?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "Por Gramos (100 g)",
+          "unitType": "gramos",
+          "price": 2600,
+          "image": "/images/julie_05.jpg",
+          "fallback": "https://images.unsplash.com/photo-1598373182133-52452f7691ef?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "1/4 Kg (250 gramos)",
+          "unitType": "cuarto",
+          "price": 6200,
+          "image": "/images/julie_05.jpg",
+          "fallback": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "1/2 Kg (500 gramos)",
+          "unitType": "medio",
+          "price": 11800,
+          "image": "/images/julie_05.jpg",
+          "fallback": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "1 Kilo Completo (1000 gramos)",
+          "unitType": "kilo",
+          "price": 22000,
+          "image": "/images/julie_05.jpg",
+          "fallback": "https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=900&q=80"
+        }
+      ]
+    },
+    {
+      "id": "prod-box-desayuno",
+      "name": "Box Desayuno & Sorpresa Julié con Foto",
+      "category": "box",
+      "badge": "Regalo Especial",
+      "featured": true,
+      "immediateDelivery": false,
+      "immediateNote": "",
+      "dailyOffer": false,
+      "offerLabel": "",
+      "description": "Caja de regalo personalizada con nuestra estampa Julié: incluye mini pastafrola con coco, mini tarta con dulce de leche y frutos rojos, cupcake decorado, bolsita de chipá, infusiones y tarjeta tipo Polaroid con tu foto y corazoncitos.",
+      "allowCombine": true,
+      "flavors": [
+        "Mini Pastafrola de Membrillo y Coco",
+        "Mini Pastafrola de Batata",
+        "Mini Brownie con Dulce de Leche y Frutos Rojos",
+        "Cupcake Chocolate con Sprinkles Rosas",
+        "Cupcake Vainilla y Dulce de Leche",
+        "Bolsita de Chipá Artesanal",
+        "Medialunas de Manteca",
+        "Incluir Foto Polaroid + Dedicatoria"
+      ],
+      "variants": [
+        {
+          "label": "Box Individual Completa (Con Foto)",
+          "unitType": "unidad",
+          "price": 24500,
+          "image": "/images/julie_07.jpg",
+          "fallback": "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "Box Para Compartir (2 Personas + 2 Fotos)",
+          "unitType": "unidad",
+          "price": 35900,
+          "image": "/images/julie_07.jpg",
+          "fallback": "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "Mega Box Cumpleaños / Aniversario",
+          "unitType": "unidad",
+          "price": 46000,
+          "image": "/images/julie_07.jpg",
+          "fallback": "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=900&q=80"
+        }
+      ]
+    },
+    {
+      "id": "prod-medialunas",
+      "name": "Medialunas de Manteca Almibaradas",
+      "category": "dulce",
+      "badge": "Clásico Julié",
+      "featured": true,
+      "immediateDelivery": true,
+      "immediateNote": "Recién salidas del horno con almíbar tibio",
+      "dailyOffer": true,
+      "offerLabel": "Docena en Promo Hoy",
+      "description": "Medialunas artesanales bien doradas, hojaldradas y bañadas en nuestro almíbar casero tibio. Podés llevarlas solas o combinarlas rellenas con dulce de leche.",
+      "allowCombine": true,
+      "flavors": [
+        "Clásicas de Manteca con Almíbar",
+        "Rellenas con Dulce de Leche",
+        "Rellenas con Crema Pastelera",
+        "Bañadas en Chocolate"
+      ],
+      "variants": [
+        {
+          "label": "Por Unidad (1 u.)",
+          "unitType": "unidad",
+          "price": 1100,
+          "image": "/images/julie_08.jpg",
+          "fallback": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "Media Docena (6 unidades)",
+          "unitType": "docena",
+          "price": 6200,
+          "image": "/images/julie_08.jpg",
+          "fallback": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "1 Docena en Caja Julié (12 unidades)",
+          "unitType": "docena",
+          "price": 11800,
+          "image": "/images/julie_08.jpg",
+          "fallback": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80"
+        }
+      ]
+    },
+    {
+      "id": "prod-box-budines",
+      "name": "Trío & Budines Húmedos en Caja Damero",
+      "category": "box",
+      "badge": "Packaging Exclusivo",
+      "featured": true,
+      "immediateDelivery": true,
+      "immediateNote": "2 Cajas Trío disponibles para entrega hoy",
+      "dailyOffer": false,
+      "offerLabel": "",
+      "description": "Nuestros budines artesanales presentados en la icónica caja damero bordó y crema con corazones de Julié Bakery. Ideales para la merienda o para regalar.",
+      "allowCombine": true,
+      "flavors": [
+        "Limón con Glaseado Real y Ralladura",
+        "Intenso de Chocolate con Chips",
+        "Vainilla con Nueces y Manzana",
+        "Marmolado con corazón de Dulce de Leche",
+        "Naranja y Amapolas"
+      ],
+      "variants": [
+        {
+          "label": "1 Budín Individual (350 g)",
+          "unitType": "gramos",
+          "price": 7800,
+          "image": "/images/julie_11.jpg",
+          "fallback": "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "Box Dúo (2 Budines a elección - 700 g)",
+          "unitType": "gramos",
+          "price": 14900,
+          "image": "/images/julie_11.jpg",
+          "fallback": "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "Box Trío Degustación (3 Budines - 1 Kg)",
+          "unitType": "kilo",
+          "price": 21500,
+          "image": "/images/julie_11.jpg",
+          "fallback": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80"
+        }
+      ]
+    },
+    {
+      "id": "prod-salado-medialunas-jyq",
+      "name": "Medialunas & Scons Salados con Jamón y Queso",
+      "category": "salado",
+      "badge": "Salado Tentador",
+      "featured": false,
+      "immediateDelivery": false,
+      "immediateNote": "",
+      "dailyOffer": false,
+      "offerLabel": "",
+      "description": "Combinación salada ideal para eventos, desayunos o meriendas: medialunas rellenas con jamón cocido natural y mucho queso fundido, o scons de queso parmesano.",
+      "allowCombine": true,
+      "flavors": [
+        "Medialuna con Jamón y Queso",
+        "Scon de Queso Parmesano",
+        "Sacramento con Jamón y Queso",
+        "Pancito Saborizado de Cebolla y Queso"
+      ],
+      "variants": [
+        {
+          "label": "Por Unidad (1 u.)",
+          "unitType": "unidad",
+          "price": 1650,
+          "image": "/images/julie_15.jpg",
+          "fallback": "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "1/4 Kg de Scons / Pancitos (250 g)",
+          "unitType": "cuarto",
+          "price": 6400,
+          "image": "/images/julie_15.jpg",
+          "fallback": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "1/2 Docena Surtida (6 u.)",
+          "unitType": "docena",
+          "price": 9200,
+          "image": "/images/julie_15.jpg",
+          "fallback": "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?auto=format&fit=crop&w=900&q=80"
+        },
+        {
+          "label": "1 Docena Surtida (12 u.)",
+          "unitType": "docena",
+          "price": 17500,
+          "image": "/images/julie_15.jpg",
+          "fallback": "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?auto=format&fit=crop&w=900&q=80"
+        }
+      ]
+    }
+  ]
+}
