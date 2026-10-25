@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-24T21:00:00.000Z",
+  "updatedAt": "2026-10-25T01:30:00.000Z",
   "settings": {
     "whatsapp": "5491138951241",
     "adminUser": "",
@@ -7,29 +7,468 @@
   },
   "categories": [
     {
+      "key": "waffles",
+      "title": "Waffles & Especialidades",
+      "shortTitle": "Waffles",
+      "subtitle": "Waffles artesanales recién horneados con toppings y helado.",
+      "icon": "cake",
+      "color": "bordo"
+    },
+    {
       "key": "dulce",
-      "title": "Categoría Dulce",
+      "title": "Tortas & Repostería Dulce",
       "shortTitle": "Dulce",
-      "subtitle": "Tortas personalizadas, tartas y repostería artesanal.",
+      "subtitle": "Budines húmedos, tortas decoradas y delicias artesanales.",
       "icon": "cake",
       "color": "bordo"
     },
     {
       "key": "salado",
-      "title": "Categoría Salada",
+      "title": "Especialidades Saladas",
       "shortTitle": "Salado",
-      "subtitle": "Chipá artesanal, scons de queso y especialidades horneadas.",
+      "subtitle": "Chipá con tres quesos, scons horneados y medialunas saladas.",
       "icon": "cheese",
       "color": "chocolate"
     },
     {
       "key": "box",
-      "title": "Categoría Box & Desayunos",
+      "title": "Boxes & Desayunos Especiales",
       "shortTitle": "Boxes",
-      "subtitle": "Boxes para regalar, degustaciones y sorpresas especiales.",
+      "subtitle": "Cajas de regalo artesanales, degustaciones y sorpresas con dedicatoria.",
       "icon": "gift",
       "color": "oliva"
     }
   ],
-  "products": []
+  "products": [
+    {
+      "id": "prod-waffles-clasicos",
+      "name": "Waffles Clásicos",
+      "category": "waffles",
+      "badge": "Clásico",
+      "immediateDelivery": true,
+      "dailyOffer": false,
+      "offerLabel": "",
+      "description": "Waffle de vainilla artesanal esponjoso y dorado. Podés pedirlo por 3 o 6 unidades con miel o dulce de leche.",
+      "allowCombine": false,
+      "flavors": [
+        "Con Miel Pura",
+        "Con Dulce de Leche Clásico",
+        "Con Azúcar Impalpable"
+      ],
+      "variants": [
+        {
+          "label": "3 Unidades",
+          "unitType": "unidad",
+          "price": 10200,
+          "image": "/images/julie_07.jpg",
+          "fallback": "/images/julie_07.jpg"
+        },
+        {
+          "label": "6 Unidades",
+          "unitType": "unidad",
+          "price": 18500,
+          "image": "/images/julie_07.jpg",
+          "fallback": "/images/julie_07.jpg"
+        }
+      ]
+    },
+    {
+      "id": "prod-waffle-helado",
+      "name": "Waffle Con Helado",
+      "category": "waffles",
+      "badge": "Más vendido",
+      "immediateDelivery": true,
+      "dailyOffer": true,
+      "offerLabel": "Recomendado",
+      "description": "Dos waffles tibios, un gusto de helado a elección con dulce de leche repostero y salsa tibia de chocolate.",
+      "allowCombine": true,
+      "flavors": [
+        "Dulce de Leche Granizado",
+        "Chocolate Belga Amargo",
+        "Crema Americana & Vainilla",
+        "Frutilla a la Reina"
+      ],
+      "variants": [
+        {
+          "label": "2 Waffles + 1 Gusto Helado",
+          "unitType": "porcion",
+          "price": 11600,
+          "image": "/images/julie_08.jpg",
+          "fallback": "/images/julie_08.jpg"
+        },
+        {
+          "label": "4 Waffles + 2 Gustos Helado (Para 2)",
+          "unitType": "porcion",
+          "price": 21000,
+          "image": "/images/julie_08.jpg",
+          "fallback": "/images/julie_08.jpg"
+        }
+      ]
+    },
+    {
+      "id": "prod-torre-waffles",
+      "name": "Torre De Waffles",
+      "category": "waffles",
+      "badge": "Para compartir",
+      "immediateDelivery": false,
+      "dailyOffer": false,
+      "offerLabel": "",
+      "description": "4 waffles con chocolate, dulce de leche, bocha de helado, chocolinas y oreos trituradas.",
+      "allowCombine": true,
+      "flavors": [
+        "Con Chocolinas y Oreos",
+        "Extra Dulce de Leche",
+        "Salsa de Frutos Rojos"
+      ],
+      "variants": [
+        {
+          "label": "Torre Completa (4 waffles)",
+          "unitType": "unidad",
+          "price": 19000,
+          "image": "/images/julie_09.jpg",
+          "fallback": "/images/julie_09.jpg"
+        }
+      ]
+    },
+    {
+      "id": "prod-box-waffles",
+      "name": "Box Waffles",
+      "category": "waffles",
+      "badge": "Promo Box",
+      "immediateDelivery": true,
+      "dailyOffer": true,
+      "offerLabel": "15% OFF",
+      "description": "3 waffles grandes con 3 toppings a elección en potes separados para armar como más te guste.",
+      "allowCombine": true,
+      "flavors": [
+        "Dulce de Leche",
+        "Nutella / Crema de Avellanas",
+        "M&Ms / Confites",
+        "Chips de Chocolate",
+        "Merenguitos"
+      ],
+      "variants": [
+        {
+          "label": "Box 3 Waffles + 3 Toppings",
+          "unitType": "unidad",
+          "price": 14000,
+          "image": "/images/julie_10.jpg",
+          "fallback": "/images/julie_10.jpg"
+        }
+      ]
+    },
+    {
+      "id": "prod-budines-humedos",
+      "name": "Budín Húmedo Artesanal",
+      "category": "dulce",
+      "badge": "Más vendido",
+      "immediateDelivery": true,
+      "dailyOffer": false,
+      "offerLabel": "",
+      "description": "Masa súper esponjosa y húmeda con abundante glasé cítrico o chocolate. Elegí peso en gramos o kilos y sabor favorito.",
+      "allowCombine": true,
+      "flavors": [
+        "Limón con Glasé Cítrico",
+        "Naranja y Semillas de Amapola",
+        "Vainilla con Chispas de Chocolate",
+        "Marmolado Vainilla y Cacao Intenso",
+        "Zanahoria & Nuez (Carrot Cake)"
+      ],
+      "variants": [
+        {
+          "label": "350g (Individual / Chico)",
+          "unitType": "gramos",
+          "price": 4500,
+          "image": "/images/julie_04.jpg",
+          "fallback": "/images/julie_04.jpg"
+        },
+        {
+          "label": "500g (Medio Kilo)",
+          "unitType": "gramos",
+          "price": 6500,
+          "image": "/images/julie_04.jpg",
+          "fallback": "/images/julie_04.jpg"
+        },
+        {
+          "label": "700g (Familiar Mediano)",
+          "unitType": "gramos",
+          "price": 8500,
+          "image": "/images/julie_04.jpg",
+          "fallback": "/images/julie_04.jpg"
+        },
+        {
+          "label": "1 Kilo (1000g Extra Grande)",
+          "unitType": "gramos",
+          "price": 11900,
+          "image": "/images/julie_04.jpg",
+          "fallback": "/images/julie_04.jpg"
+        }
+      ]
+    },
+    {
+      "id": "prod-letter-cake",
+      "name": "Letter & Number Cake Personalizada",
+      "category": "dulce",
+      "badge": "Especialidad Julié",
+      "immediateDelivery": false,
+      "dailyOffer": true,
+      "offerLabel": "10% OFF",
+      "description": "Torta artesanal de letra o número, rellena con picos de dulce de leche repostero y decorada con perlas comestibles, macarons y flores.",
+      "allowCombine": true,
+      "flavors": [
+        "Base Sablée de Vainilla",
+        "Base Sablée de Chocolate Belga",
+        "Relleno Dulce de Leche Repostero",
+        "Crema Chocotorta Bariloche",
+        "Ganache de Chocolate Blanco",
+        "Decoración con Frutos Rojos"
+      ],
+      "variants": [
+        {
+          "label": "1 Letra / Número Chica (10-12 porc.)",
+          "unitType": "unidad",
+          "price": 26500,
+          "image": "/images/julie_01.jpg",
+          "fallback": "/images/julie_01.jpg"
+        },
+        {
+          "label": "1 Letra / Número Grande (16-18 porc.)",
+          "unitType": "unidad",
+          "price": 34500,
+          "image": "/images/julie_01.jpg",
+          "fallback": "/images/julie_01.jpg"
+        },
+        {
+          "label": "2 Letras o Números (25-30 porc.)",
+          "unitType": "unidad",
+          "price": 49000,
+          "image": "/images/julie_01.jpg",
+          "fallback": "/images/julie_01.jpg"
+        }
+      ]
+    },
+    {
+      "id": "prod-medialunas-manteca",
+      "name": "Medialunas de Manteca Almibaradas",
+      "category": "dulce",
+      "badge": "Recién Horneadas",
+      "immediateDelivery": true,
+      "dailyOffer": false,
+      "offerLabel": "",
+      "description": "Medialunas tradicionales hojaldradas con pura manteca y suave almíbar aromatizado con naranja y vainilla natural.",
+      "allowCombine": false,
+      "flavors": [
+        "Almíbar Clásico",
+        "Con Dulce de Leche"
+      ],
+      "variants": [
+        {
+          "label": "1 Unidad",
+          "unitType": "unidad",
+          "price": 950,
+          "image": "/images/julie_02.jpg",
+          "fallback": "/images/julie_02.jpg"
+        },
+        {
+          "label": "3 Unidades",
+          "unitType": "unidad",
+          "price": 2700,
+          "image": "/images/julie_02.jpg",
+          "fallback": "/images/julie_02.jpg"
+        },
+        {
+          "label": "6 Unidades (Media docena)",
+          "unitType": "unidad",
+          "price": 5200,
+          "image": "/images/julie_02.jpg",
+          "fallback": "/images/julie_02.jpg"
+        },
+        {
+          "label": "12 Unidades (1 Docena)",
+          "unitType": "unidad",
+          "price": 9800,
+          "image": "/images/julie_02.jpg",
+          "fallback": "/images/julie_02.jpg"
+        }
+      ]
+    },
+    {
+      "id": "prod-chipa-artesanal",
+      "name": "Chipá Artesanal Super Quesoso",
+      "category": "salado",
+      "badge": "Más vendido",
+      "immediateDelivery": true,
+      "dailyOffer": false,
+      "offerLabel": "",
+      "description": "Receta tradicional correntina elaborada con tres variedades de queso (sardo, cáscara colorada y gouda). Crocantes por fuera y súper esponjosos por dentro.",
+      "allowCombine": false,
+      "flavors": [
+        "Tres Quesos Tradicional",
+        "Con Toque de Jamón Picado"
+      ],
+      "variants": [
+        {
+          "label": "1/4 Kg (250g calentitos)",
+          "unitType": "gramos",
+          "price": 4200,
+          "image": "/images/julie_05.jpg",
+          "fallback": "/images/julie_05.jpg"
+        },
+        {
+          "label": "1/2 Kg (500g familiar)",
+          "unitType": "gramos",
+          "price": 7800,
+          "image": "/images/julie_05.jpg",
+          "fallback": "/images/julie_05.jpg"
+        },
+        {
+          "label": "1 Kilo (1000g para freezer/fiesta)",
+          "unitType": "gramos",
+          "price": 14500,
+          "image": "/images/julie_05.jpg",
+          "fallback": "/images/julie_05.jpg"
+        }
+      ]
+    },
+    {
+      "id": "prod-scons-salados",
+      "name": "Scons de Queso Parmesano",
+      "category": "salado",
+      "badge": "Especial Salado",
+      "immediateDelivery": true,
+      "dailyOffer": false,
+      "offerLabel": "",
+      "description": "Scons dorados con textura mantecosa y abundante queso parmesano rallado en la masa. Ricos solos o para rellenar.",
+      "allowCombine": false,
+      "flavors": [
+        "Parmesano Clásico",
+        "Con Finas Hierbas"
+      ],
+      "variants": [
+        {
+          "label": "1/4 Kg (Aprox. 6 unidades)",
+          "unitType": "gramos",
+          "price": 4800,
+          "image": "/images/julie_06.jpg",
+          "fallback": "/images/julie_06.jpg"
+        },
+        {
+          "label": "1/2 Kg (Aprox. 12 unidades)",
+          "unitType": "gramos",
+          "price": 8900,
+          "image": "/images/julie_06.jpg",
+          "fallback": "/images/julie_06.jpg"
+        },
+        {
+          "label": "1 Kilo (Aprox. 24 unidades)",
+          "unitType": "gramos",
+          "price": 16500,
+          "image": "/images/julie_06.jpg",
+          "fallback": "/images/julie_06.jpg"
+        }
+      ]
+    },
+    {
+      "id": "prod-medialunas-rellenas",
+      "name": "Medialunas con Jamón y Queso",
+      "category": "salado",
+      "badge": "Disponible hoy",
+      "immediateDelivery": true,
+      "dailyOffer": false,
+      "offerLabel": "",
+      "description": "Medialunas de manteca agridulces rellenas con jamón cocido seleccionado y queso tybo fundido.",
+      "allowCombine": false,
+      "flavors": [
+        "Jamón Cocido y Queso Tybo"
+      ],
+      "variants": [
+        {
+          "label": "1 Unidad",
+          "unitType": "unidad",
+          "price": 1800,
+          "image": "/images/julie_11.jpg",
+          "fallback": "/images/julie_11.jpg"
+        },
+        {
+          "label": "3 Unidades",
+          "unitType": "unidad",
+          "price": 5100,
+          "image": "/images/julie_11.jpg",
+          "fallback": "/images/julie_11.jpg"
+        },
+        {
+          "label": "6 Unidades (Media docena)",
+          "unitType": "unidad",
+          "price": 9900,
+          "image": "/images/julie_11.jpg",
+          "fallback": "/images/julie_11.jpg"
+        }
+      ]
+    },
+    {
+      "id": "prod-box-desayuno",
+      "name": "Box Desayuno Sorpresa con Foto",
+      "category": "box",
+      "badge": "Ideal Regalo",
+      "immediateDelivery": false,
+      "dailyOffer": true,
+      "offerLabel": "Regalo Especial",
+      "description": "Caja rígida con guarda damero, lazo de raso y tarjeta dedicatoria. Incluye taza de cerámica, jugo, budín artesanal, medialunas de manteca y chipá.",
+      "allowCombine": true,
+      "flavors": [
+        "Con Taza Julié y Dedicatoria",
+        "Budín de Limón o Naranja",
+        "Medialunas de Manteca",
+        "Porción de Chipá Calentito"
+      ],
+      "variants": [
+        {
+          "label": "Box Individual Completo",
+          "unitType": "unidad",
+          "price": 28500,
+          "image": "/images/julie_03.jpg",
+          "fallback": "/images/julie_03.jpg"
+        },
+        {
+          "label": "Box Dúo (Para 2 personas)",
+          "unitType": "unidad",
+          "price": 42000,
+          "image": "/images/julie_03.jpg",
+          "fallback": "/images/julie_03.jpg"
+        }
+      ]
+    },
+    {
+      "id": "prod-box-degustacion",
+      "name": "Box Degustación Sweet & Salty",
+      "category": "box",
+      "badge": "Surtido",
+      "immediateDelivery": true,
+      "dailyOffer": false,
+      "offerLabel": "",
+      "description": "Degustación surtida para compartir: chipacitos, scons de parmesano, mini alfajores de maicena y cuadraditos dulces.",
+      "allowCombine": true,
+      "flavors": [
+        "Chipacitos & Scons",
+        "Alfajores de Maicena",
+        "Cookies con Chips"
+      ],
+      "variants": [
+        {
+          "label": "Box Mediano (Aprox. 600g surtido)",
+          "unitType": "gramos",
+          "price": 19500,
+          "image": "/images/julie_12.jpg",
+          "fallback": "/images/julie_12.jpg"
+        },
+        {
+          "label": "Box Grande (Aprox. 1.2 kg surtido)",
+          "unitType": "gramos",
+          "price": 34000,
+          "image": "/images/julie_12.jpg",
+          "fallback": "/images/julie_12.jpg"
+        }
+      ]
+    }
+  ]
 }
