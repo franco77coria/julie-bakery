@@ -4,17 +4,12 @@
   "trailingSlash": false,
   "functions": {
     "api/upload.js": {
-      "maxDuration": 15,
-      "memory": 1024
+      "maxDuration": 15
     },
     "api/catalog.js": {
-      "maxDuration": 10,
-      "memory": 512
+      "maxDuration": 10
     }
   },
-  "rewrites": [
-    { "source": "/admin", "destination": "/index.html" }
-  ],
   "headers": [
     {
       "source": "/api/catalog",
