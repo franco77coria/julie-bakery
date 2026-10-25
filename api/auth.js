@@ -1,42 +1,84 @@
-const { getCatalog } = require('./_storage');
+const { getCatalog, saveCatalog } = require('./_storage');
 
 module.exports = async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-admin-token');
 
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
 
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Método no permitido' });
-    }
+    const catalog = await getCatalog();
+    const envUser = process.env.ADMIN_USER || '';
+    const envPass = process.env.ADMIN_PASSWORD || '';
+    const savedUser = (catalog.settings && catalog.settings.adminUser) || envUser;
+    const savedPass = (catalog.settings && catalog.settings.adminPass) || envPass;
+    const isConfigured = Boolean(savedUser && savedPass);
 
-    try {
-        let body = req.body;
-        if (typeof body === 'string') {
-            try { body = JSON.parse(body); } catch (e) {}
-        }
-
-        const { username, password } = body || {};
-        const catalog = await getCatalog();
-        const validUser = (catalog.settings && catalog.settings.adminUser) || 'julie.bakery';
-        const validPass = (catalog.settings && catalog.settings.adminPass) || 'Helena2024.';
-
-        if (username === validUser && password === validPass) {
-            return res.status(200).json({
-                success: true,
-                token: validPass,
-                user: validUser
-            });
-        }
-
-        return res.status(401).json({
-            success: false,
-            error: 'Credenciales inválidas. Verificá tu usuario y contraseña.'
+    if (req.method === 'GET') {
+        return res.status(200).json({
+            isConfigured,
+            userHint: isConfigured ? savedUser : null
         });
-    } catch (error) {
-        return res.status(500).json({ error: error.message });
     }
+
+    if (req.method === 'POST') {
+        try {
+            let body = req.body;
+            if (typeof body === 'string') {
+                try { body = JSON.parse(body); } catch (e) {}
+            }
+
+            const { action, username, password, whatsapp } = body || {};
+
+            // Configuración inicial si no existe contraseña configurada todavía
+            if (action === 'setup' || !isConfigured) {
+                if (!username || !password) {
+                    return res.status(400).json({ error: 'Debes definir un usuario y una contraseña' });
+                }
+
+                catalog.settings = catalog.settings || {};
+                catalog.settings.adminUser = username.trim();
+                catalog.settings.adminPass = password.trim();
+                if (whatsapp) {
+                    catalog.settings.whatsapp = whatsapp.trim().replace(/\D/g, '');
+                }
+
+                await saveCatalog(catalog);
+
+                return res.status(200).json({
+                    success: true,
+                    isSetup: true,
+                    message: '¡Credenciales de administradora creadas exitosamente!',
+                    token: catalog.settings.adminPass,
+                    user: catalog.settings.adminUser
+                });
+            }
+
+            // Inicio de sesión normal
+            if (username && password) {
+                const userMatch = (username.trim().toLowerCase() === savedUser.toLowerCase());
+                const passMatch = (password === savedPass);
+
+                if (userMatch && passMatch) {
+                    return res.status(200).json({
+                        success: true,
+                        token: savedPass,
+                        user: savedUser
+                    });
+                }
+            }
+
+            return res.status(401).json({
+                success: false,
+                error: 'Usuario o contraseña incorrectos. Por favor verificá los datos.'
+            });
+        } catch (error) {
+            console.error('Error in /api/auth:', error);
+            return res.status(500).json({ error: error.message });
+        }
+    }
+
+    return res.status(405).json({ error: 'Método no permitido' });
 };

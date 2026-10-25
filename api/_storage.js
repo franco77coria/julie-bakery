@@ -23,7 +23,7 @@ function readLocalDefault() {
     }
     return {
         updatedAt: new Date().toISOString(),
-        settings: { whatsapp: '5491138951241', adminUser: 'julie.bakery', adminPass: 'Helena2024.' },
+        settings: { whatsapp: '5491138951241', adminUser: '', adminPass: '' },
         categories: [],
         products: []
     };

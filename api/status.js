@@ -18,7 +18,8 @@ module.exports = async function handler(req, res) {
             totalProducts: (catalog.products && catalog.products.length) || 0,
             totalCategories: (catalog.categories && catalog.categories.length) || 0,
             updatedAt: catalog.updatedAt || null,
-            whatsapp: (catalog.settings && catalog.settings.whatsapp) || '5491138951241'
+            whatsapp: (catalog.settings && catalog.settings.whatsapp) || '5491138951241',
+            isConfigured: Boolean(catalog.settings && catalog.settings.adminPass)
         });
     } catch (error) {
         return res.status(500).json({ error: error.message });
