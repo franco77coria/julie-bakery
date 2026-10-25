@@ -179,7 +179,7 @@
             </div>
         </div>
 
-        <!-- Tarjeta Flotante del Local (100% Limpia: Sin delivery/retiro y sin banners innecesarios) -->
+        <!-- Tarjeta Flotante del Local -->
         <div class="max-w-2xl mx-auto px-3.5 -mt-10 sm:-mt-12 relative z-20">
             <div class="bg-white rounded-[1.75rem] sm:rounded-[2rem] p-4 sm:p-5 shadow-card border border-rosa/30">
                 <!-- Fila Superior: Logo, Nombre, Calificación y Especialidad -->
@@ -218,7 +218,7 @@
         </div>
     </div>
 
-    <!-- BARRA STICKY DE CATEGORÍAS (Configurable desde Admin: Dulce, Salado, Boxes, etc.) -->
+    <!-- BARRA STICKY DE CATEGORÍAS -->
     <div class="sticky top-0 z-30 bg-crema/95 backdrop-blur-xl border-b border-rosa/40 shadow-sm mt-3">
         <div class="max-w-2xl mx-auto px-3.5">
             <div id="stickyCategoryTabs" class="flex items-center gap-5 sm:gap-6 overflow-x-auto no-scrollbar py-3 scroll-smooth">
@@ -250,7 +250,7 @@
     </footer>
 
     <!-- =================================================================== -->
-    <!-- BARRA FLOTANTE DEL PEDIDO (CONFIGURABLE, APARECE CUANDO HAY ITEMS)   -->
+    <!-- BARRA FLOTANTE DEL PEDIDO (APARECE CUANDO HAY ITEMS)                 -->
     <!-- =================================================================== -->
     <div id="floatingOrderBar" class="hidden fixed bottom-4 left-3 right-3 sm:left-auto sm:right-auto sm:w-full max-w-xl sm:left-1/2 sm:-translate-x-1/2 z-40 transition-all duration-300">
         <button onclick="toggleCartDrawer(true)" class="ios-tap w-full py-3.5 px-4 rounded-2xl bg-bordo text-crema font-bold shadow-floating flex items-center justify-between border-2 border-rosa/40 hover:bg-bordoDark transition">
@@ -266,7 +266,7 @@
     </div>
 
     <!-- =================================================================== -->
-    <!-- MODAL DETALLE Y PERSONALIZACIÓN DE PRODUCTO (BOTTOM SHEET iOS)       -->
+    <!-- MODAL DETALLE Y PERSONALIZACIÓN DE PRODUCTO                         -->
     <!-- =================================================================== -->
     <div id="productModal" style="display: none;" onclick="if(event.target === this) closeProductModal()" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
         <div class="ios-sheet-enter bg-white w-full max-w-lg rounded-t-[2rem] sm:rounded-[2rem] shadow-floating border border-rosa/40 overflow-hidden flex flex-col max-h-[92dvh] sm:max-h-[88dvh] relative">
@@ -336,25 +336,33 @@
     </div>
 
     <!-- =================================================================== -->
-    <!-- MODAL /ADMIN PANTALLA COMPLETA                                      -->
+    <!-- PANEL /ADMIN PROFESIONAL, RESPONSIVO Y CON JERARQUÍA VISUAL          -->
     <!-- =================================================================== -->
-    <div id="adminRouteOverlay" style="display: none;" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex flex-col justify-end sm:justify-center p-0 sm:p-4">
-        <div class="bg-crema w-full max-w-4xl mx-auto h-[95dvh] sm:h-[90dvh] rounded-t-[2.2rem] sm:rounded-[2.2rem] shadow-floating border-2 border-rosa/70 flex flex-col overflow-hidden">
+    <div id="adminRouteOverlay" style="display: none;" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex flex-col justify-end sm:justify-center p-0 sm:p-4">
+        <div class="bg-crema w-full max-w-4xl mx-auto h-[95dvh] sm:h-[90dvh] rounded-t-[2rem] sm:rounded-[2rem] shadow-floating border-2 border-rosa/50 flex flex-col overflow-hidden">
             
-            <div class="bg-chocolate text-crema px-4 sm:px-6 py-3.5 flex items-center justify-between shrink-0">
+            <!-- Barra Superior del Panel Admin -->
+            <div class="bg-chocolate text-crema px-4 sm:px-6 py-3.5 flex items-center justify-between shrink-0 border-b border-rosa/20">
                 <div class="flex items-center gap-2.5">
-                    <span class="w-8 h-8 rounded-full bg-rosa text-bordo flex items-center justify-center font-bold text-sm">⚙</span>
+                    <div class="w-8 h-8 rounded-xl bg-rosa text-bordo flex items-center justify-center font-bold text-sm shadow-xs">
+                        ⚙
+                    </div>
                     <div>
                         <h2 class="font-serifBrand text-xl font-bold tracking-wider leading-none">Panel de Administración</h2>
-                        <span class="text-[10px] text-rosa tracking-widest uppercase">Julié Bakery Control</span>
+                        <span class="text-[10px] text-rosa tracking-widest uppercase font-semibold">Julié Bakery Control</span>
                     </div>
                 </div>
-                <button onclick="closeAdminRoute()" class="ios-tap w-8 h-8 rounded-full bg-crema/15 text-crema flex items-center justify-center hover:bg-crema/30">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="closeAdminRoute()" class="ios-tap px-3 py-1.5 rounded-xl bg-crema/15 text-crema text-xs font-semibold hover:bg-crema/25 flex items-center gap-1">
+                        <span>Ver Menú</span>
+                    </button>
+                    <button onclick="closeAdminRoute()" class="ios-tap w-8 h-8 rounded-xl bg-crema/15 text-crema flex items-center justify-center hover:bg-crema/30" title="Cerrar">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
             </div>
 
-            <!-- Login Screen -->
+            <!-- Pantalla 1: Formulario de Login -->
             <div id="adminLoginScreen" class="flex-1 flex flex-col justify-center items-center p-6 overflow-y-auto">
                 <div class="w-full max-w-sm bg-white p-6 rounded-3xl border border-rosa/40 shadow-card text-center space-y-4">
                     <div class="w-14 h-14 rounded-full bg-rosaLight text-bordo flex items-center justify-center mx-auto text-xl font-bold">
@@ -382,165 +390,343 @@
                 </div>
             </div>
 
-            <!-- Dashboard Screen -->
+            <!-- Pantalla 2: Panel de Gestión (Cuando está autenticada) -->
             <div id="adminDashboardScreen" class="hidden flex-1 flex flex-col overflow-hidden bg-crema">
-                <div class="flex items-center gap-2 p-3 bg-white border-b border-rosa/30 overflow-x-auto no-scrollbar shrink-0">
-                    <button onclick="switchAdminTab('productos')" id="admintab-btn-productos" class="ios-tap px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-bordo text-crema">
-                        Productos (<span id="adminProdCount">0</span>)
+                
+                <!-- Pestañas de Navegación del Admin (Segmented Bar) -->
+                <div class="flex items-center gap-1.5 p-2.5 sm:p-3 bg-white border-b border-rosa/30 overflow-x-auto no-scrollbar shrink-0">
+                    <button onclick="switchAdminTab('productos')" id="admintab-btn-productos" class="ios-tap px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-bordo text-crema shrink-0">
+                        <span>🍰 Productos</span>
+                        <span id="adminProdCountBadge" class="px-1.5 py-0.2 rounded-full bg-rosa text-bordo text-[10px] font-extrabold">0</span>
                     </button>
-                    <button onclick="switchAdminTab('portada')" id="admintab-btn-portada" class="ios-tap px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-cremaDark text-chocolate">
-                        🖼️ Foto de Portada
+                    <button onclick="switchAdminTab('portada')" id="admintab-btn-portada" class="ios-tap px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1 bg-cremaDark text-chocolate shrink-0">
+                        <span>🖼️ Portada</span>
                     </button>
-                    <button onclick="switchAdminTab('categorias')" id="admintab-btn-categorias" class="ios-tap px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-cremaDark text-chocolate">
-                        Categorías
+                    <button onclick="switchAdminTab('categorias')" id="admintab-btn-categorias" class="ios-tap px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1 bg-cremaDark text-chocolate shrink-0">
+                        <span>📂 Categorías</span>
                     </button>
-                    <button onclick="switchAdminTab('config')" id="admintab-btn-config" class="ios-tap px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-cremaDark text-chocolate">
-                        Ajustes & Nube
+                    <button onclick="switchAdminTab('config')" id="admintab-btn-config" class="ios-tap px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1 bg-cremaDark text-chocolate shrink-0">
+                        <span>⚙️ Ajustes & Nube</span>
                     </button>
+                    <div class="ml-auto pl-2 flex items-center shrink-0">
+                        <button onclick="logoutAdmin()" class="ios-tap px-2.5 py-1.5 rounded-xl text-[11px] font-semibold text-chocolate/70 hover:text-red-600 hover:bg-red-50">
+                            Cerrar Sesión
+                        </button>
+                    </div>
                 </div>
 
-                <div class="bg-cremaDark/70 px-4 py-2 border-b border-rosa/20 flex items-center justify-between text-xs text-chocolate shrink-0">
+                <!-- Barra de Estado de Sincronización en la Nube -->
+                <div class="bg-cremaDark/85 px-4 py-2 border-b border-rosa/20 flex items-center justify-between text-xs text-chocolate shrink-0 flex-wrap gap-2">
                     <span class="flex items-center gap-1.5">
-                        <span class="w-2 h-2 rounded-full bg-oliva"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-oliva inline-block animate-pulse"></span>
                         <strong id="cloudStatusText">Almacenamiento Vercel Blob Activo</strong>
                     </span>
-                    <button onclick="syncCatalogWithCloudNow()" class="ios-tap px-2.5 py-1 rounded-lg bg-white border border-rosa/40 text-[11px] font-bold text-bordo hover:bg-rosaLight">
-                        Guardar & Publicar en la Nube
+                    <button onclick="syncCatalogWithCloudNow()" class="ios-tap px-3 py-1 rounded-lg bg-white border border-rosa/40 text-[11px] font-bold text-bordo hover:bg-rosaLight shadow-xs flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <span>Sincronizar Nube Ahora</span>
                     </button>
                 </div>
 
-                <div class="flex-1 overflow-y-auto p-4 space-y-6">
-                    <!-- TAB: PRODUCTOS -->
+                <!-- Área con Scroll de los Contenidos de Admin -->
+                <div class="flex-1 overflow-y-auto p-3.5 sm:p-5 space-y-6">
+                    
+                    <!-- ======================================================= -->
+                    <!-- TAB 1: PRODUCTOS (FORMULARIO Y LISTADO)                 -->
+                    <!-- ======================================================= -->
                     <div id="admintab-panel-productos" class="space-y-6">
-                        <form id="productForm" onsubmit="saveProductFromForm(event)" class="bg-white p-4 sm:p-5 rounded-3xl border border-rosa/30 shadow-sm space-y-4">
-                            <h4 id="formTitle" class="font-serifBrand text-xl font-bold text-chocolate">Cargar Nuevo Producto</h4>
+                        
+                        <!-- Formulario de Producto -->
+                        <form id="productForm" onsubmit="saveProductFromForm(event)" class="bg-white p-4 sm:p-6 rounded-3xl border border-rosa/30 shadow-sm space-y-5">
+                            
+                            <!-- Encabezado del Formulario -->
+                            <div class="flex items-center justify-between border-b border-rosa/20 pb-3 flex-wrap gap-2">
+                                <div>
+                                    <h4 id="formTitle" class="font-serifBrand text-xl sm:text-2xl font-bold text-chocolate leading-tight">
+                                        Cargar Nuevo Producto
+                                    </h4>
+                                    <p class="text-[11px] text-chocolate/60">Completá los datos y medidas para publicarlo en el menú.</p>
+                                </div>
+                                <span id="formStatusBadge" class="hidden px-2.5 py-0.5 rounded-full bg-rosaLight text-bordo text-[11px] font-bold">
+                                    Modo Edición
+                                </span>
+                            </div>
+
                             <input type="hidden" id="editProductId">
 
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <!-- SECCIÓN 1: DATOS PRINCIPALES -->
+                            <div class="space-y-3">
+                                <h5 class="text-xs font-bold uppercase tracking-wider text-bordo flex items-center gap-1.5">
+                                    <span>1. Datos del Producto</span>
+                                </h5>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="text-[11px] font-bold text-chocolate block mb-1">Nombre del Producto:</label>
+                                        <input id="formName" required type="text" placeholder="Ej: Budín Artesanal / Chipá / Box Especial" class="w-full px-3.5 py-2.5 rounded-xl bg-crema border border-rosa/30 text-xs text-chocolate focus:border-bordo focus:outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="text-[11px] font-bold text-chocolate block mb-1">Categoría del Menú:</label>
+                                        <select id="formCategory" class="w-full px-3.5 py-2.5 rounded-xl bg-crema border border-rosa/30 text-xs text-chocolate font-medium focus:border-bordo focus:outline-none">
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div>
-                                    <label class="text-[11px] font-bold text-chocolate block mb-1">Nombre del Producto:</label>
-                                    <input id="formName" required type="text" placeholder="Ej: Budín de Limón / Chipá Artesanal" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
+                                    <label class="text-[11px] font-bold text-chocolate block mb-1">Descripción (ingredientes, presentación, porciones):</label>
+                                    <textarea id="formDescription" required rows="2" placeholder="Ej: Masa suave y húmeda con glasé cítrico elaborado artesanalmente..." class="w-full px-3.5 py-2.5 rounded-xl bg-crema border border-rosa/30 text-xs text-chocolate focus:border-bordo focus:outline-none"></textarea>
                                 </div>
-                                <div>
-                                    <label class="text-[11px] font-bold text-chocolate block mb-1">Categoría:</label>
-                                    <select id="formCategory" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate font-medium">
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div>
-                                <label class="text-[11px] font-bold text-chocolate block mb-1">Descripción (ingredientes, peso, presentación):</label>
-                                <textarea id="formDescription" required rows="2" placeholder="Ej: Elaborado con manteca y cáscara de limón glaseada..." class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate"></textarea>
-                            </div>
-
-                            <!-- Variantes, Pesos y Precios -->
-                            <div class="bg-crema p-3 sm:p-4 rounded-2xl border border-rosa/30 space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <label class="text-xs font-bold text-chocolate">Medidas, Pesos y Precios:</label>
-                                    <button type="button" onclick="addVariantRow()" class="ios-tap px-2.5 py-1 rounded-lg bg-bordo text-crema text-[11px] font-bold">
-                                        + Agregar Opción
-                                    </button>
-                                </div>
-                                <div id="variantsFormContainer" class="space-y-2">
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div>
                                     <label class="text-[11px] font-bold text-chocolate block mb-1">Etiqueta destacada (Opcional):</label>
-                                    <input id="formBadge" type="text" placeholder="Ej: Más pedido / Recién horneado" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
-                                </div>
-                                <div>
-                                    <label class="text-[11px] font-bold text-chocolate block mb-1">Sabores (separados por coma):</label>
-                                    <input id="formFlavors" type="text" placeholder="Ej: Limón, Naranja, Chocolate" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
+                                    <input id="formBadge" type="text" placeholder="Ej: Más pedido / Especialidad Julié / Promo" class="w-full px-3.5 py-2.5 rounded-xl bg-crema border border-rosa/30 text-xs text-chocolate focus:border-bordo focus:outline-none">
                                 </div>
                             </div>
 
-                            <!-- Foto del Producto -->
-                            <div class="pt-2 border-t border-rosa/30 flex items-center justify-between flex-wrap gap-2">
-                                <div>
-                                    <label class="text-[11px] font-bold text-chocolate block mb-1">Subir Foto a la Nube (Vercel Blob):</label>
-                                    <input type="file" id="formImageFile" accept="image/*" class="text-xs text-chocolate file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-bordo file:text-crema">
+                            <!-- SECCIÓN 2: FOTO DEL PRODUCTO -->
+                            <div class="space-y-2 pt-2 border-t border-rosa/20">
+                                <h5 class="text-xs font-bold uppercase tracking-wider text-bordo flex items-center gap-1.5">
+                                    <span>2. Foto del Producto</span>
+                                </h5>
+
+                                <div class="p-3 sm:p-4 rounded-2xl bg-crema/60 border border-rosa/30 flex items-center gap-3 sm:gap-4 flex-wrap sm:flex-nowrap">
+                                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden bg-white border-2 border-rosa/40 shrink-0 shadow-sm relative flex items-center justify-center">
+                                        <img id="formProductImagePreview" src="/images/logo.jpg" alt="Vista previa" class="w-full h-full object-cover">
+                                    </div>
+
+                                    <div class="flex-1 min-w-[200px] space-y-2">
+                                        <input type="file" id="formImageFile" accept="image/*" onchange="previewProductImageFile(this)" class="hidden">
+                                        <div class="flex items-center gap-2 flex-wrap">
+                                            <button type="button" onclick="document.getElementById('formImageFile').click()" class="ios-tap px-3.5 py-2 rounded-xl bg-white border border-rosa/40 text-xs font-bold text-chocolate hover:bg-rosaLight flex items-center gap-1.5 shadow-xs">
+                                                <svg class="w-4 h-4 text-bordo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                                                <span>Subir Foto desde Celular / PC</span>
+                                            </button>
+                                            <button type="button" onclick="clearFormProductImage()" id="btnClearProductImg" class="hidden ios-tap px-2.5 py-2 rounded-xl bg-cremaDark text-red-600 text-xs font-bold hover:bg-red-50">
+                                                Quitar
+                                            </button>
+                                        </div>
+                                        <p class="text-[11px] text-chocolate/65">
+                                            Se guardará en la nube Vercel Blob de forma permanente.
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <button type="button" onclick="resetProductForm()" class="ios-tap px-3 py-2 rounded-xl bg-cremaDark text-chocolate text-xs font-semibold">Limpiar</button>
-                                    <button type="submit" class="ios-tap px-4 py-2 rounded-xl bg-bordo text-crema text-xs font-bold shadow-md">Guardar Producto</button>
+                            </div>
+
+                            <!-- SECCIÓN 3: MEDIDAS, PESOS Y PRECIOS (SIN DESBORDES) -->
+                            <div class="space-y-3 pt-2 border-t border-rosa/20">
+                                <div class="flex items-center justify-between flex-wrap gap-2">
+                                    <div>
+                                        <h5 class="text-xs font-bold uppercase tracking-wider text-bordo">
+                                            3. Opciones, Medidas y Precios
+                                        </h5>
+                                        <span class="text-[11px] text-chocolate/65">Agregá las variantes (ej: 350g, 1/2 Kg, 1 Kilo, 6 unidades, etc.)</span>
+                                    </div>
+                                    <button type="button" onclick="addVariantRow()" class="ios-tap px-3 py-1.5 rounded-xl bg-bordo text-crema text-xs font-bold shadow-xs hover:bg-bordoDark flex items-center gap-1">
+                                        <span>+ Agregar Medida / Peso</span>
+                                    </button>
                                 </div>
+
+                                <!-- Contenedor de Variantes (Cards limpias que nunca se salen de su caja) -->
+                                <div id="variantsFormContainer" class="space-y-2.5">
+                                    <!-- Inyectado por JS -->
+                                </div>
+                            </div>
+
+                            <!-- SECCIÓN 4: SABORES / GUSTOS EN PÍLDORAS (NUEVO GESTOR) -->
+                            <div class="space-y-3 pt-2 border-t border-rosa/20">
+                                <div class="flex items-center justify-between flex-wrap gap-2">
+                                    <div>
+                                        <h5 class="text-xs font-bold uppercase tracking-wider text-bordo">
+                                            4. Sabores a Elección (Píldoras)
+                                        </h5>
+                                        <span class="text-[11px] text-chocolate/65">El cliente podrá elegir entre estos gustos al pedir.</span>
+                                    </div>
+                                    <label class="flex items-center gap-1.5 cursor-pointer text-xs font-semibold text-chocolate">
+                                        <input id="formAllowCombine" type="checkbox" checked class="accent-bordo w-4 h-4 rounded">
+                                        <span>¿Permitir combinar varios?</span>
+                                    </label>
+                                </div>
+
+                                <!-- Caja de Píldoras activas -->
+                                <div class="bg-crema/60 p-3 sm:p-4 rounded-2xl border border-rosa/30 space-y-3">
+                                    <div id="formFlavorsPillsContainer" class="flex flex-wrap gap-1.5 min-h-[42px] p-2.5 rounded-2xl bg-white border border-rosa/30 items-center">
+                                        <!-- Píldoras inyectadas por JS -->
+                                    </div>
+
+                                    <!-- Campo para agregar nuevo gusto -->
+                                    <div class="flex items-center gap-2">
+                                        <input id="inputNewFlavor" type="text" placeholder="Escribí un gusto (ej: Limón con glasé, Dulce de leche...)" onkeydown="if(event.key==='Enter'){event.preventDefault(); addFlavorPill();}" class="flex-1 px-3.5 py-2.5 rounded-xl bg-white border border-rosa/30 text-xs text-chocolate focus:border-bordo focus:outline-none placeholder:text-chocolate/40">
+                                        <button type="button" onclick="addFlavorPill()" class="ios-tap px-3.5 py-2.5 rounded-xl bg-bordo text-crema font-bold text-xs shadow-xs hover:bg-bordoDark flex items-center gap-1 shrink-0">
+                                            <span>+ Agregar</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Sugerencias en 1 toque -->
+                                    <div class="pt-1">
+                                        <span class="text-[10px] uppercase tracking-wider font-bold text-chocolate/60 block mb-1.5">Sugerencias rápidas en 1 toque:</span>
+                                        <div class="flex flex-wrap gap-1.5">
+                                            <button type="button" onclick="addFlavorPill('Limón con glasé')" class="ios-tap px-2.5 py-1 rounded-full bg-white hover:bg-rosaLight text-[11px] text-chocolate/80 border border-rosa/30 font-medium transition">+ Limón</button>
+                                            <button type="button" onclick="addFlavorPill('Naranja y amapola')" class="ios-tap px-2.5 py-1 rounded-full bg-white hover:bg-rosaLight text-[11px] text-chocolate/80 border border-rosa/30 font-medium transition">+ Naranja</button>
+                                            <button type="button" onclick="addFlavorPill('Chocolate belga')" class="ios-tap px-2.5 py-1 rounded-full bg-white hover:bg-rosaLight text-[11px] text-chocolate/80 border border-rosa/30 font-medium transition">+ Chocolate</button>
+                                            <button type="button" onclick="addFlavorPill('Dulce de leche')" class="ios-tap px-2.5 py-1 rounded-full bg-white hover:bg-rosaLight text-[11px] text-chocolate/80 border border-rosa/30 font-medium transition">+ Dulce de leche</button>
+                                            <button type="button" onclick="addFlavorPill('Vainilla natural')" class="ios-tap px-2.5 py-1 rounded-full bg-white hover:bg-rosaLight text-[11px] text-chocolate/80 border border-rosa/30 font-medium transition">+ Vainilla</button>
+                                            <button type="button" onclick="addFlavorPill('Frutos rojos')" class="ios-tap px-2.5 py-1 rounded-full bg-white hover:bg-rosaLight text-[11px] text-chocolate/80 border border-rosa/30 font-medium transition">+ Frutos rojos</button>
+                                            <button type="button" onclick="addFlavorPill('Carrot & nuez')" class="ios-tap px-2.5 py-1 rounded-full bg-white hover:bg-rosaLight text-[11px] text-chocolate/80 border border-rosa/30 font-medium transition">+ Carrot</button>
+                                            <button type="button" onclick="addFlavorPill('Tres quesos tradicional')" class="ios-tap px-2.5 py-1 rounded-full bg-white hover:bg-rosaLight text-[11px] text-chocolate/80 border border-rosa/30 font-medium transition">+ Tres quesos</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- BOTONES DE ACCIÓN DEL FORMULARIO -->
+                            <div class="pt-4 border-t border-rosa/25 flex items-center justify-between flex-wrap gap-2">
+                                <button type="button" onclick="resetProductForm()" class="ios-tap px-4 py-2.5 rounded-xl bg-cremaDark text-chocolate text-xs font-semibold hover:bg-rosaLight">
+                                    Limpiar Campos
+                                </button>
+                                <button type="submit" id="btnSubmitProduct" class="ios-tap px-6 py-3 rounded-2xl bg-bordo text-crema text-xs sm:text-sm font-bold shadow-card hover:bg-bordoDark transition flex items-center gap-2">
+                                    <span>Guardar Producto en la Nube</span>
+                                    <span class="text-rosa">➔</span>
+                                </button>
                             </div>
                         </form>
 
-                        <div class="space-y-2">
-                            <h4 class="font-serifBrand text-xl font-bold text-chocolate">Tus Productos en el Catálogo</h4>
-                            <div id="adminProductsList" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <!-- Listado de Productos Cargados en Admin con Buscador -->
+                        <div class="space-y-3 pt-2">
+                            <div class="flex items-center justify-between flex-wrap gap-2">
+                                <div>
+                                    <h4 class="font-serifBrand text-xl font-bold text-chocolate">
+                                        Tus Productos en el Catálogo (<span id="adminProdCount">0</span>)
+                                    </h4>
+                                    <p class="text-[11px] text-chocolate/60">Tocá en Editar para modificar medidas, precios o fotos.</p>
+                                </div>
+                                <div class="relative w-full sm:w-64">
+                                    <input id="adminSearchInput" oninput="renderAdminProductsList()" type="search" placeholder="Buscar producto..." class="w-full pl-8 pr-3 py-1.5 rounded-xl bg-white border border-rosa/30 text-xs text-chocolate focus:border-bordo focus:outline-none">
+                                    <svg class="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-chocolate/50 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                </div>
+                            </div>
+                            
+                            <div id="adminProductsList" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <!-- Inyectado dinámicamente -->
                             </div>
                         </div>
                     </div>
 
-                    <!-- TAB: FOTO DE PORTADA (CONFIGURABLE DESDE ADMIN) -->
+                    <!-- ======================================================= -->
+                    <!-- TAB 2: FOTO DE PORTADA                                  -->
+                    <!-- ======================================================= -->
                     <div id="admintab-panel-portada" class="hidden space-y-4">
-                        <div class="bg-white p-4 sm:p-5 rounded-3xl border border-rosa/30 shadow-sm space-y-4">
-                            <h4 class="font-serifBrand text-xl font-bold text-chocolate">Foto de Portada del Menú</h4>
-                            <p class="text-xs text-chocolate/70">Subí o cambiá la foto grande que se ve arriba de todo en tu catálogo.</p>
+                        <div class="bg-white p-4 sm:p-6 rounded-3xl border border-rosa/30 shadow-sm space-y-4">
+                            <div>
+                                <h4 class="font-serifBrand text-xl sm:text-2xl font-bold text-chocolate">Foto de Portada del Menú</h4>
+                                <p class="text-xs text-chocolate/70 mt-0.5">Esta foto es la imagen grande que se ve arriba de todo en tu catálogo al entrar.</p>
+                            </div>
                             
-                            <div class="relative h-44 sm:h-56 w-full rounded-2xl overflow-hidden bg-chocolate border-2 border-rosa/40">
+                            <!-- Preview de Portada -->
+                            <div class="relative h-44 sm:h-60 w-full rounded-2xl overflow-hidden bg-chocolate border-2 border-rosa/40 shadow-sm">
                                 <img id="adminCoverPreview" src="" alt="Vista previa de portada" class="w-full h-full object-cover hidden">
-                                <div id="adminCoverPlaceholder" class="w-full h-full flex flex-col items-center justify-center text-crema p-4 text-center">
+                                <div id="adminCoverPlaceholder" class="w-full h-full flex flex-col items-center justify-center text-crema p-4 text-center bg-gradient-to-br from-bordo via-chocolate to-bordoDark">
                                     <span class="text-3xl mb-1">🖼️</span>
                                     <p class="text-xs font-bold">Sin foto de portada asignada</p>
-                                    <p class="text-[10px] text-crema/70 mt-0.5">Se mostrará el fondo decorativo con los colores oficiales de la marca</p>
+                                    <p class="text-[10px] text-crema/70 mt-0.5">Se mostrará el fondo con los colores oficiales de Julié Bakery</p>
                                 </div>
                             </div>
 
+                            <!-- Botones para cambiar portada -->
                             <div class="space-y-3 pt-2">
-                                <div>
-                                    <label class="text-xs font-bold text-chocolate block mb-1">Subir nueva foto de portada desde tu celular/PC:</label>
-                                    <input type="file" id="coverImageFileInput" accept="image/*" onchange="handleCoverFileUpload(this)" class="text-xs text-chocolate file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-bordo file:text-crema">
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <button type="button" onclick="removeCoverImage()" class="ios-tap px-3 py-2 rounded-xl bg-cremaDark text-red-600 text-xs font-bold hover:bg-red-50">
-                                        Eliminar foto y usar fondo por defecto
+                                <input type="file" id="coverImageFileInput" accept="image/*" onchange="handleCoverFileUpload(this)" class="hidden">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <button type="button" onclick="document.getElementById('coverImageFileInput').click()" class="ios-tap px-4 py-2.5 rounded-xl bg-bordo text-crema text-xs font-bold shadow-sm hover:bg-bordoDark flex items-center gap-1.5">
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                        <span>Subir Nueva Foto de Portada</span>
+                                    </button>
+                                    <button type="button" onclick="removeCoverImage()" class="ios-tap px-3 py-2.5 rounded-xl bg-cremaDark text-red-600 text-xs font-bold hover:bg-red-50">
+                                        Eliminar Foto
                                     </button>
                                 </div>
+                                <p class="text-[11px] text-chocolate/65">
+                                    Subí una foto de tu pastelería o una mesa con tus productos horneados. Se guardará directamente en la nube Vercel Blob.
+                                </p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- TAB: CATEGORÍAS -->
+                    <!-- ======================================================= -->
+                    <!-- TAB 3: CATEGORÍAS                                       -->
+                    <!-- ======================================================= -->
                     <div id="admintab-panel-categorias" class="hidden space-y-4">
-                        <div class="bg-white p-4 rounded-3xl border border-rosa/30 space-y-3">
-                            <h4 class="font-serifBrand text-xl font-bold text-chocolate">Categorías del Menú</h4>
-                            <p class="text-xs text-chocolate/70">Estas secciones aparecen arriba en la barra deslizable.</p>
+                        <div class="bg-white p-4 sm:p-6 rounded-3xl border border-rosa/30 space-y-4">
+                            <div class="flex items-center justify-between flex-wrap gap-2">
+                                <div>
+                                    <h4 class="font-serifBrand text-xl sm:text-2xl font-bold text-chocolate">Categorías del Menú</h4>
+                                    <p class="text-xs text-chocolate/70 mt-0.5">Organizan tus productos y aparecen arriba en la barra deslizable.</p>
+                                </div>
+                                <button type="button" onclick="toggleAddCategoryForm()" class="ios-tap px-3.5 py-2 rounded-xl bg-bordo text-crema text-xs font-bold shadow-xs hover:bg-bordoDark">
+                                    + Nueva Categoría
+                                </button>
+                            </div>
+
+                            <!-- Formulario para agregar categoría -->
+                            <div id="addCategoryBox" class="hidden p-4 rounded-2xl bg-crema border border-rosa/30 space-y-3">
+                                <h5 class="text-xs font-bold text-chocolate">Agregar Nueva Categoría</h5>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="text-[10px] font-bold text-chocolate block mb-1">Nombre Completo:</label>
+                                        <input id="newCatTitle" type="text" placeholder="Ej: Especialidades Saladas / Tartas" class="w-full px-3 py-2 rounded-xl bg-white border border-rosa/30 text-xs text-chocolate">
+                                    </div>
+                                    <div>
+                                        <label class="text-[10px] font-bold text-chocolate block mb-1">Nombre Corto (para la barra):</label>
+                                        <input id="newCatShort" type="text" placeholder="Ej: Salado / Tartas" class="w-full px-3 py-2 rounded-xl bg-white border border-rosa/30 text-xs text-chocolate">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-chocolate block mb-1">Subtítulo explicativo (Opcional):</label>
+                                    <input id="newCatSubtitle" type="text" placeholder="Ej: Horneados recién hechos y para compartir..." class="w-full px-3 py-2 rounded-xl bg-white border border-rosa/30 text-xs text-chocolate">
+                                </div>
+                                <div class="flex items-center justify-end gap-2 pt-1">
+                                    <button type="button" onclick="toggleAddCategoryForm()" class="ios-tap px-3 py-1.5 rounded-xl bg-cremaDark text-chocolate text-xs">Cancelar</button>
+                                    <button type="button" onclick="saveNewCategory()" class="ios-tap px-4 py-1.5 rounded-xl bg-bordo text-crema text-xs font-bold shadow-xs">Guardar Categoría</button>
+                                </div>
+                            </div>
+
                             <div id="adminCategoriesList" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+                                <!-- Inyectado dinámicamente -->
                             </div>
                         </div>
                     </div>
 
-                    <!-- TAB: AJUSTES -->
+                    <!-- ======================================================= -->
+                    <!-- TAB 4: AJUSTES Y NUBE                                   -->
+                    <!-- ======================================================= -->
                     <div id="admintab-panel-config" class="hidden space-y-4">
-                        <div class="bg-white p-4 sm:p-5 rounded-3xl border border-rosa/30 space-y-3">
-                            <h4 class="font-serifBrand text-xl font-bold text-chocolate">Datos del Emprendimiento</h4>
+                        <div class="bg-white p-4 sm:p-6 rounded-3xl border border-rosa/30 space-y-4">
+                            <div>
+                                <h4 class="font-serifBrand text-xl sm:text-2xl font-bold text-chocolate">Datos del Emprendimiento</h4>
+                                <p class="text-xs text-chocolate/70 mt-0.5">Se muestran en la cabecera y en los mensajes automáticos de WhatsApp.</p>
+                            </div>
+
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div>
                                     <label class="text-xs font-bold text-chocolate block mb-1">Nombre del Negocio:</label>
-                                    <input id="configStoreName" type="text" value="Julié Bakery" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
+                                    <input id="configStoreName" type="text" value="Julié Bakery" class="w-full px-3.5 py-2.5 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
                                 </div>
                                 <div>
                                     <label class="text-xs font-bold text-chocolate block mb-1">Especialidad / Subtítulo:</label>
-                                    <input id="configStoreTagline" type="text" value="Pastelería & Repostería Artesanal" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
+                                    <input id="configStoreTagline" type="text" value="Pastelería & Repostería Artesanal" class="w-full px-3.5 py-2.5 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
                                 </div>
                             </div>
+
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div>
-                                    <label class="text-xs font-bold text-chocolate block mb-1">WhatsApp para recibir pedidos:</label>
-                                    <input id="configWhatsapp" type="text" value="5491138951241" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
+                                    <label class="text-xs font-bold text-chocolate block mb-1">WhatsApp para recibir pedidos (sin 0 ni 15):</label>
+                                    <input id="configWhatsapp" type="text" value="5491138951241" class="w-full px-3.5 py-2.5 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
                                 </div>
                                 <div>
                                     <label class="text-xs font-bold text-chocolate block mb-1">Aviso de anticipación:</label>
-                                    <input id="configStoreSchedule" type="text" value="Pedidos con 24-48 hs de anticipación" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
+                                    <input id="configStoreSchedule" type="text" value="Pedidos con 24-48 hs de anticipación" class="w-full px-3.5 py-2.5 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
                                 </div>
                             </div>
+
                             <div class="pt-3 border-t border-rosa/30 flex items-center justify-between">
-                                <button type="button" onclick="saveAdminSettings()" class="ios-tap px-4 py-2 rounded-xl bg-bordo text-crema text-xs font-bold shadow-md">
+                                <button type="button" onclick="saveAdminSettings()" class="ios-tap px-5 py-2.5 rounded-xl bg-bordo text-crema text-xs font-bold shadow-md hover:bg-bordoDark transition">
                                     Guardar Cambios en la Nube
                                 </button>
                             </div>
@@ -561,9 +747,9 @@
     <!-- SCRIPT DE LA APLICACIÓN                                             -->
     <!-- =================================================================== -->
     <script>
-        const STORAGE_KEY = "julie_bakery_catalog_v4";
-        const SETTINGS_STORAGE_KEY = "julie_bakery_settings_v4";
-        const CART_STORAGE_KEY = "julie_bakery_cart_v4";
+        const STORAGE_KEY = "julie_bakery_catalog_v5";
+        const SETTINGS_STORAGE_KEY = "julie_bakery_settings_v5";
+        const CART_STORAGE_KEY = "julie_bakery_cart_v5";
         const ADMIN_SESSION_KEY = "julie_bakery_admin_logged_in";
 
         /*__CATEGORIES_START__*/
@@ -718,7 +904,7 @@
         }
 
         function applyStoreSettingsUI() {
-            // Portada
+            // Portada en Menú
             const coverImg = document.getElementById("storeCoverImg");
             const coverFallback = document.getElementById("storeCoverFallback");
             if (coverImg && coverFallback) {
@@ -869,7 +1055,6 @@
             if (!container) return;
             const searchQuery = (document.getElementById("searchInput")?.value || "").trim().toLowerCase();
 
-            // Si el catálogo está vacío (sin productos cargados por la clienta)
             if (products.length === 0) {
                 container.innerHTML = `
                     <div class="text-center py-16 px-4 bg-white rounded-3xl border border-rosa/30 shadow-sm max-w-lg mx-auto space-y-3">
@@ -993,7 +1178,7 @@
         }
 
         // ===================================================================
-        // MODAL PERSONALIZADOR DE PRODUCTO: TAMAÑOS, PESOS Y GUSTOS          
+        // MODAL PERSONALIZADOR DE PRODUCTO (CLIENTE)                          
         // ===================================================================
         function openProductModal(productId) {
             const prod = products.find(p => p.id === productId);
@@ -1384,6 +1569,8 @@
         function showAdminDashboard() {
             document.getElementById("adminLoginScreen").classList.add("hidden");
             document.getElementById("adminDashboardScreen").classList.remove("hidden");
+            renderFormVariants();
+            renderFlavorPills();
             renderAdminProductsList();
             renderAdminCategoriesList();
             populateCategorySelect();
@@ -1444,74 +1631,118 @@
                 if (panel && btn) {
                     if (t === tab) {
                         panel.classList.remove("hidden");
-                        btn.className = "ios-tap px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-bordo text-crema";
+                        btn.className = "ios-tap px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-bordo text-crema shrink-0";
                     } else {
                         panel.classList.add("hidden");
-                        btn.className = "ios-tap px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-cremaDark text-chocolate";
+                        btn.className = "ios-tap px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 bg-cremaDark text-chocolate shrink-0";
                     }
                 }
             });
         }
 
         // ===================================================================
-        // FOTO DE PORTADA CONFIGURABLE (SUBIDA A VERCEL BLOB)                 
+        // GESTOR DE PÍLDORAS DE SABORES (GUSTOS)                              
         // ===================================================================
-        async function handleCoverFileUpload(input) {
-            if (!input.files || !input.files[0]) return;
-            showToast("Subiendo foto de portada a la nube Vercel Blob...");
-            const url = await uploadImageFile(input.files[0]);
-            settings.coverImage = url;
-            applyStoreSettingsUI();
-            showToast("¡Portada actualizada!");
-            await syncCatalogWithCloudNow();
+        let formFlavorsList = [];
+
+        function renderFlavorPills() {
+            const container = document.getElementById("formFlavorsPillsContainer");
+            if (!container) return;
+
+            if (formFlavorsList.length === 0) {
+                container.innerHTML = `
+                    <span class="text-xs text-chocolate/50 italic py-1">
+                        Aún no agregaste gustos. Escribí uno abajo o tocá una sugerencia rápida.
+                    </span>
+                `;
+                return;
+            }
+
+            container.innerHTML = formFlavorsList.map((f, i) => `
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rosaLight/80 text-chocolate border border-rosa/40 text-xs font-semibold shadow-xs">
+                    <span>${f}</span>
+                    <button type="button" onclick="removeFlavorPill(${i})" class="w-4 h-4 rounded-full hover:bg-bordo hover:text-white flex items-center justify-center text-chocolate/70 transition text-[10px] font-bold" title="Quitar gusto">
+                        ✕
+                    </button>
+                </span>
+            `).join("");
         }
 
-        async function removeCoverImage() {
-            settings.coverImage = "";
-            applyStoreSettingsUI();
-            document.getElementById("coverImageFileInput").value = "";
-            showToast("Portada restablecida al fondo por defecto");
-            await syncCatalogWithCloudNow();
+        function addFlavorPill(text) {
+            const input = document.getElementById("inputNewFlavor");
+            let val = (text !== undefined ? text : (input ? input.value : "")).trim();
+            if (!val) return;
+
+            // Evitar duplicados
+            if (!formFlavorsList.some(item => item.toLowerCase() === val.toLowerCase())) {
+                formFlavorsList.push(val);
+                renderFlavorPills();
+            }
+            if (input) {
+                input.value = "";
+                input.focus();
+            }
+        }
+
+        function removeFlavorPill(idx) {
+            formFlavorsList.splice(idx, 1);
+            renderFlavorPills();
         }
 
         // ===================================================================
-        // FORMULARIO DE PRODUCTOS                                            
+        // GESTOR DE VARIANTES, PESOS Y PRECIOS (SIN DESBORDES)               
         // ===================================================================
         let formVariants = [
             { label: "1 Unidad", unitType: "unidad", price: 1000, image: "/images/logo.jpg" }
         ];
-
-        function populateCategorySelect() {
-            const select = document.getElementById("formCategory");
-            if (!select) return;
-            select.innerHTML = categories.map(c => `<option value="${c.key}">${c.title}</option>`).join("");
-        }
 
         function renderFormVariants() {
             const container = document.getElementById("variantsFormContainer");
             if (!container) return;
 
             container.innerHTML = formVariants.map((v, i) => `
-                <div class="flex items-center gap-2 bg-white p-2 rounded-xl border border-rosa/30">
-                    <input type="text" placeholder="Ej: 350g / 1/2 Kg / 6 unidades" value="${v.label}" oninput="formVariants[${i}].label = this.value" class="flex-1 px-2.5 py-1.5 rounded-lg bg-crema text-xs text-chocolate border border-rosa/20 font-medium">
-                    <select onchange="formVariants[${i}].unitType = this.value" class="px-2 py-1.5 rounded-lg bg-crema text-[11px] text-chocolate border border-rosa/20">
-                        <option value="gramos" ${v.unitType === 'gramos' ? 'selected' : ''}>Gramos/Kg</option>
-                        <option value="unidad" ${v.unitType === 'unidad' ? 'selected' : ''}>Unidades</option>
-                        <option value="porcion" ${v.unitType === 'porcion' ? 'selected' : ''}>Porciones</option>
-                    </select>
-                    <div class="flex items-center gap-1">
-                        <span class="text-xs font-bold">$</span>
-                        <input type="number" placeholder="Precio" value="${v.price}" oninput="formVariants[${i}].price = Number(this.value)" class="w-20 px-2 py-1.5 rounded-lg bg-crema text-xs text-chocolate border border-rosa/20 font-bold">
+                <div class="bg-white p-3 rounded-2xl border border-rosa/30 shadow-xs space-y-2.5">
+                    <div class="flex items-center justify-between border-b border-rosa/20 pb-1.5">
+                        <span class="text-[11px] font-bold text-bordo flex items-center gap-1.5">
+                            <span class="w-2 h-2 rounded-full bg-bordo inline-block"></span>
+                            <span>Opción #${i + 1}</span>
+                        </span>
+                        ${formVariants.length > 1 ? `
+                            <button type="button" onclick="removeVariantRow(${i})" class="text-xs text-red-500 hover:text-red-700 font-semibold flex items-center gap-1 transition">
+                                <span>Eliminar</span> ✕
+                            </button>
+                        ` : '<span class="text-[10px] text-chocolate/50 italic">Opción única</span>'}
                     </div>
-                    ${formVariants.length > 1 ? `
-                        <button type="button" onclick="removeVariantRow(${i})" class="w-6 h-6 rounded-lg text-red-500 hover:bg-red-50 text-xs font-bold">✕</button>
-                    ` : ''}
+
+                    <div class="grid grid-cols-1 sm:grid-cols-12 gap-2">
+                        <div class="sm:col-span-6">
+                            <label class="text-[10px] uppercase font-bold text-chocolate/70 block mb-1">Nombre o Peso:</label>
+                            <input type="text" placeholder="Ej: 350g / 1/2 Kg / 1 Unidad / 6u" value="${v.label || ''}" oninput="formVariants[${i}].label = this.value" class="w-full px-3 py-2 rounded-xl bg-crema text-xs text-chocolate border border-rosa/30 font-medium focus:border-bordo focus:outline-none">
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label class="text-[10px] uppercase font-bold text-chocolate/70 block mb-1">Tipo de Medida:</label>
+                            <select onchange="formVariants[${i}].unitType = this.value" class="w-full px-2.5 py-2 rounded-xl bg-crema text-xs text-chocolate border border-rosa/30 font-medium focus:border-bordo focus:outline-none">
+                                <option value="gramos" ${v.unitType === 'gramos' ? 'selected' : ''}>Gramos / Kg</option>
+                                <option value="unidad" ${v.unitType === 'unidad' ? 'selected' : ''}>Unidades</option>
+                                <option value="porcion" ${v.unitType === 'porcion' ? 'selected' : ''}>Porciones</option>
+                            </select>
+                        </div>
+
+                        <div class="sm:col-span-3">
+                            <label class="text-[10px] uppercase font-bold text-chocolate/70 block mb-1">Precio ($):</label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-chocolate/60">$</span>
+                                <input type="number" placeholder="0" value="${v.price || ''}" oninput="formVariants[${i}].price = Number(this.value)" class="w-full pl-7 pr-3 py-2 rounded-xl bg-crema text-xs text-chocolate border border-rosa/30 font-bold focus:border-bordo focus:outline-none">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             `).join("");
         }
 
         function addVariantRow() {
-            formVariants.push({ label: "Nueva opción", unitType: "gramos", price: 5000, image: "/images/logo.jpg" });
+            formVariants.push({ label: "Opción " + (formVariants.length + 1), unitType: "gramos", price: 5000, image: "/images/logo.jpg" });
             renderFormVariants();
         }
 
@@ -1520,23 +1751,59 @@
             renderFormVariants();
         }
 
+        // ===================================================================
+        // FOTO DEL PRODUCTO EN EL FORMULARIO                                 
+        // ===================================================================
+        let currentFormUploadedImage = null;
+
+        function previewProductImageFile(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentFormUploadedImage = e.target.result;
+                const previewImg = document.getElementById("formProductImagePreview");
+                const clearBtn = document.getElementById("btnClearProductImg");
+                if (previewImg) previewImg.src = currentFormUploadedImage;
+                if (clearBtn) clearBtn.classList.remove("hidden");
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearFormProductImage() {
+            currentFormUploadedImage = null;
+            document.getElementById("formImageFile").value = "";
+            const previewImg = document.getElementById("formProductImagePreview");
+            const clearBtn = document.getElementById("btnClearProductImg");
+            if (previewImg) previewImg.src = "/images/logo.jpg";
+            if (clearBtn) clearBtn.classList.add("hidden");
+        }
+
+        // ===================================================================
+        // GUARDAR / EDITAR PRODUCTO EN ADMIN                                 
+        // ===================================================================
         async function saveProductFromForm(event) {
             event.preventDefault();
+            const btnSubmit = document.getElementById("btnSubmitProduct");
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = `<span>Guardando en la Nube...</span>`;
+
             const id = document.getElementById("editProductId").value || `prod_${Date.now()}`;
             const name = document.getElementById("formName").value.trim();
             const category = document.getElementById("formCategory").value;
             const description = document.getElementById("formDescription").value.trim();
             const badge = document.getElementById("formBadge").value.trim();
-            const flavorsRaw = document.getElementById("formFlavors").value.trim();
-
-            const flavors = flavorsRaw ? flavorsRaw.split(",").map(s => s.trim()).filter(Boolean) : [];
+            const allowCombine = document.getElementById("formAllowCombine").checked;
 
             const fileInput = document.getElementById("formImageFile");
             let imageUrl = "/images/logo.jpg";
 
+            // Si el usuario eligió un archivo nuevo, subirlo a Vercel Blob
             if (fileInput.files && fileInput.files[0]) {
-                showToast("Subiendo foto a la nube Vercel Blob...");
+                showToast("Subiendo foto a Vercel Blob...");
                 imageUrl = await uploadImageFile(fileInput.files[0]);
+            } else if (currentFormUploadedImage) {
+                imageUrl = currentFormUploadedImage;
             } else {
                 const existingProd = products.find(p => p.id === id);
                 if (existingProd && existingProd.variants[0]) {
@@ -1558,8 +1825,8 @@
                 category,
                 description,
                 badge,
-                flavors,
-                allowCombine: flavors.length > 1,
+                flavors: [...formFlavorsList],
+                allowCombine: allowCombine,
                 immediateDelivery: false,
                 dailyOffer: false,
                 offerLabel: "",
@@ -1576,7 +1843,9 @@
             renderCatalog();
             renderAdminProductsList();
             resetProductForm();
-            showToast("¡Producto guardado! Sincronizando en la nube...");
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = `<span>Guardar Producto en la Nube</span> <span class="text-rosa">➔</span>`;
+            showToast("¡Producto guardado exitosamente!");
             await syncCatalogWithCloudNow();
         }
 
@@ -1614,34 +1883,65 @@
             if (!prod) return;
 
             document.getElementById("formTitle").textContent = "Editar Producto: " + prod.name;
+            document.getElementById("formStatusBadge").classList.remove("hidden");
             document.getElementById("editProductId").value = prod.id;
             document.getElementById("formName").value = prod.name;
             document.getElementById("formCategory").value = prod.category;
             document.getElementById("formDescription").value = prod.description;
             document.getElementById("formBadge").value = prod.badge || "";
-            document.getElementById("formFlavors").value = (prod.flavors || []).join(", ");
+            document.getElementById("formAllowCombine").checked = prod.allowCombine !== false;
 
+            // Sabores en píldoras
+            formFlavorsList = Array.isArray(prod.flavors) ? [...prod.flavors] : [];
+            renderFlavorPills();
+
+            // Variantes
             formVariants = prod.variants.map(v => ({ ...v }));
             renderFormVariants();
 
+            // Foto
+            const previewImg = document.getElementById("formProductImagePreview");
+            const clearBtn = document.getElementById("btnClearProductImg");
+            if (prod.variants[0] && prod.variants[0].image) {
+                previewImg.src = prod.variants[0].image;
+                currentFormUploadedImage = prod.variants[0].image;
+                clearBtn.classList.remove("hidden");
+            } else {
+                previewImg.src = "/images/logo.jpg";
+                clearBtn.classList.add("hidden");
+            }
+
             switchAdminTab('productos');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const formCard = document.getElementById("productForm");
+            if (formCard) formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function resetProductForm() {
             document.getElementById("formTitle").textContent = "Cargar Nuevo Producto";
+            document.getElementById("formStatusBadge").classList.add("hidden");
             document.getElementById("editProductId").value = "";
             document.getElementById("formName").value = "";
             document.getElementById("formDescription").value = "";
             document.getElementById("formBadge").value = "";
-            document.getElementById("formFlavors").value = "";
+            document.getElementById("formAllowCombine").checked = true;
             document.getElementById("formImageFile").value = "";
+
+            currentFormUploadedImage = null;
+            document.getElementById("formProductImagePreview").src = "/images/logo.jpg";
+            document.getElementById("btnClearProductImg").classList.add("hidden");
+
+            formFlavorsList = [];
+            renderFlavorPills();
+
             formVariants = [{ label: "1 Unidad", unitType: "unidad", price: 1000, image: "/images/logo.jpg" }];
             renderFormVariants();
         }
 
         async function deleteProductInAdmin(productId) {
-            if (!confirm("¿Estás segura de eliminar este producto?")) return;
+            const prod = products.find(p => p.id === productId);
+            const name = prod ? prod.name : "este producto";
+            if (!confirm(`¿Estás segura de eliminar "${name}" del catálogo?`)) return;
+            
             products = products.filter(p => p.id !== productId);
             renderCatalog();
             renderAdminProductsList();
@@ -1652,31 +1952,164 @@
         function renderAdminProductsList() {
             const container = document.getElementById("adminProductsList");
             const countEl = document.getElementById("adminProdCount");
+            const countBadge = document.getElementById("adminProdCountBadge");
             if (countEl) countEl.textContent = products.length;
+            if (countBadge) countBadge.textContent = products.length;
             if (!container) return;
+
+            const query = (document.getElementById("adminSearchInput")?.value || "").trim().toLowerCase();
+            let filtered = [...products];
+            if (query) {
+                filtered = filtered.filter(p => 
+                    p.name.toLowerCase().includes(query) ||
+                    p.description.toLowerCase().includes(query) ||
+                    (p.flavors && p.flavors.some(f => f.toLowerCase().includes(query)))
+                );
+            }
 
             if (products.length === 0) {
                 container.innerHTML = `
-                    <div class="col-span-full py-8 text-center text-chocolate/60 text-xs bg-white rounded-2xl border border-rosa/30 p-4">
-                        Aún no cargaste productos. Completá el formulario arriba para empezar a publicar en tu menú.
+                    <div class="col-span-full py-12 text-center bg-white rounded-3xl border border-rosa/30 p-6 space-y-2">
+                        <span class="text-3xl block">🍰</span>
+                        <h5 class="font-serifBrand text-lg font-bold text-chocolate">Aún no hay productos en el catálogo</h5>
+                        <p class="text-xs text-chocolate/65 max-w-sm mx-auto">
+                            Completá el formulario arriba para cargar tu primer producto con sus medidas, precios y foto.
+                        </p>
                     </div>
                 `;
                 return;
             }
 
-            container.innerHTML = products.map(prod => `
-                <div class="flex items-center justify-between gap-3 p-3 rounded-2xl bg-crema border border-rosa/30">
-                    <img src="${getSafeImage(prod.variants[0])}" onerror="this.src='/images/logo.jpg'" alt="${prod.name}" class="w-12 h-12 rounded-xl object-cover shrink-0">
-                    <div class="flex-1 min-w-0">
-                        <h5 class="text-xs font-bold text-chocolate truncate">${prod.name}</h5>
-                        <p class="text-[11px] text-chocolate/60 truncate">${prod.variants.length} variantes · Desde ${formatARS(Math.min(...prod.variants.map(v => v.price)))}</p>
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-8 text-center bg-white rounded-2xl border border-rosa/30 p-4 text-xs text-chocolate/70">
+                        No hay productos que coincidan con "${query}".
                     </div>
-                    <div class="flex items-center gap-1.5 shrink-0">
-                        <button type="button" onclick="editProductInAdmin('${prod.id}')" class="px-2.5 py-1 rounded-lg bg-bordo text-crema text-[11px] font-bold">Editar</button>
-                        <button type="button" onclick="deleteProductInAdmin('${prod.id}')" class="px-2 py-1 rounded-lg text-red-600 hover:bg-red-50 text-[11px] font-bold">✕</button>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(prod => {
+                const catObj = categories.find(c => c.key === prod.category) || { title: prod.category };
+                const minPrice = Math.min(...prod.variants.map(v => v.price));
+                const maxPrice = Math.max(...prod.variants.map(v => v.price));
+                const priceDisplay = minPrice === maxPrice ? formatARS(minPrice) : `${formatARS(minPrice)} - ${formatARS(maxPrice)}`;
+
+                return `
+                    <div class="bg-white p-3.5 rounded-2xl border border-rosa/30 shadow-xs flex flex-col justify-between gap-3 hover:border-rosa transition">
+                        <div class="flex items-start gap-3">
+                            <img src="${getSafeImage(prod.variants[0])}" onerror="this.src='/images/logo.jpg'" alt="${prod.name}" class="w-16 h-16 rounded-xl object-cover shrink-0 border border-rosa/20">
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-1.5 flex-wrap mb-1">
+                                    <span class="px-2 py-0.5 rounded-md bg-cremaDark text-[10px] font-bold text-chocolate">
+                                        ${catObj.title}
+                                    </span>
+                                    ${prod.badge ? `
+                                        <span class="px-2 py-0.5 rounded-md bg-rosa/30 text-[10px] font-bold text-bordo">
+                                            ${prod.badge}
+                                        </span>
+                                    ` : ''}
+                                </div>
+                                <h5 class="text-sm font-bold text-chocolate truncate">${prod.name}</h5>
+                                <p class="text-xs font-extrabold text-bordo mt-0.5">${priceDisplay}</p>
+                                <p class="text-[11px] text-chocolate/60 truncate mt-0.5">
+                                    ${prod.variants.length} ${prod.variants.length === 1 ? 'medida' : 'medidas'} (${prod.variants.map(v => v.label).join(', ')})
+                                </p>
+                                ${prod.flavors && prod.flavors.length > 0 ? `
+                                    <div class="flex flex-wrap gap-1 mt-1.5">
+                                        ${prod.flavors.slice(0, 3).map(f => `
+                                            <span class="px-1.5 py-0.5 rounded-md bg-olivaLight text-[9px] font-semibold text-chocolate">
+                                                ${f}
+                                            </span>
+                                        `).join('')}
+                                        ${prod.flavors.length > 3 ? `<span class="text-[9px] text-chocolate/50 font-semibold">+${prod.flavors.length - 3}</span>` : ''}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-2 pt-2 border-t border-rosa/20">
+                            <button type="button" onclick="editProductInAdmin('${prod.id}')" class="ios-tap px-3 py-1.5 rounded-xl bg-bordo text-crema text-xs font-bold hover:bg-bordoDark flex items-center gap-1 shadow-xs transition">
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                                <span>Editar</span>
+                            </button>
+                            <button type="button" onclick="deleteProductInAdmin('${prod.id}')" class="ios-tap px-3 py-1.5 rounded-xl bg-red-50 text-red-600 hover:bg-red-100 text-xs font-bold flex items-center gap-1 transition">
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                                <span>Eliminar</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-            `).join("");
+                `;
+            }).join("");
+        }
+
+        // ===================================================================
+        // FOTO DE PORTADA                                                    
+        // ===================================================================
+        async function handleCoverFileUpload(input) {
+            if (!input.files || !input.files[0]) return;
+            showToast("Subiendo foto de portada a Vercel Blob...");
+            const url = await uploadImageFile(input.files[0]);
+            settings.coverImage = url;
+            applyStoreSettingsUI();
+            showToast("¡Portada actualizada!");
+            await syncCatalogWithCloudNow();
+        }
+
+        async function removeCoverImage() {
+            settings.coverImage = "";
+            applyStoreSettingsUI();
+            document.getElementById("coverImageFileInput").value = "";
+            showToast("Portada restablecida al fondo por defecto");
+            await syncCatalogWithCloudNow();
+        }
+
+        // ===================================================================
+        // CATEGORÍAS EN ADMIN                                               
+        // ===================================================================
+        function populateCategorySelect() {
+            const select = document.getElementById("formCategory");
+            if (!select) return;
+            select.innerHTML = categories.map(c => `<option value="${c.key}">${c.title}</option>`).join("");
+        }
+
+        function toggleAddCategoryForm() {
+            const box = document.getElementById("addCategoryBox");
+            if (box) box.classList.toggle("hidden");
+        }
+
+        async function saveNewCategory() {
+            const title = document.getElementById("newCatTitle").value.trim();
+            const shortTitle = document.getElementById("newCatShort").value.trim() || title;
+            const subtitle = document.getElementById("newCatSubtitle").value.trim();
+
+            if (!title) {
+                showToast("Ingresá el nombre de la categoría");
+                return;
+            }
+
+            const key = shortTitle.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 15) || `cat_${Date.now()}`;
+            
+            categories.push({
+                key,
+                title,
+                shortTitle,
+                subtitle: subtitle || "Especialidades seleccionadas",
+                icon: "cake",
+                color: "bordo"
+            });
+
+            document.getElementById("newCatTitle").value = "";
+            document.getElementById("newCatShort").value = "";
+            document.getElementById("newCatSubtitle").value = "";
+            toggleAddCategoryForm();
+
+            renderAdminCategoriesList();
+            populateCategorySelect();
+            renderStickyCategoryTabs();
+            renderCatalog();
+            showToast("Categoría agregada");
+            await syncCatalogWithCloudNow();
         }
 
         function renderAdminCategoriesList() {
@@ -1684,12 +2117,12 @@
             if (!container) return;
 
             container.innerHTML = categories.map(cat => `
-                <div class="p-3 rounded-2xl bg-crema border border-rosa/30 flex items-center justify-between">
+                <div class="p-3.5 rounded-2xl bg-crema border border-rosa/30 flex items-center justify-between">
                     <div>
                         <h5 class="text-xs font-bold text-chocolate">${cat.title}</h5>
-                        <p class="text-[11px] text-chocolate/60">Clave: ${cat.key}</p>
+                        <p class="text-[11px] text-chocolate/60">Pestaña: "${cat.shortTitle || cat.title}"</p>
                     </div>
-                    <span class="px-2 py-0.5 rounded-full bg-white text-[11px] font-bold text-bordo border border-rosa/20">
+                    <span class="px-2.5 py-1 rounded-full bg-white text-xs font-bold text-bordo border border-rosa/20 shadow-xs">
                         ${products.filter(p => p.category === cat.key).length} productos
                     </span>
                 </div>
@@ -1697,7 +2130,7 @@
         }
 
         // ===================================================================
-        // SINCRONIZACIÓN EN TIEMPO REAL CON VERCEL BLOB / API                
+        // AJUSTES Y SINCRONIZACIÓN EN LA NUBE                                
         // ===================================================================
         async function syncCatalogWithCloudNow() {
             const token = sessionStorage.getItem("julie_admin_token") || "Helena2024.";
