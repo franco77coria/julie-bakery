@@ -16,9 +16,10 @@ module.exports = async function handler(req, res) {
     try {
         // Verificar token de administrador
         const currentCatalog = await getCatalog();
-        const envPass = process.env.ADMIN_PASSWORD || '';
-        const currentPass = envPass || (currentCatalog.settings && currentCatalog.settings.adminPass);
-        const adminToken = req.headers['x-admin-token'] || (req.headers.authorization && req.headers.authorization.replace('Bearer ', ''));
+        const envPass = (process.env.ADMIN_PASSWORD || '').trim();
+        const currentPass = (envPass || (currentCatalog.settings && currentCatalog.settings.adminPass) || '').trim();
+        const rawToken = req.headers['x-admin-token'] || (req.headers.authorization && req.headers.authorization.replace('Bearer ', '')) || '';
+        const adminToken = rawToken.trim();
 
         if (currentPass && adminToken !== currentPass && adminToken !== 'authenticated') {
             return res.status(401).json({ error: 'No autorizado para subir imágenes' });
