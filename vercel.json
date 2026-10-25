@@ -12,6 +12,9 @@
       "memory": 512
     }
   },
+  "rewrites": [
+    { "source": "/admin", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/api/catalog",

@@ -127,21 +127,7 @@
 </head>
 <body class="bg-crema min-h-screen flex flex-col pb-28 selection:bg-rosa selection:text-bordo">
 
-    <!-- BARRA SUPERIOR CUANDO LA ADMINISTRADORA ESTÁ LOGUEADA -->
-    <div id="adminSessionBanner" class="hidden bg-chocolate text-crema text-xs py-2 px-3.5 items-center justify-between gap-2 border-b border-rosa/30 z-40 sticky top-0">
-        <div class="flex items-center gap-2 font-semibold">
-            <span class="w-2 h-2 rounded-full bg-oliva inline-block"></span>
-            <span>Modo Administradora Activo (<span class="underline">/admin</span>)</span>
-        </div>
-        <div class="flex items-center gap-2">
-            <button onclick="navigateToAdmin()" class="ios-tap px-3 py-1 rounded-full bg-bordo text-crema font-bold text-[11px] flex items-center gap-1.5 shadow-sm">
-                <span>Abrir Panel /admin</span>
-            </button>
-            <button onclick="logoutAdmin()" class="ios-tap px-2.5 py-1 rounded-full bg-crema/15 hover:bg-crema/25 text-crema text-[11px] font-semibold">
-                Salir
-            </button>
-        </div>
-    </div>
+
 
     <!-- =================================================================== -->
     <!-- PORTADA CONFIGURABLE DESDE EL PANEL DE ADMIN                         -->
@@ -167,13 +153,10 @@
                     <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-chocolate/60 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 </div>
 
-                <!-- Botones Derecha: Favoritos & Tres Puntos (Acceso a /admin) -->
+                <!-- Botones Derecha: Favoritos -->
                 <div class="flex items-center gap-1.5 sm:gap-2">
                     <button onclick="showToast('¡Guardado en tus favoritos!')" class="ios-tap w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/95 backdrop-blur-md text-bordo flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition" aria-label="Favoritos">
                         <svg class="w-5 h-5 fill-bordo/20 text-bordo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                    </button>
-                    <button onclick="navigateToAdmin()" class="ios-tap w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/95 backdrop-blur-md text-chocolate flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition" aria-label="Menú y Administración" title="Panel Administradora /admin">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
                     </button>
                 </div>
             </div>
@@ -240,13 +223,11 @@
     <footer class="mt-12 bg-white/80 border-t border-rosa/40 py-8 px-4 text-center text-xs text-chocolate/70 space-y-2">
         <div class="flex items-center justify-center gap-2">
             <span class="font-serifBrand text-lg font-bold text-bordo">Julié Bakery</span>
-            <span>•</span>
+            <span class="cursor-pointer select-none text-chocolate/40 hover:text-bordo transition" ondblclick="navigateToAdmin()" title="">•</span>
             <span>Pastelería Artesanal</span>
         </div>
         <p>Hecho con amor y dedicación en cada horneada ♡</p>
-        <p class="pt-2 text-[11px] text-chocolate/50">
-            <a href="#admin" onclick="navigateToAdmin(); return false;" class="underline hover:text-bordo">Acceso Administradora (/admin)</a>
-        </p>
+
     </footer>
 
     <!-- =================================================================== -->
@@ -338,11 +319,11 @@
     <!-- =================================================================== -->
     <!-- PANEL /ADMIN PROFESIONAL, RESPONSIVO Y CON JERARQUÍA VISUAL          -->
     <!-- =================================================================== -->
-    <div id="adminRouteOverlay" style="display: none;" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex flex-col justify-end sm:justify-center p-0 sm:p-4">
-        <div class="bg-crema w-full max-w-4xl mx-auto h-[95dvh] sm:h-[90dvh] rounded-t-[2rem] sm:rounded-[2rem] shadow-floating border-2 border-rosa/50 flex flex-col overflow-hidden">
+    <div id="adminRouteOverlay" style="display: none;" class="fixed inset-0 z-50 bg-crema w-full h-full flex flex-col overflow-hidden">
+        <div class="w-full h-full flex flex-col overflow-hidden">
             
-            <!-- Barra Superior del Panel Admin -->
-            <div class="bg-chocolate text-crema px-4 sm:px-6 py-3.5 flex items-center justify-between shrink-0 border-b border-rosa/20">
+            <!-- Barra Superior del Panel Admin (Fullscreen) -->
+            <div class="bg-chocolate text-crema px-4 sm:px-8 py-3.5 flex items-center justify-between shrink-0 border-b border-rosa/20 shadow-sm">
                 <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-xl bg-rosa text-bordo flex items-center justify-center font-bold text-sm shadow-xs">
                         ⚙
@@ -376,16 +357,21 @@
                     <form onsubmit="handleAdminLogin(event)" class="space-y-3 text-left">
                         <div>
                             <label class="text-[11px] font-bold text-chocolate block mb-1">Usuario:</label>
-                            <input id="adminLoginUser" type="text" required value="julie.bakery" class="w-full px-3.5 py-2.5 rounded-xl bg-crema border border-rosa/40 text-sm focus:outline-none focus:border-bordo text-chocolate">
+                            <input id="adminLoginUser" type="text" required value="" placeholder="Usuario" autocomplete="off" class="w-full px-3.5 py-2.5 rounded-xl bg-crema border border-rosa/40 text-sm focus:outline-none focus:border-bordo text-chocolate">
                         </div>
                         <div>
                             <label class="text-[11px] font-bold text-chocolate block mb-1">Contraseña:</label>
-                            <input id="adminLoginPass" type="password" required value="Helena2024." class="w-full px-3.5 py-2.5 rounded-xl bg-crema border border-rosa/40 text-sm focus:outline-none focus:border-bordo text-chocolate">
+                            <input id="adminLoginPass" type="password" required value="" placeholder="Contraseña" autocomplete="off" class="w-full px-3.5 py-2.5 rounded-xl bg-crema border border-rosa/40 text-sm focus:outline-none focus:border-bordo text-chocolate">
                         </div>
                         <p id="adminLoginError" class="hidden text-xs text-red-600 font-bold bg-red-50 p-2 rounded-xl text-center"></p>
                         <button type="submit" class="ios-tap w-full py-3 rounded-2xl bg-bordo text-crema font-bold text-sm shadow-md hover:bg-bordoDark transition">
                             Iniciar Sesión
                         </button>
+                        <div class="text-center pt-2">
+                            <button type="button" onclick="closeAdminRoute()" class="text-xs text-chocolate/60 hover:text-bordo underline font-medium">
+                                ← Volver al catálogo principal
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -406,7 +392,7 @@
                         <span>📂 Categorías</span>
                     </button>
                     <button onclick="switchAdminTab('config')" id="admintab-btn-config" class="ios-tap px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1 bg-cremaDark text-chocolate shrink-0">
-                        <span>⚙️ Ajustes & Nube</span>
+                        <span>⚙️ Ajustes</span>
                     </button>
                     <div class="ml-auto pl-2 flex items-center shrink-0">
                         <button onclick="logoutAdmin()" class="ios-tap px-2.5 py-1.5 rounded-xl text-[11px] font-semibold text-chocolate/70 hover:text-red-600 hover:bg-red-50">
@@ -415,20 +401,11 @@
                     </div>
                 </div>
 
-                <!-- Barra de Estado de Sincronización en la Nube -->
-                <div class="bg-cremaDark/85 px-4 py-2 border-b border-rosa/20 flex items-center justify-between text-xs text-chocolate shrink-0 flex-wrap gap-2">
-                    <span class="flex items-center gap-1.5">
-                        <span class="w-2.5 h-2.5 rounded-full bg-oliva inline-block animate-pulse"></span>
-                        <strong id="cloudStatusText">Almacenamiento Vercel Blob Activo</strong>
-                    </span>
-                    <button onclick="syncCatalogWithCloudNow()" class="ios-tap px-3 py-1 rounded-lg bg-white border border-rosa/40 text-[11px] font-bold text-bordo hover:bg-rosaLight shadow-xs flex items-center gap-1">
-                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                        <span>Sincronizar Nube Ahora</span>
-                    </button>
-                </div>
+                
 
                 <!-- Área con Scroll de los Contenidos de Admin -->
-                <div class="flex-1 overflow-y-auto p-3.5 sm:p-5 space-y-6">
+                <div class="flex-1 overflow-y-auto p-4 sm:p-8 space-y-6">
+                    <div class="max-w-4xl mx-auto w-full space-y-6 pb-20">
                     
                     <!-- ======================================================= -->
                     <!-- TAB 1: PRODUCTOS (FORMULARIO Y LISTADO)                 -->
@@ -505,7 +482,7 @@
                                             </button>
                                         </div>
                                         <p class="text-[11px] text-chocolate/65">
-                                            Se guardará en la nube Vercel Blob de forma permanente.
+                                            Se guardará automáticamente de forma permanente.
                                         </p>
                                     </div>
                                 </div>
@@ -583,7 +560,7 @@
                                     Limpiar Campos
                                 </button>
                                 <button type="submit" id="btnSubmitProduct" class="ios-tap px-6 py-3 rounded-2xl bg-bordo text-crema text-xs sm:text-sm font-bold shadow-card hover:bg-bordoDark transition flex items-center gap-2">
-                                    <span>Guardar Producto en la Nube</span>
+                                    <span>Guardar Producto</span>
                                     <span class="text-rosa">➔</span>
                                 </button>
                             </div>
@@ -643,7 +620,7 @@
                                     </button>
                                 </div>
                                 <p class="text-[11px] text-chocolate/65">
-                                    Subí una foto de tu pastelería o una mesa con tus productos horneados. Se guardará directamente en la nube Vercel Blob.
+                                    Subí una foto de tu pastelería o una mesa con tus productos horneados. Se guardará y actualizará automáticamente.
                                 </p>
                             </div>
                         </div>
@@ -694,7 +671,7 @@
                     </div>
 
                     <!-- ======================================================= -->
-                    <!-- TAB 4: AJUSTES Y NUBE                                   -->
+                    <!-- TAB 4: AJUSTES                                           -->
                     <!-- ======================================================= -->
                     <div id="admintab-panel-config" class="hidden space-y-4">
                         <div class="bg-white p-4 sm:p-6 rounded-3xl border border-rosa/30 space-y-4">
@@ -727,10 +704,11 @@
 
                             <div class="pt-3 border-t border-rosa/30 flex items-center justify-between">
                                 <button type="button" onclick="saveAdminSettings()" class="ios-tap px-5 py-2.5 rounded-xl bg-bordo text-crema text-xs font-bold shadow-md hover:bg-bordoDark transition">
-                                    Guardar Cambios en la Nube
+                                    Guardar Cambios
                                 </button>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -886,12 +864,14 @@
             renderCatalog();
             updateCartUI();
 
-            if (window.location.hash === "#admin") {
-                navigateToAdmin();
+            function checkAdminURL() {
+                if (window.location.hash === "#admin" || window.location.pathname === "/admin" || window.location.pathname.startsWith("/admin")) {
+                    navigateToAdmin();
+                }
             }
-            window.addEventListener("hashchange", () => {
-                if (window.location.hash === "#admin") navigateToAdmin();
-            });
+            checkAdminURL();
+            window.addEventListener("hashchange", checkAdminURL);
+            window.addEventListener("popstate", checkAdminURL);
 
             setupScrollSpy();
         }
@@ -1069,9 +1049,7 @@
                             <a href="https://wa.me/${settings.whatsapp || '5491138951241'}?text=Hola%20Juli%C3%A9%20Bakery!%20Quería%20consultarles%20por%20los%20pedidos" target="_blank" rel="noopener noreferrer" class="ios-tap w-full sm:w-auto px-5 py-2.5 rounded-full bg-oliva text-crema text-xs font-bold shadow-sm flex items-center justify-center gap-2">
                                 <span>Consultar por WhatsApp</span>
                             </a>
-                            <button onclick="navigateToAdmin()" class="ios-tap w-full sm:w-auto px-5 py-2.5 rounded-full bg-bordo text-crema text-xs font-bold shadow-sm flex items-center justify-center gap-1.5">
-                                <span>Cargar Productos (/admin)</span>
-                            </button>
+
                         </div>
                     </div>
                 `;
@@ -1542,8 +1520,13 @@
 
         function navigateToAdmin() {
             const overlay = document.getElementById("adminRouteOverlay");
+            if (!overlay) return;
             overlay.style.display = "flex";
             document.body.style.overflow = "hidden";
+
+            if (window.location.pathname !== "/admin" && window.location.hash !== "#admin") {
+                history.pushState(null, "", "/admin");
+            }
 
             if (isAdminLoggedIn) {
                 showAdminDashboard();
@@ -1554,16 +1537,22 @@
 
         function closeAdminRoute() {
             const overlay = document.getElementById("adminRouteOverlay");
-            overlay.style.display = "none";
+            if (overlay) overlay.style.display = "none";
             document.body.style.overflow = "";
-            if (window.location.hash === "#admin") {
-                history.pushState("", document.title, window.location.pathname);
+            if (window.location.hash === "#admin" || window.location.pathname.startsWith("/admin")) {
+                history.pushState("", document.title, "/");
             }
         }
 
         function showAdminLogin() {
             document.getElementById("adminLoginScreen").classList.remove("hidden");
             document.getElementById("adminDashboardScreen").classList.add("hidden");
+            const u = document.getElementById("adminLoginUser");
+            const p = document.getElementById("adminLoginPass");
+            if (u) u.value = "";
+            if (p) p.value = "";
+            const errEl = document.getElementById("adminLoginError");
+            if (errEl) errEl.classList.add("hidden");
         }
 
         function showAdminDashboard() {
@@ -1786,7 +1775,7 @@
             event.preventDefault();
             const btnSubmit = document.getElementById("btnSubmitProduct");
             btnSubmit.disabled = true;
-            btnSubmit.innerHTML = `<span>Guardando en la Nube...</span>`;
+            btnSubmit.innerHTML = `<span>Guardando producto...</span>`;
 
             const id = document.getElementById("editProductId").value || `prod_${Date.now()}`;
             const name = document.getElementById("formName").value.trim();
@@ -1800,7 +1789,7 @@
 
             // Si el usuario eligió un archivo nuevo, subirlo a Vercel Blob
             if (fileInput.files && fileInput.files[0]) {
-                showToast("Subiendo foto a Vercel Blob...");
+                showToast("Subiendo foto...");
                 imageUrl = await uploadImageFile(fileInput.files[0]);
             } else if (currentFormUploadedImage) {
                 imageUrl = currentFormUploadedImage;
@@ -1844,7 +1833,7 @@
             renderAdminProductsList();
             resetProductForm();
             btnSubmit.disabled = false;
-            btnSubmit.innerHTML = `<span>Guardar Producto en la Nube</span> <span class="text-rosa">➔</span>`;
+            btnSubmit.innerHTML = `<span>Guardar Producto</span> <span class="text-rosa">➔</span>`;
             showToast("¡Producto guardado exitosamente!");
             await syncCatalogWithCloudNow();
         }
@@ -2048,7 +2037,7 @@
         // ===================================================================
         async function handleCoverFileUpload(input) {
             if (!input.files || !input.files[0]) return;
-            showToast("Subiendo foto de portada a Vercel Blob...");
+            showToast("Subiendo foto de portada...");
             const url = await uploadImageFile(input.files[0]);
             settings.coverImage = url;
             applyStoreSettingsUI();
@@ -2152,9 +2141,8 @@
                 });
 
                 if (res.ok) {
-                    showToast("¡Catálogo sincronizado en la nube para todos!");
-                    const statusText = document.getElementById("cloudStatusText");
-                    if (statusText) statusText.textContent = "Sincronizado en Vercel Blob (" + new Date().toLocaleTimeString() + ")";
+                    showToast("¡Cambios guardados con éxito!");
+                    
                 }
             } catch (e) {
                 showToast("Guardado localmente");
