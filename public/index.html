@@ -123,21 +123,11 @@
         .ios-sheet-enter {
             animation: iosSheetUp 0.32s cubic-bezier(0.32, 0.72, 0, 1) forwards;
         }
-
-        @keyframes cartPopSpring {
-            0% { transform: scale(1); }
-            35% { transform: scale(1.3) rotate(-5deg); }
-            65% { transform: scale(0.94) rotate(3deg); }
-            100% { transform: scale(1) rotate(0deg); }
-        }
-        .animate-cart-pop {
-            animation: cartPopSpring 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-        }
     </style>
 </head>
 <body class="bg-crema min-h-screen flex flex-col pb-28 selection:bg-rosa selection:text-bordo">
 
-    <!-- BARRA FLOTANTE DE ADMINISTRADORA CUANDO ESTÁ LOGUEADA -->
+    <!-- BARRA SUPERIOR CUANDO LA ADMINISTRADORA ESTÁ LOGUEADA -->
     <div id="adminSessionBanner" class="hidden bg-chocolate text-crema text-xs py-2 px-3.5 items-center justify-between gap-2 border-b border-rosa/30 z-40 sticky top-0">
         <div class="flex items-center gap-2 font-semibold">
             <span class="w-2 h-2 rounded-full bg-oliva inline-block"></span>
@@ -154,24 +144,26 @@
     </div>
 
     <!-- =================================================================== -->
-    <!-- PORTADA & CABECERA ESTILO RAPPI (FOTO DE PORTADA + CONTROLES)        -->
+    <!-- PORTADA CONFIGURABLE DESDE EL PANEL DE ADMIN                         -->
     <!-- =================================================================== -->
     <div class="relative w-full">
-        <!-- Portada con Imagen de Pastelería Artesanal de Fondo -->
-        <div class="relative h-44 sm:h-56 md:h-64 w-full overflow-hidden bg-chocolate">
-            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1400&q=80" alt="Julié Bakery Portada" class="w-full h-full object-cover opacity-85">
-            <div class="absolute inset-0 bg-gradient-to-b from-black/45 via-black/20 to-black/60"></div>
+        <!-- Portada: Si tiene foto configurada se muestra, si no tiene fondo con gradiente elegante -->
+        <div id="storeCoverContainer" class="relative h-44 sm:h-56 md:h-64 w-full overflow-hidden bg-chocolate">
+            <img id="storeCoverImg" src="" alt="Portada Julié Bakery" class="w-full h-full object-cover hidden">
+            <div id="storeCoverFallback" class="w-full h-full bg-gradient-to-br from-bordo via-chocolate to-bordoDark flex items-center justify-center relative">
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#F9F4EC_1.5px,transparent_1.5px)] [background-size:18px_18px]"></div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60"></div>
 
             <!-- Controles superiores sobre la portada: Volver / Buscador / Favoritos / Menú Admin -->
             <div class="absolute top-0 left-0 right-0 p-3 sm:p-4 flex items-center justify-between gap-2 z-20">
-                <!-- Botón Atrás / Inicio -->
                 <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="ios-tap w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/95 backdrop-blur-md text-chocolate flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition" aria-label="Volver arriba">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
                 </button>
 
-                <!-- Buscador de Menú estilo Rappi ("Buscar en Julié Bakery...") -->
+                <!-- Buscador de Menú -->
                 <div class="flex-1 max-w-md relative">
-                    <input id="searchInput" oninput="renderCatalog()" type="search" inputmode="search" placeholder="Buscar en Julié Bakery..." class="w-full pl-9 pr-4 py-2 rounded-full bg-white/95 backdrop-blur-md text-sm text-chocolate placeholder:text-chocolate/60 shadow-md border-0 focus:ring-2 focus:ring-bordo focus:outline-none transition">
+                    <input id="searchInput" oninput="renderCatalog()" type="search" inputmode="search" placeholder="Buscar en el catálogo..." class="w-full pl-9 pr-4 py-2 rounded-full bg-white/95 backdrop-blur-md text-sm text-chocolate placeholder:text-chocolate/60 shadow-md border-0 focus:ring-2 focus:ring-bordo focus:outline-none transition">
                     <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-chocolate/60 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 </div>
 
@@ -187,102 +179,60 @@
             </div>
         </div>
 
-        <!-- Tarjeta Flotante del Local (Exacta al diseño de Rappi) -->
+        <!-- Tarjeta Flotante del Local (100% Limpia: Sin delivery/retiro y sin banners innecesarios) -->
         <div class="max-w-2xl mx-auto px-3.5 -mt-10 sm:-mt-12 relative z-20">
             <div class="bg-white rounded-[1.75rem] sm:rounded-[2rem] p-4 sm:p-5 shadow-card border border-rosa/30">
                 <!-- Fila Superior: Logo, Nombre, Calificación y Especialidad -->
                 <div class="flex items-start gap-3 sm:gap-4">
-                    <!-- Sello Oficial Circular dentro de cuadrado redondeado estilo Rappi -->
                     <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-crema p-1 shrink-0 shadow-sm border border-bordo/20 overflow-hidden">
-                        <img src="/images/logo.jpg" alt="Julié Bakery" class="w-full h-full object-cover rounded-xl">
+                        <img id="storeLogoImg" src="/images/logo.jpg" alt="Julié Bakery" class="w-full h-full object-cover rounded-xl">
                     </div>
                     <div class="flex-1 min-w-0">
                         <div class="flex items-center gap-2">
-                            <h1 class="font-serifBrand text-2xl sm:text-3xl font-bold text-chocolate truncate">Julié Bakery</h1>
+                            <h1 id="storeNameText" class="font-serifBrand text-2xl sm:text-3xl font-bold text-chocolate truncate">Julié Bakery</h1>
                             <span class="inline-flex items-center text-[11px] font-bold text-oliva px-2 py-0.5 rounded-full bg-olivaLight">Abierto</span>
                         </div>
                         <div class="flex items-center gap-2 mt-0.5 text-xs text-chocolate/80">
                             <span class="flex items-center text-amber-600 font-bold">
                                 <svg class="w-3.5 h-3.5 fill-current inline mr-0.5" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                                4.9 <span class="font-normal text-chocolate/60 ml-0.5">(148 opiniones)</span>
+                                4.9
                             </span>
                             <span>•</span>
-                            <span class="font-medium text-chocolate/75">Pastelería & Repostería Artesanal</span>
+                            <span id="storeTaglineText" class="font-medium text-chocolate/75">Pastelería & Repostería Artesanal</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Selector Delivery vs Retiro en Taller (Estilo Botones Rappi) -->
-                <div class="mt-3.5 grid grid-cols-2 gap-2 bg-cremaDark/80 p-1 rounded-2xl border border-bordo/10">
-                    <button id="toggleBtnDelivery" onclick="setStoreMode('delivery')" class="ios-tap py-2 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 bg-bordo text-crema shadow-sm">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-                        <span>Delivery / Envío</span>
-                    </button>
-                    <button id="toggleBtnPickup" onclick="setStoreMode('pickup')" class="ios-tap py-2 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 text-chocolate hover:bg-white/60">
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                        <span>Retiro en Taller</span>
-                    </button>
-                </div>
-
-                <!-- Fila de Tiempo de Anticipación & Enlace Directo a WhatsApp -->
-                <div class="mt-3 pt-3 border-t border-rosa/30 flex items-center justify-between text-xs text-chocolate/85 flex-wrap gap-2">
+                <!-- Anticipación y Enlace a WhatsApp directo -->
+                <div class="mt-3.5 pt-3 border-t border-rosa/30 flex items-center justify-between text-xs text-chocolate/85 flex-wrap gap-2">
                     <div class="flex items-center gap-1.5">
                         <svg class="w-4 h-4 text-bordo shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        <span>Anticipación: <strong class="text-chocolate">24-48 hs</strong> (Consultar stock del día)</span>
+                        <span id="storeScheduleText">Pedidos con <strong class="text-chocolate">24-48 hs de anticipación</strong></span>
                     </div>
                     <a id="storeWhatsappLink" href="https://wa.me/5491138951241?text=Hola%20Juli%C3%A9%20Bakery!%20Tengo%20una%20consulta" target="_blank" rel="noopener noreferrer" class="ios-tap font-bold text-oliva hover:underline flex items-center gap-1">
                         <svg class="w-3.5 h-3.5 text-oliva shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                        <span>WhatsApp: 11 3895-1241</span>
+                        <span>WhatsApp: <strong id="storeWhatsappDisplay">11 3895-1241</strong></span>
                     </a>
-                </div>
-
-                <!-- Banner Destacado de Marca (Estilo Banner Rappi Plus) -->
-                <div class="mt-3 bg-gradient-to-r from-bordo via-bordoDark to-chocolate rounded-2xl p-2.5 sm:p-3 text-crema flex items-center justify-between gap-2 shadow-sm">
-                    <div class="flex items-center gap-2 min-w-0">
-                        <span class="w-7 h-7 rounded-xl bg-crema text-bordo font-serifBrand font-bold text-base flex items-center justify-center shrink-0">♡</span>
-                        <p class="text-xs font-semibold leading-tight truncate">
-                            <span class="text-rosa font-bold">100% Artesanal:</span> Armá tu pedido y te lo enviamos por WhatsApp
-                        </p>
-                    </div>
-                    <button onclick="document.getElementById('searchInput').focus()" class="ios-tap px-3 py-1 rounded-xl bg-rosa text-bordo font-extrabold text-[11px] shrink-0 shadow-sm hover:scale-105 active:scale-95 transition">
-                        Ver Menú
-                    </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- CHIPS DE FILTRO RÁPIDO (Más vendidos, Precio más bajo primero, Disponibles hoy) -->
-    <div class="max-w-2xl mx-auto px-3.5 pt-4 pb-2 flex items-center gap-2 overflow-x-auto no-scrollbar">
-        <button onclick="setFilterSort('mas_vendidos')" id="chipSort_mas_vendidos" class="ios-tap px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition border border-bordo/25 bg-bordo text-crema shadow-sm">
-            Más vendidos
-        </button>
-        <button onclick="setFilterSort('precio_bajo')" id="chipSort_precio_bajo" class="ios-tap px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition border border-bordo/25 bg-cremaDark text-chocolate hover:bg-rosaLight">
-            Precio más bajo primero
-        </button>
-        <button onclick="setFilterSort('disponible_hoy')" id="chipSort_disponible_hoy" class="ios-tap px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition border border-bordo/25 bg-cremaDark text-chocolate hover:bg-rosaLight">
-            ⚡ Disponible hoy
-        </button>
-        <button onclick="setFilterSort('todos')" id="chipSort_todos" class="ios-tap px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition border border-bordo/25 bg-cremaDark text-chocolate hover:bg-rosaLight">
-            Todos
-        </button>
-    </div>
-
-    <!-- BARRA HORIZONTAL STICKY DE CATEGORÍAS (Screenshot 2: Waffles, Dulce, Salado, Boxes...) -->
-    <div class="sticky top-0 z-30 bg-crema/95 backdrop-blur-xl border-b border-rosa/40 shadow-sm">
+    <!-- BARRA STICKY DE CATEGORÍAS (Configurable desde Admin: Dulce, Salado, Boxes, etc.) -->
+    <div class="sticky top-0 z-30 bg-crema/95 backdrop-blur-xl border-b border-rosa/40 shadow-sm mt-3">
         <div class="max-w-2xl mx-auto px-3.5">
             <div id="stickyCategoryTabs" class="flex items-center gap-5 sm:gap-6 overflow-x-auto no-scrollbar py-3 scroll-smooth">
-                <!-- Se inyecta dinámicamente -->
+                <!-- Se inyecta dinámicamente según las categorías configuradas -->
             </div>
         </div>
     </div>
 
     <!-- =================================================================== -->
-    <!-- CATÁLOGO PRINCIPAL 100% ENFOCADO EN PRODUCTOS (LISTADO ESTILO RAPPI) -->
+    <!-- CATÁLOGO PRINCIPAL (LISTADO ESTILO RAPPI O ESTADO VACÍO)             -->
     <!-- =================================================================== -->
     <main class="max-w-2xl mx-auto px-3.5 py-4 flex-1 w-full">
         <div id="catalogContainer" class="space-y-8">
-            <!-- Renderizado dinámico de secciones de productos -->
+            <!-- Se llena dinámicamente -->
         </div>
     </main>
 
@@ -300,7 +250,7 @@
     </footer>
 
     <!-- =================================================================== -->
-    <!-- BARRA FLOTANTE INFERIOR DEL PEDIDO (APARECE CUANDO HAY ITEMS)       -->
+    <!-- BARRA FLOTANTE DEL PEDIDO (CONFIGURABLE, APARECE CUANDO HAY ITEMS)   -->
     <!-- =================================================================== -->
     <div id="floatingOrderBar" class="hidden fixed bottom-4 left-3 right-3 sm:left-auto sm:right-auto sm:w-full max-w-xl sm:left-1/2 sm:-translate-x-1/2 z-40 transition-all duration-300">
         <button onclick="toggleCartDrawer(true)" class="ios-tap w-full py-3.5 px-4 rounded-2xl bg-bordo text-crema font-bold shadow-floating flex items-center justify-between border-2 border-rosa/40 hover:bg-bordoDark transition">
@@ -320,12 +270,9 @@
     <!-- =================================================================== -->
     <div id="productModal" style="display: none;" onclick="if(event.target === this) closeProductModal()" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
         <div class="ios-sheet-enter bg-white w-full max-w-lg rounded-t-[2rem] sm:rounded-[2rem] shadow-floating border border-rosa/40 overflow-hidden flex flex-col max-h-[92dvh] sm:max-h-[88dvh] relative">
-            <!-- Tirador superior táctil móvil -->
             <div class="sm:hidden pt-2.5 pb-1 bg-white flex justify-center shrink-0" onclick="closeProductModal()">
                 <div class="w-11 h-1.5 rounded-full bg-chocolate/20"></div>
             </div>
-
-            <!-- Contenido dinámico del modal de producto -->
             <div id="productModalContent" class="overflow-y-auto flex-1">
                 <!-- Inyectado por JS -->
             </div>
@@ -338,13 +285,12 @@
     <div id="cartDrawerBackdrop" style="display: none;" onclick="if(event.target === this) toggleCartDrawer(false)" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-4">
         <div class="ios-sheet-enter bg-crema w-full max-w-md h-[90dvh] sm:h-auto sm:max-h-[85dvh] rounded-t-[2rem] sm:rounded-[2rem] shadow-floating flex flex-col overflow-hidden border-2 border-rosa/40 relative">
             
-            <!-- Encabezado del Carrito -->
             <div class="p-4 sm:p-5 bg-white border-b border-rosa/30 flex items-center justify-between">
                 <div class="flex items-center gap-2">
                     <span class="w-8 h-8 rounded-full bg-rosaLight text-bordo flex items-center justify-center font-bold text-sm">🛒</span>
                     <div>
                         <h3 class="font-serifBrand text-xl font-bold text-chocolate leading-none">Tu Pedido</h3>
-                        <p class="text-[11px] text-chocolate/60 mt-0.5">Se enviará en 1 toque a WhatsApp (11 3895-1241)</p>
+                        <p class="text-[11px] text-chocolate/60 mt-0.5">Se enviará en 1 toque al WhatsApp de Julié Bakery</p>
                     </div>
                 </div>
                 <button onclick="toggleCartDrawer(false)" class="ios-tap w-8 h-8 rounded-full bg-cremaDark text-chocolate flex items-center justify-center hover:bg-rosaLight">
@@ -352,12 +298,10 @@
                 </button>
             </div>
 
-            <!-- Lista de Productos en el Carrito -->
             <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3 bg-crema">
                 <!-- Inyectado por JS -->
             </div>
 
-            <!-- Datos del Cliente y Forma de Entrega -->
             <div class="p-4 bg-white border-t border-rosa/30 space-y-3">
                 <div class="grid grid-cols-2 gap-2">
                     <div>
@@ -367,7 +311,7 @@
                     <div>
                         <label class="text-[10px] uppercase font-bold text-chocolate/70 block mb-1">Entrega:</label>
                         <select id="deliveryMode" class="w-full px-2.5 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate font-medium focus:outline-none focus:border-bordo">
-                            <option value="Envío a domicilio">Envío / Delivery</option>
+                            <option value="Envío a domicilio">Envío a domicilio</option>
                             <option value="Retiro por taller Julié Bakery">Retiro en Taller</option>
                         </select>
                     </div>
@@ -378,7 +322,6 @@
                     <input id="customerNote" type="text" placeholder="Ej: Para el sábado a la tarde / Escribir dedicatoria" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate focus:outline-none focus:border-bordo">
                 </div>
 
-                <!-- Total y Botón Enviar a WhatsApp -->
                 <div class="pt-2 border-t border-rosa/30 flex items-center justify-between">
                     <span class="text-xs uppercase font-bold text-chocolate/70">Total Estimado:</span>
                     <span id="cartTotalAmount" class="font-serifBrand text-2xl font-bold text-bordo">$0</span>
@@ -386,7 +329,7 @@
 
                 <button onclick="sendOrderWhatsApp()" class="ios-tap w-full py-3.5 px-4 rounded-2xl bg-oliva text-crema font-bold text-sm shadow-md hover:opacity-95 flex items-center justify-center gap-2 transition">
                     <svg class="w-5 h-5 text-crema" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-                    <span>Enviar Pedido a WhatsApp (11 3895-1241)</span>
+                    <span>Enviar Pedido a WhatsApp</span>
                 </button>
             </div>
         </div>
@@ -398,7 +341,6 @@
     <div id="adminRouteOverlay" style="display: none;" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex flex-col justify-end sm:justify-center p-0 sm:p-4">
         <div class="bg-crema w-full max-w-4xl mx-auto h-[95dvh] sm:h-[90dvh] rounded-t-[2.2rem] sm:rounded-[2.2rem] shadow-floating border-2 border-rosa/70 flex flex-col overflow-hidden">
             
-            <!-- Barra Superior del Panel Admin -->
             <div class="bg-chocolate text-crema px-4 sm:px-6 py-3.5 flex items-center justify-between shrink-0">
                 <div class="flex items-center gap-2.5">
                     <span class="w-8 h-8 rounded-full bg-rosa text-bordo flex items-center justify-center font-bold text-sm">⚙</span>
@@ -412,7 +354,7 @@
                 </button>
             </div>
 
-            <!-- Pantalla 1: Formulario de Login -->
+            <!-- Login Screen -->
             <div id="adminLoginScreen" class="flex-1 flex flex-col justify-center items-center p-6 overflow-y-auto">
                 <div class="w-full max-w-sm bg-white p-6 rounded-3xl border border-rosa/40 shadow-card text-center space-y-4">
                     <div class="w-14 h-14 rounded-full bg-rosaLight text-bordo flex items-center justify-center mx-auto text-xl font-bold">
@@ -440,15 +382,14 @@
                 </div>
             </div>
 
-            <!-- Pantalla 2: Panel de Gestión (Cuando está autenticada) -->
+            <!-- Dashboard Screen -->
             <div id="adminDashboardScreen" class="hidden flex-1 flex flex-col overflow-hidden bg-crema">
-                <!-- Pestañas de Navegación del Admin -->
                 <div class="flex items-center gap-2 p-3 bg-white border-b border-rosa/30 overflow-x-auto no-scrollbar shrink-0">
                     <button onclick="switchAdminTab('productos')" id="admintab-btn-productos" class="ios-tap px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-bordo text-crema">
-                        Productos (${catalog_data['products'].length})
+                        Productos (<span id="adminProdCount">0</span>)
                     </button>
-                    <button onclick="switchAdminTab('inmediata')" id="admintab-btn-inmediata" class="ios-tap px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-cremaDark text-chocolate">
-                        ⚡ Stock Hoy & Ofertas
+                    <button onclick="switchAdminTab('portada')" id="admintab-btn-portada" class="ios-tap px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-cremaDark text-chocolate">
+                        🖼️ Foto de Portada
                     </button>
                     <button onclick="switchAdminTab('categorias')" id="admintab-btn-categorias" class="ios-tap px-3.5 py-1.5 rounded-xl text-xs font-bold transition bg-cremaDark text-chocolate">
                         Categorías
@@ -458,7 +399,6 @@
                     </button>
                 </div>
 
-                <!-- Banner Estado de Nube -->
                 <div class="bg-cremaDark/70 px-4 py-2 border-b border-rosa/20 flex items-center justify-between text-xs text-chocolate shrink-0">
                     <span class="flex items-center gap-1.5">
                         <span class="w-2 h-2 rounded-full bg-oliva"></span>
@@ -469,123 +409,139 @@
                     </button>
                 </div>
 
-                <!-- Contenido de las Pestañas -->
                 <div class="flex-1 overflow-y-auto p-4 space-y-6">
-                    <!-- TAB 1: PRODUCTOS (Formulario de Carga y Edición con Pesos y Variantes) -->
+                    <!-- TAB: PRODUCTOS -->
                     <div id="admintab-panel-productos" class="space-y-6">
                         <form id="productForm" onsubmit="saveProductFromForm(event)" class="bg-white p-4 sm:p-5 rounded-3xl border border-rosa/30 shadow-sm space-y-4">
-                            <h4 id="formTitle" class="font-serifBrand text-xl font-bold text-chocolate">Agregar o Editar Producto</h4>
+                            <h4 id="formTitle" class="font-serifBrand text-xl font-bold text-chocolate">Cargar Nuevo Producto</h4>
                             <input type="hidden" id="editProductId">
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div>
                                     <label class="text-[11px] font-bold text-chocolate block mb-1">Nombre del Producto:</label>
-                                    <input id="formName" required type="text" placeholder="Ej: Waffles con Helado / Budín de Limón" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
+                                    <input id="formName" required type="text" placeholder="Ej: Budín de Limón / Chipá Artesanal" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
                                 </div>
                                 <div>
                                     <label class="text-[11px] font-bold text-chocolate block mb-1">Categoría:</label>
                                     <select id="formCategory" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate font-medium">
-                                        <!-- Dinámico -->
                                     </select>
                                 </div>
                             </div>
 
                             <div>
-                                <label class="text-[11px] font-bold text-chocolate block mb-1">Descripción corta (ingredientes, porciones):</label>
-                                <textarea id="formDescription" required rows="2" placeholder="Ej: 3 waffles con toppings a elección..." class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate"></textarea>
+                                <label class="text-[11px] font-bold text-chocolate block mb-1">Descripción (ingredientes, peso, presentación):</label>
+                                <textarea id="formDescription" required rows="2" placeholder="Ej: Elaborado con manteca y cáscara de limón glaseada..." class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate"></textarea>
                             </div>
 
                             <!-- Variantes, Pesos y Precios -->
                             <div class="bg-crema p-3 sm:p-4 rounded-2xl border border-rosa/30 space-y-3">
                                 <div class="flex items-center justify-between">
-                                    <label class="text-xs font-bold text-chocolate">Tamaños, Pesos y Precios:</label>
+                                    <label class="text-xs font-bold text-chocolate">Medidas, Pesos y Precios:</label>
                                     <button type="button" onclick="addVariantRow()" class="ios-tap px-2.5 py-1 rounded-lg bg-bordo text-crema text-[11px] font-bold">
-                                        + Agregar Tamaño/Peso
+                                        + Agregar Opción
                                     </button>
                                 </div>
                                 <div id="variantsFormContainer" class="space-y-2">
-                                    <!-- Inyectado por JS -->
                                 </div>
                             </div>
 
-                            <!-- Opciones y Tags -->
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div>
-                                    <label class="text-[11px] font-bold text-chocolate block mb-1">Etiqueta destacada:</label>
-                                    <input id="formBadge" type="text" placeholder="Ej: Más vendido / Clásico" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
+                                    <label class="text-[11px] font-bold text-chocolate block mb-1">Etiqueta destacada (Opcional):</label>
+                                    <input id="formBadge" type="text" placeholder="Ej: Más pedido / Recién horneado" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
                                 </div>
                                 <div>
                                     <label class="text-[11px] font-bold text-chocolate block mb-1">Sabores (separados por coma):</label>
-                                    <input id="formFlavors" type="text" placeholder="Ej: Vainilla, Chocolate, Limón" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
-                                </div>
-                                <div class="flex items-center gap-4 pt-4">
-                                    <label class="flex items-center gap-1.5 text-xs font-bold text-chocolate cursor-pointer">
-                                        <input id="formImmediate" type="checkbox" class="accent-oliva w-4 h-4 rounded">
-                                        <span>⚡ Disponible Hoy</span>
-                                    </label>
-                                    <label class="flex items-center gap-1.5 text-xs font-bold text-chocolate cursor-pointer">
-                                        <input id="formDailyOffer" type="checkbox" class="accent-bordo w-4 h-4 rounded">
-                                        <span>Oferta / Promo</span>
-                                    </label>
+                                    <input id="formFlavors" type="text" placeholder="Ej: Limón, Naranja, Chocolate" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
                                 </div>
                             </div>
 
-                            <!-- Subida de Foto a Vercel Blob -->
+                            <!-- Foto del Producto -->
                             <div class="pt-2 border-t border-rosa/30 flex items-center justify-between flex-wrap gap-2">
-                                <div class="flex items-center gap-2">
+                                <div>
+                                    <label class="text-[11px] font-bold text-chocolate block mb-1">Subir Foto a la Nube (Vercel Blob):</label>
                                     <input type="file" id="formImageFile" accept="image/*" class="text-xs text-chocolate file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-bordo file:text-crema">
                                 </div>
                                 <div class="flex items-center gap-2">
-                                    <button type="button" onclick="resetProductForm()" class="ios-tap px-3 py-2 rounded-xl bg-cremaDark text-chocolate text-xs font-semibold">Cancelar</button>
+                                    <button type="button" onclick="resetProductForm()" class="ios-tap px-3 py-2 rounded-xl bg-cremaDark text-chocolate text-xs font-semibold">Limpiar</button>
                                     <button type="submit" class="ios-tap px-4 py-2 rounded-xl bg-bordo text-crema text-xs font-bold shadow-md">Guardar Producto</button>
                                 </div>
                             </div>
                         </form>
 
-                        <!-- Listado de Productos Existentes en Admin -->
                         <div class="space-y-2">
-                            <h4 class="font-serifBrand text-xl font-bold text-chocolate">Productos Cargados</h4>
+                            <h4 class="font-serifBrand text-xl font-bold text-chocolate">Tus Productos en el Catálogo</h4>
                             <div id="adminProductsList" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                <!-- Dinámico -->
                             </div>
                         </div>
                     </div>
 
-                    <!-- TAB 2: INMEDIATA & OFERTAS -->
-                    <div id="admintab-panel-inmediata" class="hidden space-y-4">
-                        <div class="bg-white p-4 rounded-3xl border border-rosa/30">
-                            <h4 class="font-serifBrand text-xl font-bold text-chocolate">Marcar Stock Listo Hoy & Ofertas</h4>
-                            <p class="text-xs text-chocolate/70 mb-3">Tildá los productos que están horneados y listos para retirar o entregar hoy.</p>
-                            <div id="adminImmediateTaggerList" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                <!-- Dinámico -->
+                    <!-- TAB: FOTO DE PORTADA (CONFIGURABLE DESDE ADMIN) -->
+                    <div id="admintab-panel-portada" class="hidden space-y-4">
+                        <div class="bg-white p-4 sm:p-5 rounded-3xl border border-rosa/30 shadow-sm space-y-4">
+                            <h4 class="font-serifBrand text-xl font-bold text-chocolate">Foto de Portada del Menú</h4>
+                            <p class="text-xs text-chocolate/70">Subí o cambiá la foto grande que se ve arriba de todo en tu catálogo.</p>
+                            
+                            <div class="relative h-44 sm:h-56 w-full rounded-2xl overflow-hidden bg-chocolate border-2 border-rosa/40">
+                                <img id="adminCoverPreview" src="" alt="Vista previa de portada" class="w-full h-full object-cover hidden">
+                                <div id="adminCoverPlaceholder" class="w-full h-full flex flex-col items-center justify-center text-crema p-4 text-center">
+                                    <span class="text-3xl mb-1">🖼️</span>
+                                    <p class="text-xs font-bold">Sin foto de portada asignada</p>
+                                    <p class="text-[10px] text-crema/70 mt-0.5">Se mostrará el fondo decorativo con los colores oficiales de la marca</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3 pt-2">
+                                <div>
+                                    <label class="text-xs font-bold text-chocolate block mb-1">Subir nueva foto de portada desde tu celular/PC:</label>
+                                    <input type="file" id="coverImageFileInput" accept="image/*" onchange="handleCoverFileUpload(this)" class="text-xs text-chocolate file:mr-2 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-bordo file:text-crema">
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <button type="button" onclick="removeCoverImage()" class="ios-tap px-3 py-2 rounded-xl bg-cremaDark text-red-600 text-xs font-bold hover:bg-red-50">
+                                        Eliminar foto y usar fondo por defecto
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- TAB 3: CATEGORÍAS -->
+                    <!-- TAB: CATEGORÍAS -->
                     <div id="admintab-panel-categorias" class="hidden space-y-4">
-                        <div class="bg-white p-4 rounded-3xl border border-rosa/30">
+                        <div class="bg-white p-4 rounded-3xl border border-rosa/30 space-y-3">
                             <h4 class="font-serifBrand text-xl font-bold text-chocolate">Categorías del Menú</h4>
+                            <p class="text-xs text-chocolate/70">Estas secciones aparecen arriba en la barra deslizable.</p>
                             <div id="adminCategoriesList" class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-                                <!-- Dinámico -->
                             </div>
                         </div>
                     </div>
 
-                    <!-- TAB 4: AJUSTES Y CONFIGURACIÓN -->
+                    <!-- TAB: AJUSTES -->
                     <div id="admintab-panel-config" class="hidden space-y-4">
-                        <div class="bg-white p-4 rounded-3xl border border-rosa/30 space-y-3">
-                            <h4 class="font-serifBrand text-xl font-bold text-chocolate">Configuración de Contacto & Catálogo</h4>
-                            <div>
-                                <label class="text-xs font-bold text-chocolate block mb-1">Número de WhatsApp (con código de país, sin espacios):</label>
-                                <input id="configWhatsapp" type="text" value="5491138951241" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
+                        <div class="bg-white p-4 sm:p-5 rounded-3xl border border-rosa/30 space-y-3">
+                            <h4 class="font-serifBrand text-xl font-bold text-chocolate">Datos del Emprendimiento</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-xs font-bold text-chocolate block mb-1">Nombre del Negocio:</label>
+                                    <input id="configStoreName" type="text" value="Julié Bakery" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-bold text-chocolate block mb-1">Especialidad / Subtítulo:</label>
+                                    <input id="configStoreTagline" type="text" value="Pastelería & Repostería Artesanal" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-xs font-bold text-chocolate block mb-1">WhatsApp para recibir pedidos:</label>
+                                    <input id="configWhatsapp" type="text" value="5491138951241" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-bold text-chocolate block mb-1">Aviso de anticipación:</label>
+                                    <input id="configStoreSchedule" type="text" value="Pedidos con 24-48 hs de anticipación" class="w-full px-3 py-2 rounded-xl bg-crema border border-rosa/40 text-xs text-chocolate">
+                                </div>
                             </div>
                             <div class="pt-3 border-t border-rosa/30 flex items-center justify-between">
                                 <button type="button" onclick="saveAdminSettings()" class="ios-tap px-4 py-2 rounded-xl bg-bordo text-crema text-xs font-bold shadow-md">
-                                    Guardar WhatsApp
-                                </button>
-                                <button type="button" onclick="reloadDefaultCatalogData()" class="ios-tap px-3 py-2 rounded-xl bg-cremaDark text-bordo text-xs font-bold hover:bg-rosaLight">
-                                    Restaurar Catálogo de Ejemplo
+                                    Guardar Cambios en la Nube
                                 </button>
                             </div>
                         </div>
@@ -605,42 +561,34 @@
     <!-- SCRIPT DE LA APLICACIÓN                                             -->
     <!-- =================================================================== -->
     <script>
-        const STORAGE_KEY = "julie_bakery_catalog_v3";
-        const SETTINGS_STORAGE_KEY = "julie_bakery_settings_v3";
-        const CART_STORAGE_KEY = "julie_bakery_cart_v3";
+        const STORAGE_KEY = "julie_bakery_catalog_v4";
+        const SETTINGS_STORAGE_KEY = "julie_bakery_settings_v4";
+        const CART_STORAGE_KEY = "julie_bakery_cart_v4";
         const ADMIN_SESSION_KEY = "julie_bakery_admin_logged_in";
 
         /*__CATEGORIES_START__*/
         const DEFAULT_CATEGORIES = [
         {
-                "key": "waffles",
-                "title": "Waffles & Especialidades",
-                "shortTitle": "Waffles",
-                "subtitle": "Waffles artesanales recién horneados con toppings y helado.",
-                "icon": "cake",
-                "color": "bordo"
-        },
-        {
                 "key": "dulce",
-                "title": "Tortas & Repostería Dulce",
+                "title": "Categoría Dulce",
                 "shortTitle": "Dulce",
-                "subtitle": "Budines húmedos, tortas decoradas y delicias artesanales.",
+                "subtitle": "Tortas personalizadas, tartas y repostería artesanal.",
                 "icon": "cake",
                 "color": "bordo"
         },
         {
                 "key": "salado",
-                "title": "Especialidades Saladas",
+                "title": "Categoría Salada",
                 "shortTitle": "Salado",
-                "subtitle": "Chipá con tres quesos, scons horneados y medialunas saladas.",
+                "subtitle": "Chipá artesanal, scons de queso y especialidades horneadas.",
                 "icon": "cheese",
                 "color": "chocolate"
         },
         {
                 "key": "box",
-                "title": "Boxes & Desayunos Especiales",
+                "title": "Boxes & Desayunos",
                 "shortTitle": "Boxes",
-                "subtitle": "Cajas de regalo artesanales, degustaciones y sorpresas con dedicatoria.",
+                "subtitle": "Boxes para regalar, degustaciones y sorpresas especiales.",
                 "icon": "gift",
                 "color": "oliva"
         }
@@ -648,446 +596,13 @@
         /*__CATEGORIES_END__*/
 
         /*__PRODUCTS_START__*/
-        const DEFAULT_PRODUCTS = [
-        {
-                "id": "prod-waffles-clasicos",
-                "name": "Waffles Clásicos",
-                "category": "waffles",
-                "badge": "Clásico",
-                "immediateDelivery": true,
-                "dailyOffer": false,
-                "offerLabel": "",
-                "description": "Waffle de vainilla artesanal esponjoso y dorado. Podés pedirlo por 3 o 6 unidades con miel o dulce de leche.",
-                "allowCombine": false,
-                "flavors": [
-                        "Con Miel Pura",
-                        "Con Dulce de Leche Clásico",
-                        "Con Azúcar Impalpable"
-                ],
-                "variants": [
-                        {
-                                "label": "3 Unidades",
-                                "unitType": "unidad",
-                                "price": 10200,
-                                "image": "/images/julie_07.jpg",
-                                "fallback": "/images/julie_07.jpg"
-                        },
-                        {
-                                "label": "6 Unidades",
-                                "unitType": "unidad",
-                                "price": 18500,
-                                "image": "/images/julie_07.jpg",
-                                "fallback": "/images/julie_07.jpg"
-                        }
-                ]
-        },
-        {
-                "id": "prod-waffle-helado",
-                "name": "Waffle Con Helado",
-                "category": "waffles",
-                "badge": "Más vendido",
-                "immediateDelivery": true,
-                "dailyOffer": true,
-                "offerLabel": "Recomendado",
-                "description": "Dos waffles tibios, un gusto de helado a elección con dulce de leche repostero y salsa tibia de chocolate.",
-                "allowCombine": true,
-                "flavors": [
-                        "Dulce de Leche Granizado",
-                        "Chocolate Belga Amargo",
-                        "Crema Americana & Vainilla",
-                        "Frutilla a la Reina"
-                ],
-                "variants": [
-                        {
-                                "label": "2 Waffles + 1 Gusto Helado",
-                                "unitType": "porcion",
-                                "price": 11600,
-                                "image": "/images/julie_08.jpg",
-                                "fallback": "/images/julie_08.jpg"
-                        },
-                        {
-                                "label": "4 Waffles + 2 Gustos Helado (Para 2)",
-                                "unitType": "porcion",
-                                "price": 21000,
-                                "image": "/images/julie_08.jpg",
-                                "fallback": "/images/julie_08.jpg"
-                        }
-                ]
-        },
-        {
-                "id": "prod-torre-waffles",
-                "name": "Torre De Waffles",
-                "category": "waffles",
-                "badge": "Para compartir",
-                "immediateDelivery": false,
-                "dailyOffer": false,
-                "offerLabel": "",
-                "description": "4 waffles con chocolate, dulce de leche, bocha de helado, chocolinas y oreos trituradas.",
-                "allowCombine": true,
-                "flavors": [
-                        "Con Chocolinas y Oreos",
-                        "Extra Dulce de Leche",
-                        "Salsa de Frutos Rojos"
-                ],
-                "variants": [
-                        {
-                                "label": "Torre Completa (4 waffles)",
-                                "unitType": "unidad",
-                                "price": 19000,
-                                "image": "/images/julie_09.jpg",
-                                "fallback": "/images/julie_09.jpg"
-                        }
-                ]
-        },
-        {
-                "id": "prod-box-waffles",
-                "name": "Box Waffles",
-                "category": "waffles",
-                "badge": "Promo Box",
-                "immediateDelivery": true,
-                "dailyOffer": true,
-                "offerLabel": "15% OFF",
-                "description": "3 waffles grandes con 3 toppings a elección en potes separados para armar como más te guste.",
-                "allowCombine": true,
-                "flavors": [
-                        "Dulce de Leche",
-                        "Nutella / Crema de Avellanas",
-                        "M&Ms / Confites",
-                        "Chips de Chocolate",
-                        "Merenguitos"
-                ],
-                "variants": [
-                        {
-                                "label": "Box 3 Waffles + 3 Toppings",
-                                "unitType": "unidad",
-                                "price": 14000,
-                                "image": "/images/julie_10.jpg",
-                                "fallback": "/images/julie_10.jpg"
-                        }
-                ]
-        },
-        {
-                "id": "prod-budines-humedos",
-                "name": "Budín Húmedo Artesanal",
-                "category": "dulce",
-                "badge": "Más vendido",
-                "immediateDelivery": true,
-                "dailyOffer": false,
-                "offerLabel": "",
-                "description": "Masa súper esponjosa y húmeda con abundante glasé cítrico o chocolate. Elegí peso en gramos o kilos y sabor favorito.",
-                "allowCombine": true,
-                "flavors": [
-                        "Limón con Glasé Cítrico",
-                        "Naranja y Semillas de Amapola",
-                        "Vainilla con Chispas de Chocolate",
-                        "Marmolado Vainilla y Cacao Intenso",
-                        "Zanahoria & Nuez (Carrot Cake)"
-                ],
-                "variants": [
-                        {
-                                "label": "350g (Individual / Chico)",
-                                "unitType": "gramos",
-                                "price": 4500,
-                                "image": "/images/julie_04.jpg",
-                                "fallback": "/images/julie_04.jpg"
-                        },
-                        {
-                                "label": "500g (Medio Kilo)",
-                                "unitType": "gramos",
-                                "price": 6500,
-                                "image": "/images/julie_04.jpg",
-                                "fallback": "/images/julie_04.jpg"
-                        },
-                        {
-                                "label": "700g (Familiar Mediano)",
-                                "unitType": "gramos",
-                                "price": 8500,
-                                "image": "/images/julie_04.jpg",
-                                "fallback": "/images/julie_04.jpg"
-                        },
-                        {
-                                "label": "1 Kilo (1000g Extra Grande)",
-                                "unitType": "gramos",
-                                "price": 11900,
-                                "image": "/images/julie_04.jpg",
-                                "fallback": "/images/julie_04.jpg"
-                        }
-                ]
-        },
-        {
-                "id": "prod-letter-cake",
-                "name": "Letter & Number Cake Personalizada",
-                "category": "dulce",
-                "badge": "Especialidad Julié",
-                "immediateDelivery": false,
-                "dailyOffer": true,
-                "offerLabel": "10% OFF",
-                "description": "Torta artesanal de letra o número, rellena con picos de dulce de leche repostero y decorada con perlas comestibles, macarons y flores.",
-                "allowCombine": true,
-                "flavors": [
-                        "Base Sablée de Vainilla",
-                        "Base Sablée de Chocolate Belga",
-                        "Relleno Dulce de Leche Repostero",
-                        "Crema Chocotorta Bariloche",
-                        "Ganache de Chocolate Blanco",
-                        "Decoración con Frutos Rojos"
-                ],
-                "variants": [
-                        {
-                                "label": "1 Letra / Número Chica (10-12 porc.)",
-                                "unitType": "unidad",
-                                "price": 26500,
-                                "image": "/images/julie_01.jpg",
-                                "fallback": "/images/julie_01.jpg"
-                        },
-                        {
-                                "label": "1 Letra / Número Grande (16-18 porc.)",
-                                "unitType": "unidad",
-                                "price": 34500,
-                                "image": "/images/julie_01.jpg",
-                                "fallback": "/images/julie_01.jpg"
-                        },
-                        {
-                                "label": "2 Letras o Números (25-30 porc.)",
-                                "unitType": "unidad",
-                                "price": 49000,
-                                "image": "/images/julie_01.jpg",
-                                "fallback": "/images/julie_01.jpg"
-                        }
-                ]
-        },
-        {
-                "id": "prod-medialunas-manteca",
-                "name": "Medialunas de Manteca Almibaradas",
-                "category": "dulce",
-                "badge": "Recién Horneadas",
-                "immediateDelivery": true,
-                "dailyOffer": false,
-                "offerLabel": "",
-                "description": "Medialunas tradicionales hojaldradas con pura manteca y suave almíbar aromatizado con naranja y vainilla natural.",
-                "allowCombine": false,
-                "flavors": [
-                        "Almíbar Clásico",
-                        "Con Dulce de Leche"
-                ],
-                "variants": [
-                        {
-                                "label": "1 Unidad",
-                                "unitType": "unidad",
-                                "price": 950,
-                                "image": "/images/julie_02.jpg",
-                                "fallback": "/images/julie_02.jpg"
-                        },
-                        {
-                                "label": "3 Unidades",
-                                "unitType": "unidad",
-                                "price": 2700,
-                                "image": "/images/julie_02.jpg",
-                                "fallback": "/images/julie_02.jpg"
-                        },
-                        {
-                                "label": "6 Unidades (Media docena)",
-                                "unitType": "unidad",
-                                "price": 5200,
-                                "image": "/images/julie_02.jpg",
-                                "fallback": "/images/julie_02.jpg"
-                        },
-                        {
-                                "label": "12 Unidades (1 Docena)",
-                                "unitType": "unidad",
-                                "price": 9800,
-                                "image": "/images/julie_02.jpg",
-                                "fallback": "/images/julie_02.jpg"
-                        }
-                ]
-        },
-        {
-                "id": "prod-chipa-artesanal",
-                "name": "Chipá Artesanal Super Quesoso",
-                "category": "salado",
-                "badge": "Más vendido",
-                "immediateDelivery": true,
-                "dailyOffer": false,
-                "offerLabel": "",
-                "description": "Receta tradicional correntina elaborada con tres variedades de queso (sardo, cáscara colorada y gouda). Crocantes por fuera y súper esponjosos por dentro.",
-                "allowCombine": false,
-                "flavors": [
-                        "Tres Quesos Tradicional",
-                        "Con Toque de Jamón Picado"
-                ],
-                "variants": [
-                        {
-                                "label": "1/4 Kg (250g calentitos)",
-                                "unitType": "gramos",
-                                "price": 4200,
-                                "image": "/images/julie_05.jpg",
-                                "fallback": "/images/julie_05.jpg"
-                        },
-                        {
-                                "label": "1/2 Kg (500g familiar)",
-                                "unitType": "gramos",
-                                "price": 7800,
-                                "image": "/images/julie_05.jpg",
-                                "fallback": "/images/julie_05.jpg"
-                        },
-                        {
-                                "label": "1 Kilo (1000g para freezer/fiesta)",
-                                "unitType": "gramos",
-                                "price": 14500,
-                                "image": "/images/julie_05.jpg",
-                                "fallback": "/images/julie_05.jpg"
-                        }
-                ]
-        },
-        {
-                "id": "prod-scons-salados",
-                "name": "Scons de Queso Parmesano",
-                "category": "salado",
-                "badge": "Especial Salado",
-                "immediateDelivery": true,
-                "dailyOffer": false,
-                "offerLabel": "",
-                "description": "Scons dorados con textura mantecosa y abundante queso parmesano rallado en la masa. Ricos solos o para rellenar.",
-                "allowCombine": false,
-                "flavors": [
-                        "Parmesano Clásico",
-                        "Con Finas Hierbas"
-                ],
-                "variants": [
-                        {
-                                "label": "1/4 Kg (Aprox. 6 unidades)",
-                                "unitType": "gramos",
-                                "price": 4800,
-                                "image": "/images/julie_06.jpg",
-                                "fallback": "/images/julie_06.jpg"
-                        },
-                        {
-                                "label": "1/2 Kg (Aprox. 12 unidades)",
-                                "unitType": "gramos",
-                                "price": 8900,
-                                "image": "/images/julie_06.jpg",
-                                "fallback": "/images/julie_06.jpg"
-                        },
-                        {
-                                "label": "1 Kilo (Aprox. 24 unidades)",
-                                "unitType": "gramos",
-                                "price": 16500,
-                                "image": "/images/julie_06.jpg",
-                                "fallback": "/images/julie_06.jpg"
-                        }
-                ]
-        },
-        {
-                "id": "prod-medialunas-rellenas",
-                "name": "Medialunas con Jamón y Queso",
-                "category": "salado",
-                "badge": "Disponible hoy",
-                "immediateDelivery": true,
-                "dailyOffer": false,
-                "offerLabel": "",
-                "description": "Medialunas de manteca agridulces rellenas con jamón cocido seleccionado y queso tybo fundido.",
-                "allowCombine": false,
-                "flavors": [
-                        "Jamón Cocido y Queso Tybo"
-                ],
-                "variants": [
-                        {
-                                "label": "1 Unidad",
-                                "unitType": "unidad",
-                                "price": 1800,
-                                "image": "/images/julie_11.jpg",
-                                "fallback": "/images/julie_11.jpg"
-                        },
-                        {
-                                "label": "3 Unidades",
-                                "unitType": "unidad",
-                                "price": 5100,
-                                "image": "/images/julie_11.jpg",
-                                "fallback": "/images/julie_11.jpg"
-                        },
-                        {
-                                "label": "6 Unidades (Media docena)",
-                                "unitType": "unidad",
-                                "price": 9900,
-                                "image": "/images/julie_11.jpg",
-                                "fallback": "/images/julie_11.jpg"
-                        }
-                ]
-        },
-        {
-                "id": "prod-box-desayuno",
-                "name": "Box Desayuno Sorpresa con Foto",
-                "category": "box",
-                "badge": "Ideal Regalo",
-                "immediateDelivery": false,
-                "dailyOffer": true,
-                "offerLabel": "Regalo Especial",
-                "description": "Caja rígida con guarda damero, lazo de raso y tarjeta dedicatoria. Incluye taza de cerámica, jugo, budín artesanal, medialunas de manteca y chipá.",
-                "allowCombine": true,
-                "flavors": [
-                        "Con Taza Julié y Dedicatoria",
-                        "Budín de Limón o Naranja",
-                        "Medialunas de Manteca",
-                        "Porción de Chipá Calentito"
-                ],
-                "variants": [
-                        {
-                                "label": "Box Individual Completo",
-                                "unitType": "unidad",
-                                "price": 28500,
-                                "image": "/images/julie_03.jpg",
-                                "fallback": "/images/julie_03.jpg"
-                        },
-                        {
-                                "label": "Box Dúo (Para 2 personas)",
-                                "unitType": "unidad",
-                                "price": 42000,
-                                "image": "/images/julie_03.jpg",
-                                "fallback": "/images/julie_03.jpg"
-                        }
-                ]
-        },
-        {
-                "id": "prod-box-degustacion",
-                "name": "Box Degustación Sweet & Salty",
-                "category": "box",
-                "badge": "Surtido",
-                "immediateDelivery": true,
-                "dailyOffer": false,
-                "offerLabel": "",
-                "description": "Degustación surtida para compartir: chipacitos, scons de parmesano, mini alfajores de maicena y cuadraditos dulces.",
-                "allowCombine": true,
-                "flavors": [
-                        "Chipacitos & Scons",
-                        "Alfajores de Maicena",
-                        "Cookies con Chips"
-                ],
-                "variants": [
-                        {
-                                "label": "Box Mediano (Aprox. 600g surtido)",
-                                "unitType": "gramos",
-                                "price": 19500,
-                                "image": "/images/julie_12.jpg",
-                                "fallback": "/images/julie_12.jpg"
-                        },
-                        {
-                                "label": "Box Grande (Aprox. 1.2 kg surtido)",
-                                "unitType": "gramos",
-                                "price": 34000,
-                                "image": "/images/julie_12.jpg",
-                                "fallback": "/images/julie_12.jpg"
-                        }
-                ]
-        }
-];
+        const DEFAULT_PRODUCTS = [];
         /*__PRODUCTS_END__*/
 
         let categories = [...DEFAULT_CATEGORIES];
-        let products = [...DEFAULT_PRODUCTS];
+        let products = [...DEFAULT_PRODUCTS]; // Limpio desde cero
         let cart = [];
-        let currentFilterSort = "mas_vendidos";
         let activeStickyTab = "all";
-        let currentStoreMode = "delivery";
         let isAdminLoggedIn = false;
 
         let activeModalProduct = null;
@@ -1097,6 +612,10 @@
 
         let settings = {
             whatsapp: "5491138951241",
+            storeName: "Julié Bakery",
+            storeTagline: "Pastelería & Repostería Artesanal",
+            storeSchedule: "Pedidos con 24-48 hs de anticipación",
+            coverImage: "",
             adminUser: "julie.bakery",
             adminPass: "Helena2024."
         };
@@ -1112,7 +631,7 @@
         }
 
         // ===================================================================
-        // EXPLOSIÓN FESTIVA DE PARTÍCULAS (CORAZONES, MOÑOS, FLORES)         
+        // EXPLOSIÓN FESTIVA DE PARTÍCULAS                                    
         // ===================================================================
         const BRAND_SVGS = [
             '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>',
@@ -1156,7 +675,7 @@
                 const angle = Math.random() * 2 * Math.PI;
                 const distance = Math.floor(Math.random() * 140) + 60;
                 const tx = Math.cos(angle) * distance;
-                const ty = Math.sin(angle) * distance + 50; // Gravedad suave
+                const ty = Math.sin(angle) * distance + 50;
                 const rot = (Math.random() - 0.5) * 540;
 
                 requestAnimationFrame(() => {
@@ -1169,18 +688,18 @@
         }
 
         // ===================================================================
-        // INICIALIZACIÓN DE LA APLICACIÓN                                    
+        // INICIALIZACIÓN                                                     
         // ===================================================================
         async function initApp() {
             loadSavedSettings();
             loadSavedCart();
             await fetchCatalog();
             checkAdminSession();
+            applyStoreSettingsUI();
             renderStickyCategoryTabs();
             renderCatalog();
             updateCartUI();
 
-            // Sincronizar hash #admin
             if (window.location.hash === "#admin") {
                 navigateToAdmin();
             }
@@ -1188,7 +707,6 @@
                 if (window.location.hash === "#admin") navigateToAdmin();
             });
 
-            // IntersectionObserver para actualizar tab activa según scroll
             setupScrollSpy();
         }
 
@@ -1197,16 +715,52 @@
                 const raw = localStorage.getItem(SETTINGS_STORAGE_KEY);
                 if (raw) settings = { ...settings, ...JSON.parse(raw) };
             } catch (e) {}
-            updateStoreWhatsappLinks();
         }
 
-        function updateStoreWhatsappLinks() {
+        function applyStoreSettingsUI() {
+            // Portada
+            const coverImg = document.getElementById("storeCoverImg");
+            const coverFallback = document.getElementById("storeCoverFallback");
+            if (coverImg && coverFallback) {
+                if (settings.coverImage && settings.coverImage.trim()) {
+                    coverImg.src = settings.coverImage;
+                    coverImg.classList.remove("hidden");
+                    coverFallback.classList.add("hidden");
+                } else {
+                    coverImg.classList.add("hidden");
+                    coverFallback.classList.remove("hidden");
+                }
+            }
+
+            // Datos de la tienda
+            if (document.getElementById("storeNameText")) document.getElementById("storeNameText").textContent = settings.storeName || "Julié Bakery";
+            if (document.getElementById("storeTaglineText")) document.getElementById("storeTaglineText").textContent = settings.storeTagline || "Pastelería & Repostería Artesanal";
+            if (document.getElementById("storeScheduleText")) document.getElementById("storeScheduleText").innerHTML = `Pedidos con <strong class="text-chocolate">${settings.storeSchedule || "24-48 hs de anticipación"}</strong>`;
+
+            // WhatsApp
             const num = settings.whatsapp || "5491138951241";
             const link = document.getElementById("storeWhatsappLink");
-            if (link) {
-                link.href = `https://wa.me/${num}?text=Hola%20Juli%C3%A9%20Bakery!%20Tengo%20una%20consulta`;
-                const span = link.querySelector("span");
-                if (span) span.textContent = `WhatsApp: ${formatPhoneDisplay(num)}`;
+            const display = document.getElementById("storeWhatsappDisplay");
+            if (link) link.href = `https://wa.me/${num}?text=Hola%20Juli%C3%A9%20Bakery!%20Tengo%20una%20consulta`;
+            if (display) display.textContent = formatPhoneDisplay(num);
+
+            // Previews en admin
+            if (document.getElementById("configStoreName")) document.getElementById("configStoreName").value = settings.storeName || "Julié Bakery";
+            if (document.getElementById("configStoreTagline")) document.getElementById("configStoreTagline").value = settings.storeTagline || "Pastelería & Repostería Artesanal";
+            if (document.getElementById("configStoreSchedule")) document.getElementById("configStoreSchedule").value = settings.storeSchedule || "Pedidos con 24-48 hs de anticipación";
+            if (document.getElementById("configWhatsapp")) document.getElementById("configWhatsapp").value = settings.whatsapp || "5491138951241";
+
+            const adminCoverPreview = document.getElementById("adminCoverPreview");
+            const adminCoverPlaceholder = document.getElementById("adminCoverPlaceholder");
+            if (adminCoverPreview && adminCoverPlaceholder) {
+                if (settings.coverImage && settings.coverImage.trim()) {
+                    adminCoverPreview.src = settings.coverImage;
+                    adminCoverPreview.classList.remove("hidden");
+                    adminCoverPlaceholder.classList.add("hidden");
+                } else {
+                    adminCoverPreview.classList.add("hidden");
+                    adminCoverPlaceholder.classList.remove("hidden");
+                }
             }
         }
 
@@ -1237,7 +791,7 @@
                 const res = await fetch('/api/catalog', { cache: 'no-store' });
                 if (res.ok) {
                     const data = await res.json();
-                    if (data && Array.isArray(data.products) && data.products.length > 0) {
+                    if (data && Array.isArray(data.products)) {
                         products = data.products;
                     }
                     if (data && Array.isArray(data.categories) && data.categories.length > 0) {
@@ -1245,51 +799,14 @@
                     }
                     if (data && data.settings) {
                         settings = { ...settings, ...data.settings };
-                        updateStoreWhatsappLinks();
                     }
                 }
-            } catch (e) {
-                console.warn('Usando catálogo local');
-            }
+            } catch (e) {}
         }
 
         // ===================================================================
-        // VISTA PRINCIPAL: MODOS, FILTROS Y CATEGORÍAS                       
+        // BARRA HORIZONTAL STICKY DE CATEGORÍAS                              
         // ===================================================================
-        function setStoreMode(mode) {
-            currentStoreMode = mode;
-            const btnDel = document.getElementById("toggleBtnDelivery");
-            const btnPick = document.getElementById("toggleBtnPickup");
-            if (btnDel && btnPick) {
-                if (mode === "delivery") {
-                    btnDel.className = "ios-tap py-2 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 bg-bordo text-crema shadow-sm";
-                    btnPick.className = "ios-tap py-2 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 text-chocolate hover:bg-white/60";
-                } else {
-                    btnPick.className = "ios-tap py-2 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 bg-bordo text-crema shadow-sm";
-                    btnDel.className = "ios-tap py-2 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-1.5 text-chocolate hover:bg-white/60";
-                }
-            }
-            const delSelect = document.getElementById("deliveryMode");
-            if (delSelect) {
-                delSelect.value = mode === "delivery" ? "Envío a domicilio" : "Retiro por taller Julié Bakery";
-            }
-        }
-
-        function setFilterSort(mode) {
-            currentFilterSort = mode;
-            ['mas_vendidos', 'precio_bajo', 'disponible_hoy', 'todos'].forEach(m => {
-                const chip = document.getElementById(`chipSort_${m}`);
-                if (chip) {
-                    if (m === mode) {
-                        chip.className = "ios-tap px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition border border-bordo/25 bg-bordo text-crema shadow-sm";
-                    } else {
-                        chip.className = "ios-tap px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition border border-bordo/25 bg-cremaDark text-chocolate hover:bg-rosaLight";
-                    }
-                }
-            });
-            renderCatalog();
-        }
-
         function renderStickyCategoryTabs() {
             const container = document.getElementById("stickyCategoryTabs");
             if (!container) return;
@@ -1316,7 +833,7 @@
             activeStickyTab = catKey;
             renderStickyCategoryTabs();
             if (catKey === 'all') {
-                window.scrollTo({ top: 280, behavior: 'smooth' });
+                window.scrollTo({ top: 220, behavior: 'smooth' });
                 return;
             }
             const sec = document.getElementById(`sec-${catKey}`);
@@ -1327,7 +844,7 @@
 
         function setupScrollSpy() {
             window.addEventListener('scroll', () => {
-                const scrollPos = window.scrollY + 140;
+                const scrollPos = window.scrollY + 120;
                 let current = 'all';
 
                 categories.forEach(cat => {
@@ -1345,12 +862,36 @@
         }
 
         // ===================================================================
-        // RENDER DEL CATÁLOGO (FILAS ESTILO RAPPI)                            
+        // RENDER DEL CATÁLOGO (FILAS ESTILO RAPPI O ESTADO VACÍO)             
         // ===================================================================
         function renderCatalog() {
             const container = document.getElementById("catalogContainer");
             if (!container) return;
             const searchQuery = (document.getElementById("searchInput")?.value || "").trim().toLowerCase();
+
+            // Si el catálogo está vacío (sin productos cargados por la clienta)
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16 px-4 bg-white rounded-3xl border border-rosa/30 shadow-sm max-w-lg mx-auto space-y-3">
+                        <div class="w-14 h-14 rounded-full bg-rosaLight text-bordo flex items-center justify-center mx-auto text-2xl font-bold font-serifBrand">
+                            ♡
+                        </div>
+                        <h3 class="font-serifBrand text-2xl sm:text-3xl font-bold text-chocolate">Catálogo en Preparación</h3>
+                        <p class="text-xs sm:text-sm text-chocolate/75 leading-relaxed">
+                            Estamos cargando las especialidades artesanales. Muy pronto vas a poder recorrer todo el menú aquí.
+                        </p>
+                        <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2">
+                            <a href="https://wa.me/${settings.whatsapp || '5491138951241'}?text=Hola%20Juli%C3%A9%20Bakery!%20Quería%20consultarles%20por%20los%20pedidos" target="_blank" rel="noopener noreferrer" class="ios-tap w-full sm:w-auto px-5 py-2.5 rounded-full bg-oliva text-crema text-xs font-bold shadow-sm flex items-center justify-center gap-2">
+                                <span>Consultar por WhatsApp</span>
+                            </a>
+                            <button onclick="navigateToAdmin()" class="ios-tap w-full sm:w-auto px-5 py-2.5 rounded-full bg-bordo text-crema text-xs font-bold shadow-sm flex items-center justify-center gap-1.5">
+                                <span>Cargar Productos (/admin)</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
 
             let activeProducts = [...products];
 
@@ -1362,31 +903,14 @@
                 );
             }
 
-            if (currentFilterSort === "disponible_hoy") {
-                activeProducts = activeProducts.filter(p => p.immediateDelivery || p.dailyOffer);
-            } else if (currentFilterSort === "precio_bajo") {
-                activeProducts.sort((a, b) => {
-                    const pA = Math.min(...a.variants.map(v => v.price));
-                    const pB = Math.min(...b.variants.map(v => v.price));
-                    return pA - pB;
-                });
-            } else if (currentFilterSort === "mas_vendidos") {
-                activeProducts.sort((a, b) => {
-                    const isBestA = (a.badge && a.badge.toLowerCase().includes("vendido")) || a.featured ? 1 : 0;
-                    const isBestB = (b.badge && b.badge.toLowerCase().includes("vendido")) || b.featured ? 1 : 0;
-                    return isBestB - isBestA;
-                });
-            }
-
             if (activeProducts.length === 0) {
                 container.innerHTML = `
-                    <div class="text-center py-16 bg-white rounded-3xl border border-rosa/40 p-6 shadow-sm">
+                    <div class="text-center py-16 bg-white rounded-3xl border border-rosa/30 p-6 shadow-sm">
                         <div class="w-12 h-12 rounded-full bg-rosaLight text-bordo flex items-center justify-center mx-auto mb-3 font-serifBrand text-2xl font-bold">
                             ♡
                         </div>
-                        <h4 class="font-serifBrand text-2xl font-bold text-chocolate">No encontramos productos con ese filtro</h4>
-                        <p class="text-xs text-chocolate/70 mt-1">Probá con otra búsqueda o restablecé los filtros.</p>
-                        <button onclick="document.getElementById('searchInput').value=''; setFilterSort('mas_vendidos');" class="ios-tap mt-4 px-5 py-2 rounded-full bg-bordo text-crema text-xs font-bold shadow-sm">Ver todo el menú</button>
+                        <h4 class="font-serifBrand text-2xl font-bold text-chocolate">No encontramos productos con esa búsqueda</h4>
+                        <button onclick="document.getElementById('searchInput').value=''; renderCatalog();" class="ios-tap mt-4 px-5 py-2 rounded-full bg-bordo text-crema text-xs font-bold shadow-sm">Ver todo el menú</button>
                     </div>
                 `;
                 return;
@@ -1398,7 +922,7 @@
                 if (catProds.length === 0) return;
 
                 html += `
-                    <section id="sec-${catObj.key}" class="scroll-mt-24 pt-2">
+                    <section id="sec-${catObj.key}" class="scroll-mt-20 pt-2">
                         <div class="flex items-baseline justify-between mb-1.5 px-1">
                             <h3 class="font-serifBrand text-2xl sm:text-3xl font-bold text-chocolate tracking-tight">
                                 ${catObj.title}
@@ -1427,25 +951,12 @@
 
             return `
                 <div onclick="openProductModal('${prod.id}')" class="ios-tap flex items-start justify-between gap-3 py-3.5 hover:bg-crema/60 transition-all cursor-pointer group rounded-2xl px-2">
-                    <!-- Columna izquierda: Badges, Nombre, Descripción, Precio, Variantes -->
                     <div class="flex-1 pr-2 min-w-0">
-                        <div class="flex flex-wrap items-center gap-1.5 mb-1">
-                            ${prod.badge ? `
-                                <span class="inline-block text-[10px] font-extrabold text-bordo bg-rosa/30 px-2 py-0.5 rounded-md uppercase tracking-wider">
-                                    ${prod.badge}
-                                </span>
-                            ` : ''}
-                            ${prod.immediateDelivery ? `
-                                <span class="inline-block text-[10px] font-extrabold text-oliva bg-olivaLight px-2 py-0.5 rounded-md uppercase tracking-wider">
-                                    ⚡ Listo hoy
-                                </span>
-                            ` : ''}
-                            ${prod.dailyOffer ? `
-                                <span class="inline-block text-[10px] font-extrabold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-md uppercase tracking-wider">
-                                    ${prod.offerLabel || 'Promo'}
-                                </span>
-                            ` : ''}
-                        </div>
+                        ${prod.badge ? `
+                            <span class="inline-block text-[10px] font-extrabold text-bordo bg-rosa/30 px-2 py-0.5 rounded-md uppercase tracking-wider mb-1">
+                                ${prod.badge}
+                            </span>
+                        ` : ''}
 
                         <h4 class="text-base sm:text-lg font-bold text-chocolate leading-snug group-hover:text-bordo transition-colors">
                             ${prod.name}
@@ -1455,24 +966,21 @@
                             ${prod.description}
                         </p>
 
-                        <!-- Precio y resumen de medidas/pesos -->
                         <div class="mt-2.5 flex items-baseline flex-wrap gap-2">
                             <span class="text-base sm:text-lg font-extrabold text-chocolate font-sansBrand tracking-tight">
                                 ${priceText}
                             </span>
                             ${prod.variants.length > 1 ? `
                                 <span class="text-[11px] text-chocolate/65 font-medium bg-cremaDark px-2 py-0.5 rounded-lg border border-bordo/10">
-                                    ${prod.variants.length} opciones (${prod.variants.map(v => v.label.split('(')[0].trim()).slice(0, 2).join(', ')}...)
+                                    ${prod.variants.length} opciones
                                 </span>
                             ` : ''}
                         </div>
                     </div>
 
-                    <!-- Columna derecha: Foto cuadrada con botón + flotante en esquina -->
                     <div class="relative w-28 h-28 sm:w-32 sm:h-32 shrink-0 rounded-2xl overflow-hidden shadow-sm border border-rosa/40 bg-rosaLight/20">
                         <img src="${getSafeImage(firstVar)}" onerror="this.src='/images/logo.jpg'" alt="${prod.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                         
-                        <!-- Botón + flotante estilo Rappi en la esquina inferior derecha -->
                         <button onclick="event.stopPropagation(); openProductModal('${prod.id}')" class="ios-tap absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white text-chocolate font-bold flex items-center justify-center shadow-md border border-black/5 hover:bg-bordo hover:text-crema hover:scale-110 active:scale-95 transition-all" title="Ver opciones y agregar">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="12" y1="5" x2="12" y2="19"/>
@@ -1544,31 +1052,30 @@
             const container = document.getElementById("productModalContent");
             container.innerHTML = `
                 <div class="w-full">
-                    <!-- Foto Principal del Producto / Variante -->
                     <div class="relative h-56 sm:h-64 w-full overflow-hidden bg-rosaLight/30 rounded-t-[2rem]">
                         <img src="${getSafeImage(currentVar)}" onerror="this.src='/images/logo.jpg'" alt="${prod.name}" class="w-full h-full object-cover">
                         
-                        <div class="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                            ${prod.badge ? `<span class="px-2.5 py-1 rounded-full bg-white/95 text-bordo text-[11px] font-bold shadow-sm">${prod.badge}</span>` : ''}
-                            ${prod.immediateDelivery ? `<span class="px-2.5 py-1 rounded-full bg-oliva text-crema text-[11px] font-bold shadow-sm">⚡ Disponible Hoy</span>` : ''}
-                        </div>
+                        ${prod.badge ? `
+                            <div class="absolute top-3 left-3">
+                                <span class="px-2.5 py-1 rounded-full bg-white/95 text-bordo text-[11px] font-bold shadow-sm">${prod.badge}</span>
+                            </div>
+                        ` : ''}
 
                         <button onclick="closeProductModal()" class="ios-tap absolute top-3 right-3 w-8 h-8 rounded-full bg-white/95 text-chocolate flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                         </button>
                     </div>
 
-                    <!-- Detalles del Producto -->
                     <div class="p-4 sm:p-6 space-y-5 max-h-[55vh] overflow-y-auto">
                         <div>
                             <h3 class="font-serifBrand text-2xl sm:text-3xl font-bold text-chocolate leading-tight">${prod.name}</h3>
                             <p class="text-xs sm:text-sm text-chocolate/80 mt-1 leading-relaxed">${prod.description}</p>
                         </div>
 
-                        <!-- SELECTOR DE MEDIDAS / PESOS (Requisito clave) -->
+                        <!-- Selector de Medidas y Pesos -->
                         <div>
                             <div class="flex items-center justify-between mb-2">
-                                <label class="text-xs font-bold uppercase tracking-wider text-bordo flex items-center gap-1.5">
+                                <label class="text-xs font-bold uppercase tracking-wider text-bordo">
                                     <span>Elegí el Tamaño o Peso:</span>
                                 </label>
                                 <span class="text-[11px] text-chocolate/60">Obligatorio</span>
@@ -1595,11 +1102,11 @@
                             </div>
                         </div>
 
-                        <!-- SELECTOR DE SABORES COMBINABLES -->
+                        <!-- Selector de Sabores -->
                         ${prod.flavors && prod.flavors.length > 0 ? `
                             <div>
                                 <div class="flex items-center justify-between mb-2">
-                                    <label class="text-xs font-bold uppercase tracking-wider text-oliva flex items-center gap-1.5">
+                                    <label class="text-xs font-bold uppercase tracking-wider text-oliva">
                                         <span>Sabores a Elección:</span>
                                     </label>
                                     <span class="text-[11px] text-chocolate/60">${prod.allowCombine ? 'Podés combinar varios' : 'Elegí 1'}</span>
@@ -1620,13 +1127,11 @@
                             </div>
                         ` : ''}
 
-                        <!-- Aclaración o dedicatoria opcional -->
                         <div>
                             <label class="text-xs font-bold text-chocolate/80 mb-1 block">Aclaración o Dedicatoria para el pedido (Opcional):</label>
                             <input id="modalItemNote" type="text" placeholder="Ej: Con velita / Para el sábado a las 17hs" class="w-full px-3.5 py-2.5 rounded-xl bg-crema border border-rosa/50 text-sm focus:outline-none focus:border-bordo text-chocolate">
                         </div>
 
-                        <!-- Selector de Cantidad -->
                         <div class="flex items-center justify-between pt-2 border-t border-rosa/30">
                             <span class="text-xs font-bold uppercase tracking-wider text-chocolate">Cantidad:</span>
                             <div class="flex items-center gap-3 bg-cremaDark p-1.5 rounded-2xl border border-rosa/40">
@@ -1641,7 +1146,6 @@
                         </div>
                     </div>
 
-                    <!-- Botones de Acción Inferiores -->
                     <div class="p-4 sm:p-5 bg-white border-t border-rosa/40 rounded-b-[2rem] space-y-2">
                         <button id="btnModalAddToCart" onclick="addToCartFromModal(event)" class="ios-tap w-full py-3.5 px-4 rounded-2xl bg-bordo text-crema font-bold text-sm sm:text-base shadow-card hover:bg-bordoDark flex items-center justify-between transition">
                             <span>Agregar al Pedido</span>
@@ -1657,7 +1161,7 @@
         }
 
         // ===================================================================
-        // GESTIÓN DEL CARRITO Y PEDIDO POR WHATSAPP                          
+        // CARRITO Y WHATSAPP                                                 
         // ===================================================================
         function addToCartFromModal(event) {
             if (!activeModalProduct) return;
@@ -1680,7 +1184,6 @@
             cart.push(cartItem);
             saveCartToStorage();
 
-            // Disparar explosión festiva de marca con origen en el botón presionado
             let clickX = window.innerWidth / 2;
             let clickY = window.innerHeight - 80;
             if (event && event.clientX) {
@@ -1710,7 +1213,6 @@
                 msg += `  Nota/Dedicatoria: ${note}\n`;
             }
             msg += `  Subtotal: ${formatARS(total)}\n\n`;
-            msg += `Modo: ${currentStoreMode === 'delivery' ? 'Envío a domicilio' : 'Retiro en taller'}\n`;
             msg += `¿Me confirman disponibilidad? ¡Muchas gracias!`;
 
             const num = settings.whatsapp || "5491138951241";
@@ -1722,7 +1224,6 @@
             const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
             const totalPrice = cart.reduce((acc, item) => acc + (item.unitPrice * item.quantity), 0);
 
-            // Barra flotante inferior
             const floatingBar = document.getElementById("floatingOrderBar");
             const floatingCount = document.getElementById("floatingBarCount");
             const floatingTotal = document.getElementById("floatingBarTotal");
@@ -1737,7 +1238,6 @@
                 }
             }
 
-            // Total en drawer
             const totalAmountEl = document.getElementById("cartTotalAmount");
             if (totalAmountEl) totalAmountEl.textContent = formatARS(totalPrice);
 
@@ -1815,7 +1315,7 @@
             }
 
             const name = document.getElementById("customerName")?.value.trim() || "";
-            const mode = document.getElementById("deliveryMode")?.value || (currentStoreMode === 'delivery' ? "Envío a domicilio" : "Retiro por taller");
+            const mode = document.getElementById("deliveryMode")?.value || "Envío a domicilio";
             const note = document.getElementById("customerNote")?.value.trim() || "";
             const total = cart.reduce((acc, item) => acc + (item.unitPrice * item.quantity), 0);
 
@@ -1885,9 +1385,9 @@
             document.getElementById("adminLoginScreen").classList.add("hidden");
             document.getElementById("adminDashboardScreen").classList.remove("hidden");
             renderAdminProductsList();
-            renderAdminImmediateTagger();
             renderAdminCategoriesList();
             populateCategorySelect();
+            applyStoreSettingsUI();
         }
 
         async function handleAdminLogin(event) {
@@ -1915,7 +1415,6 @@
                     errEl.classList.remove("hidden");
                 }
             } catch (e) {
-                // Fallback local
                 if (p === settings.adminPass || p === "Helena2024.") {
                     isAdminLoggedIn = true;
                     sessionStorage.setItem(ADMIN_SESSION_KEY, "true");
@@ -1939,7 +1438,7 @@
         }
 
         function switchAdminTab(tab) {
-            ['productos', 'inmediata', 'categorias', 'config'].forEach(t => {
+            ['productos', 'portada', 'categorias', 'config'].forEach(t => {
                 const panel = document.getElementById(`admintab-panel-${t}`);
                 const btn = document.getElementById(`admintab-btn-${t}`);
                 if (panel && btn) {
@@ -1955,7 +1454,28 @@
         }
 
         // ===================================================================
-        // FORMULARIO PRODUCTO (TAMAÑOS, PESOS Y SUBIDA A VERCEL BLOB)        
+        // FOTO DE PORTADA CONFIGURABLE (SUBIDA A VERCEL BLOB)                 
+        // ===================================================================
+        async function handleCoverFileUpload(input) {
+            if (!input.files || !input.files[0]) return;
+            showToast("Subiendo foto de portada a la nube Vercel Blob...");
+            const url = await uploadImageFile(input.files[0]);
+            settings.coverImage = url;
+            applyStoreSettingsUI();
+            showToast("¡Portada actualizada!");
+            await syncCatalogWithCloudNow();
+        }
+
+        async function removeCoverImage() {
+            settings.coverImage = "";
+            applyStoreSettingsUI();
+            document.getElementById("coverImageFileInput").value = "";
+            showToast("Portada restablecida al fondo por defecto");
+            await syncCatalogWithCloudNow();
+        }
+
+        // ===================================================================
+        // FORMULARIO DE PRODUCTOS                                            
         // ===================================================================
         let formVariants = [
             { label: "1 Unidad", unitType: "unidad", price: 1000, image: "/images/logo.jpg" }
@@ -2008,12 +1528,9 @@
             const description = document.getElementById("formDescription").value.trim();
             const badge = document.getElementById("formBadge").value.trim();
             const flavorsRaw = document.getElementById("formFlavors").value.trim();
-            const immediate = document.getElementById("formImmediate").checked;
-            const dailyOffer = document.getElementById("formDailyOffer").checked;
 
             const flavors = flavorsRaw ? flavorsRaw.split(",").map(s => s.trim()).filter(Boolean) : [];
 
-            // Subir foto si seleccionó archivo
             const fileInput = document.getElementById("formImageFile");
             let imageUrl = "/images/logo.jpg";
 
@@ -2043,9 +1560,9 @@
                 badge,
                 flavors,
                 allowCombine: flavors.length > 1,
-                immediateDelivery: immediate,
-                dailyOffer: dailyOffer,
-                offerLabel: dailyOffer ? "Promo Especial" : "",
+                immediateDelivery: false,
+                dailyOffer: false,
+                offerLabel: "",
                 variants: cleanVariants
             };
 
@@ -2058,9 +1575,8 @@
 
             renderCatalog();
             renderAdminProductsList();
-            renderAdminImmediateTagger();
             resetProductForm();
-            showToast("¡Producto guardado! Sincronizando con la nube...");
+            showToast("¡Producto guardado! Sincronizando en la nube...");
             await syncCatalogWithCloudNow();
         }
 
@@ -2087,7 +1603,7 @@
                             if (data.url) return resolve(data.url);
                         }
                     } catch (err) {}
-                    resolve(base64); // Fallback data URI
+                    resolve(base64);
                 };
                 reader.readAsDataURL(file);
             });
@@ -2104,8 +1620,6 @@
             document.getElementById("formDescription").value = prod.description;
             document.getElementById("formBadge").value = prod.badge || "";
             document.getElementById("formFlavors").value = (prod.flavors || []).join(", ");
-            document.getElementById("formImmediate").checked = Boolean(prod.immediateDelivery);
-            document.getElementById("formDailyOffer").checked = Boolean(prod.dailyOffer);
 
             formVariants = prod.variants.map(v => ({ ...v }));
             renderFormVariants();
@@ -2115,14 +1629,12 @@
         }
 
         function resetProductForm() {
-            document.getElementById("formTitle").textContent = "Agregar o Editar Producto";
+            document.getElementById("formTitle").textContent = "Cargar Nuevo Producto";
             document.getElementById("editProductId").value = "";
             document.getElementById("formName").value = "";
             document.getElementById("formDescription").value = "";
             document.getElementById("formBadge").value = "";
             document.getElementById("formFlavors").value = "";
-            document.getElementById("formImmediate").checked = false;
-            document.getElementById("formDailyOffer").checked = false;
             document.getElementById("formImageFile").value = "";
             formVariants = [{ label: "1 Unidad", unitType: "unidad", price: 1000, image: "/images/logo.jpg" }];
             renderFormVariants();
@@ -2133,14 +1645,24 @@
             products = products.filter(p => p.id !== productId);
             renderCatalog();
             renderAdminProductsList();
-            renderAdminImmediateTagger();
             showToast("Producto eliminado");
             await syncCatalogWithCloudNow();
         }
 
         function renderAdminProductsList() {
             const container = document.getElementById("adminProductsList");
+            const countEl = document.getElementById("adminProdCount");
+            if (countEl) countEl.textContent = products.length;
             if (!container) return;
+
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-8 text-center text-chocolate/60 text-xs bg-white rounded-2xl border border-rosa/30 p-4">
+                        Aún no cargaste productos. Completá el formulario arriba para empezar a publicar en tu menú.
+                    </div>
+                `;
+                return;
+            }
 
             container.innerHTML = products.map(prod => `
                 <div class="flex items-center justify-between gap-3 p-3 rounded-2xl bg-crema border border-rosa/30">
@@ -2155,33 +1677,6 @@
                     </div>
                 </div>
             `).join("");
-        }
-
-        function renderAdminImmediateTagger() {
-            const container = document.getElementById("adminImmediateTaggerList");
-            if (!container) return;
-
-            container.innerHTML = products.map(prod => `
-                <div class="flex items-center justify-between p-3 rounded-2xl border ${prod.immediateDelivery ? 'border-oliva bg-olivaLight/30' : 'border-rosa/30 bg-crema'}">
-                    <div class="flex items-center gap-2 min-w-0">
-                        <img src="${getSafeImage(prod.variants[0])}" class="w-9 h-9 rounded-lg object-cover shrink-0">
-                        <span class="text-xs font-bold text-chocolate truncate">${prod.name}</span>
-                    </div>
-                    <label class="flex items-center gap-1.5 cursor-pointer text-xs font-bold ${prod.immediateDelivery ? 'text-oliva' : 'text-chocolate/60'}">
-                        <input type="checkbox" ${prod.immediateDelivery ? 'checked' : ''} onchange="toggleImmediateTag('${prod.id}', this.checked)" class="accent-oliva w-4 h-4 rounded">
-                        <span>${prod.immediateDelivery ? 'Listo Hoy' : 'A pedido'}</span>
-                    </label>
-                </div>
-            `).join("");
-        }
-
-        async function toggleImmediateTag(id, isImmediate) {
-            const prod = products.find(p => p.id === id);
-            if (!prod) return;
-            prod.immediateDelivery = isImmediate;
-            renderCatalog();
-            renderAdminImmediateTagger();
-            await syncCatalogWithCloudNow();
         }
 
         function renderAdminCategoriesList() {
@@ -2225,7 +1720,8 @@
 
                 if (res.ok) {
                     showToast("¡Catálogo sincronizado en la nube para todos!");
-                    document.getElementById("cloudStatusText").textContent = "Sincronizado en Vercel Blob (" + new Date().toLocaleTimeString() + ")";
+                    const statusText = document.getElementById("cloudStatusText");
+                    if (statusText) statusText.textContent = "Sincronizado en Vercel Blob (" + new Date().toLocaleTimeString() + ")";
                 }
             } catch (e) {
                 showToast("Guardado localmente");
@@ -2233,26 +1729,23 @@
         }
 
         function saveAdminSettings() {
-            const w = document.getElementById("configWhatsapp")?.value.trim();
-            if (w) settings.whatsapp = w.replace(/\D/g, "");
+            const name = document.getElementById("configStoreName")?.value.trim();
+            const tagline = document.getElementById("configStoreTagline")?.value.trim();
+            const schedule = document.getElementById("configStoreSchedule")?.value.trim();
+            const whatsapp = document.getElementById("configWhatsapp")?.value.trim();
+
+            if (name) settings.storeName = name;
+            if (tagline) settings.storeTagline = tagline;
+            if (schedule) settings.storeSchedule = schedule;
+            if (whatsapp) settings.whatsapp = whatsapp.replace(/\D/g, "");
+
             try {
                 localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
             } catch (e) {}
-            updateStoreWhatsappLinks();
-            syncCatalogWithCloudNow();
-            showToast("Número de WhatsApp actualizado");
-        }
 
-        async function reloadDefaultCatalogData() {
-            if (!confirm("¿Deseas restaurar el catálogo completo de ejemplo con fotos y precios?")) return;
-            categories = [...DEFAULT_CATEGORIES];
-            products = [...DEFAULT_PRODUCTS];
-            renderStickyCategoryTabs();
-            renderCatalog();
-            renderAdminProductsList();
-            renderAdminImmediateTagger();
-            await syncCatalogWithCloudNow();
-            showToast("Catálogo de ejemplo restaurado con éxito");
+            applyStoreSettingsUI();
+            syncCatalogWithCloudNow();
+            showToast("Ajustes del emprendimiento actualizados");
         }
 
         function showToast(msg) {
