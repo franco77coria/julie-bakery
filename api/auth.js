@@ -10,8 +10,8 @@ module.exports = async function handler(req, res) {
     }
 
     const catalog = await getCatalog();
-    const envUser = process.env.ADMIN_USER || '';
-    const envPass = process.env.ADMIN_PASSWORD || '';
+    const envUser = (process.env.ADMIN_USER || '').trim();
+    const envPass = (process.env.ADMIN_PASSWORD || '').trim();
     const savedUser = envUser || (catalog.settings && catalog.settings.adminUser);
     const savedPass = envPass || (catalog.settings && catalog.settings.adminPass);
     const isConfigured = Boolean(savedUser && savedPass);
