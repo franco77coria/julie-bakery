@@ -123,6 +123,74 @@
         .ios-sheet-enter {
             animation: iosSheetUp 0.32s cubic-bezier(0.32, 0.72, 0, 1) forwards;
         }
+
+        body.product-modal-open {
+            position: fixed;
+            top: var(--product-scroll-top);
+            width: 100%;
+            overflow: hidden;
+        }
+        #productModalPanel {
+            max-height: 88dvh;
+        }
+        #productModalContent {
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+            overflow: hidden;
+        }
+        #productModalScroll {
+            min-height: 0;
+            overflow-y: auto;
+            overscroll-behavior-y: contain;
+        }
+        #productModalClose {
+            top: max(0.75rem, env(safe-area-inset-top));
+            right: max(0.75rem, env(safe-area-inset-right));
+        }
+        #productModalActions {
+            padding-bottom: max(1rem, env(safe-area-inset-bottom));
+        }
+        [data-modal-variant][aria-pressed="true"] {
+            border-color: var(--bordo);
+            background-color: rgb(239 224 219 / 0.3);
+        }
+        [data-modal-variant][aria-pressed="true"] .variant-mark {
+            border-color: var(--bordo);
+        }
+        [data-modal-variant][aria-pressed="false"] .variant-dot,
+        [data-modal-flavor][aria-pressed="false"] .flavor-check {
+            visibility: hidden;
+        }
+        [data-modal-flavor][aria-pressed="true"] {
+            border-color: var(--oliva);
+            background-color: rgb(229 233 223 / 0.4);
+            font-weight: 700;
+        }
+        [data-modal-flavor][aria-pressed="true"] .flavor-mark {
+            background-color: var(--oliva);
+            border-color: var(--oliva);
+            color: white;
+        }
+        @media (max-width: 639px), (max-height: 500px) and (pointer: coarse) {
+            #productModal {
+                padding: 0;
+            }
+            #productModalPanel {
+                height: 100dvh;
+                max-height: 100dvh;
+                max-width: none;
+                border: 0;
+                border-radius: 0;
+            }
+            #productModalScroll {
+                padding-top: env(safe-area-inset-top);
+            }
+            #productModalContent {
+                padding-left: env(safe-area-inset-left);
+                padding-right: env(safe-area-inset-right);
+            }
+        }
     </style>
 </head>
 <body class="bg-crema min-h-screen flex flex-col pb-28 selection:bg-rosa selection:text-bordo">
@@ -250,11 +318,11 @@
     <!-- MODAL DETALLE Y PERSONALIZACIÓN DE PRODUCTO                         -->
     <!-- =================================================================== -->
     <div id="productModal" style="display: none;" onclick="if(event.target === this) closeProductModal()" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
-        <div class="ios-sheet-enter bg-white w-full max-w-lg rounded-t-[2rem] sm:rounded-[2rem] shadow-floating border border-rosa/40 overflow-hidden flex flex-col max-h-[92dvh] sm:max-h-[88dvh] relative">
-            <div class="sm:hidden pt-2.5 pb-1 bg-white flex justify-center shrink-0" onclick="closeProductModal()">
-                <div class="w-11 h-1.5 rounded-full bg-chocolate/20"></div>
-            </div>
-            <div id="productModalContent" class="overflow-y-auto flex-1">
+        <div id="productModalPanel" role="dialog" aria-modal="true" aria-labelledby="productModalTitle" class="ios-sheet-enter bg-white w-full max-w-lg sm:rounded-[2rem] shadow-floating border border-rosa/40 overflow-hidden flex flex-col relative">
+            <button id="productModalClose" type="button" onclick="closeProductModal()" aria-label="Cerrar producto" class="ios-tap absolute z-10 w-11 h-11 rounded-full bg-white/95 text-chocolate flex items-center justify-center shadow-md">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <div id="productModalContent">
                 <!-- Inyectado por JS -->
             </div>
         </div>
@@ -773,6 +841,7 @@
         let selectedVariantIndex = 0;
         let selectedFlavors = [];
         let modalQuantity = 1;
+        let productModalScrollY = 0;
 
         let settings = {
             whatsapp: "5491138951241",
@@ -1169,20 +1238,25 @@
 
             renderProductModalContent();
             const modal = document.getElementById("productModal");
+            productModalScrollY = window.scrollY;
+            document.body.style.setProperty("--product-scroll-top", `-${productModalScrollY}px`);
+            document.body.classList.add("product-modal-open");
             modal.style.display = "flex";
-            document.body.style.overflow = "hidden";
+            document.getElementById("productModalScroll").scrollTop = 0;
         }
 
         function closeProductModal() {
             const modal = document.getElementById("productModal");
             modal.style.display = "none";
             activeModalProduct = null;
-            document.body.style.overflow = "";
+            document.body.classList.remove("product-modal-open");
+            document.body.style.removeProperty("--product-scroll-top");
+            window.scrollTo({ top: productModalScrollY, behavior: "instant" });
         }
 
         function selectModalVariant(idx) {
             selectedVariantIndex = idx;
-            renderProductModalContent();
+            updateProductModalSelection();
         }
 
         function toggleModalFlavor(flavor) {
@@ -1198,12 +1272,31 @@
             } else {
                 selectedFlavors = [flavor];
             }
-            renderProductModalContent();
+            updateProductModalSelection();
         }
 
         function changeModalQty(delta) {
             modalQuantity = Math.max(1, modalQuantity + delta);
-            renderProductModalContent();
+            updateProductModalSelection();
+        }
+
+        // Keep the existing controls, note and scroll position when a selection changes.
+        function updateProductModalSelection() {
+            if (!activeModalProduct) return;
+            const currentVar = activeModalProduct.variants[selectedVariantIndex] || activeModalProduct.variants[0];
+            const container = document.getElementById("productModalContent");
+            container.querySelectorAll("[data-modal-variant]").forEach(button => {
+                button.setAttribute("aria-pressed", Number(button.dataset.modalVariant) === selectedVariantIndex);
+            });
+            container.querySelectorAll("[data-modal-flavor]").forEach(button => {
+                const flavor = activeModalProduct.flavors[Number(button.dataset.modalFlavor)];
+                button.setAttribute("aria-pressed", selectedFlavors.includes(flavor));
+            });
+            const image = document.getElementById("productModalImage");
+            const imageSrc = getSafeImage(currentVar);
+            if (image.getAttribute("src") !== imageSrc) image.src = imageSrc;
+            document.getElementById("productModalQuantity").textContent = modalQuantity;
+            document.getElementById("productModalTotal").textContent = formatARS((currentVar?.price || 0) * modalQuantity);
         }
 
         function renderProductModalContent() {
@@ -1214,9 +1307,9 @@
 
             const container = document.getElementById("productModalContent");
             container.innerHTML = `
-                <div class="w-full">
-                    <div class="relative h-56 sm:h-64 w-full overflow-hidden bg-rosaLight/30 rounded-t-[2rem]">
-                        <img src="${getSafeImage(currentVar)}" onerror="this.src='/images/logo.jpg'" alt="${prod.name}" class="w-full h-full object-cover">
+                <div id="productModalScroll">
+                    <div class="relative h-56 sm:h-64 w-full overflow-hidden bg-rosaLight/30">
+                        <img id="productModalImage" src="${getSafeImage(currentVar)}" onerror="this.src='/images/logo.jpg'" alt="${prod.name}" class="w-full h-full object-cover">
                         
                         ${prod.badge ? `
                             <div class="absolute top-3 left-3">
@@ -1224,14 +1317,11 @@
                             </div>
                         ` : ''}
 
-                        <button onclick="closeProductModal()" class="ios-tap absolute top-3 right-3 w-8 h-8 rounded-full bg-white/95 text-chocolate flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                        </button>
                     </div>
 
-                    <div class="p-4 sm:p-6 space-y-5 max-h-[55vh] overflow-y-auto">
+                    <div class="p-4 sm:p-6 space-y-5">
                         <div>
-                            <h3 class="font-serifBrand text-2xl sm:text-3xl font-bold text-chocolate leading-tight">${prod.name}</h3>
+                            <h3 id="productModalTitle" class="font-serifBrand text-2xl sm:text-3xl font-bold text-chocolate leading-tight">${prod.name}</h3>
                             <p class="text-xs sm:text-sm text-chocolate/80 mt-1 leading-relaxed">${prod.description}</p>
                         </div>
 
@@ -1248,10 +1338,10 @@
                                 ${prod.variants.map((v, idx) => {
                                     const isSelected = idx === selectedVariantIndex;
                                     return `
-                                        <div onclick="selectModalVariant(${idx})" class="ios-tap flex items-center justify-between p-3 rounded-2xl border-2 transition-all cursor-pointer ${isSelected ? 'border-bordo bg-rosaLight/30 shadow-sm' : 'border-rosa/30 bg-crema/40 hover:bg-crema'}">
+                                        <button type="button" data-modal-variant="${idx}" aria-pressed="${isSelected}" onclick="selectModalVariant(${idx})" class="ios-tap w-full text-left flex items-center justify-between p-3 rounded-2xl border-2 border-rosa/30 bg-crema/40 hover:bg-crema cursor-pointer">
                                             <div class="flex items-center gap-3">
-                                                <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center ${isSelected ? 'border-bordo' : 'border-chocolate/30'}">
-                                                    ${isSelected ? '<div class="w-2.5 h-2.5 rounded-full bg-bordo"></div>' : ''}
+                                                <div class="variant-mark w-5 h-5 rounded-full border-2 border-chocolate/30 flex items-center justify-center">
+                                                    <div class="variant-dot w-2.5 h-2.5 rounded-full bg-bordo"></div>
                                                 </div>
                                                 <div>
                                                     <p class="text-sm font-bold text-chocolate">${v.label}</p>
@@ -1259,7 +1349,7 @@
                                                 </div>
                                             </div>
                                             <span class="font-extrabold text-sm sm:text-base text-bordo font-sansBrand">${formatARS(v.price)}</span>
-                                        </div>
+                                        </button>
                                     `;
                                 }).join("")}
                             </div>
@@ -1275,15 +1365,15 @@
                                     <span class="text-[11px] text-chocolate/60">${prod.allowCombine ? 'Podés combinar varios' : 'Elegí 1'}</span>
                                 </div>
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                    ${prod.flavors.map(f => {
+                                    ${prod.flavors.map((f, idx) => {
                                         const isChecked = selectedFlavors.includes(f);
                                         return `
-                                            <div onclick="toggleModalFlavor('${f}')" class="ios-tap flex items-center justify-between p-2.5 rounded-xl border transition-all cursor-pointer ${isChecked ? 'border-oliva bg-olivaLight/40 text-chocolate font-bold' : 'border-rosa/30 bg-crema/40 text-chocolate/80'}">
+                                            <button type="button" data-modal-flavor="${idx}" aria-pressed="${isChecked}" onclick="toggleModalFlavor(activeModalProduct.flavors[${idx}])" class="ios-tap w-full min-h-11 text-left flex items-center justify-between p-2.5 rounded-xl border border-rosa/30 bg-crema/40 text-chocolate cursor-pointer">
                                                 <span class="text-xs">${f}</span>
-                                                <div class="w-4 h-4 rounded-md border flex items-center justify-center ${isChecked ? 'bg-oliva border-oliva text-white' : 'border-chocolate/30'}">
-                                                    ${isChecked ? '<svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+                                                <div class="flavor-mark w-4 h-4 rounded-md border border-chocolate/30 flex items-center justify-center">
+                                                    <svg class="flavor-check w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
                                                 </div>
-                                            </div>
+                                            </button>
                                         `;
                                     }).join("")}
                                 </div>
@@ -1301,25 +1391,25 @@
                                 <button onclick="changeModalQty(-1)" class="ios-tap w-8 h-8 rounded-xl bg-white text-chocolate font-bold shadow-sm flex items-center justify-center hover:bg-rosaLight">
                                     -
                                 </button>
-                                <span class="w-7 text-center font-bold text-base text-chocolate">${modalQuantity}</span>
+                                <span id="productModalQuantity" class="w-7 text-center font-bold text-base text-chocolate">${modalQuantity}</span>
                                 <button onclick="changeModalQty(1)" class="ios-tap w-8 h-8 rounded-xl bg-white text-chocolate font-bold shadow-sm flex items-center justify-center hover:bg-rosaLight">
                                     +
                                 </button>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="p-4 sm:p-5 bg-white border-t border-rosa/40 rounded-b-[2rem] space-y-2">
+                    <div id="productModalActions" class="shrink-0 p-4 sm:p-5 bg-white border-t border-rosa/40 space-y-2">
                         <button id="btnModalAddToCart" onclick="addToCartFromModal(event)" class="ios-tap w-full py-3.5 px-4 rounded-2xl bg-bordo text-crema font-bold text-sm sm:text-base shadow-card hover:bg-bordoDark flex items-center justify-between transition">
                             <span>Agregar al Pedido</span>
-                            <span>${formatARS(totalItemPrice)}</span>
+                            <span id="productModalTotal">${formatARS(totalItemPrice)}</span>
                         </button>
                         <button onclick="quickWhatsAppModalItem()" class="ios-tap w-full py-2.5 px-4 rounded-2xl bg-oliva text-crema font-bold text-xs sm:text-sm hover:opacity-95 flex items-center justify-center gap-2 shadow-sm transition">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                             <span>Pedir directo por WhatsApp en 1 toque</span>
                         </button>
                     </div>
-                </div>
             `;
         }
 
